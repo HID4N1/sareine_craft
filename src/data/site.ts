@@ -9,7 +9,7 @@ export const siteData: SiteData = {
   description: "",
   contact: {
     phone: null,
-    whatsapp: null,
+    whatsapp: "+212 653-712245",
     email: null,
   },
   address: {
