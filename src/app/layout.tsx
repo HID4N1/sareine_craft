@@ -18,6 +18,15 @@ export const metadata: Metadata = {
   title: "Sareine — Craft & Events",
   description:
     "Sareine imagine des créations artisanales et des expériences événementielles pensées avec soin pour vos moments précieux.",
+  icons: {
+    icon: [
+      {
+        url: "/brand/sareine-logo.png",
+        type: "image/png",
+      },
+    ],
+    apple: "/brand/sareine-logo.png",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

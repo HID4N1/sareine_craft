@@ -10,7 +10,7 @@ export const publicNavigation: NavigationItem[] = [
     href: "/craft",
   },
   {
-    label: "Events",
+    label: "Evenements",
     href: "/events",
   },
   {
