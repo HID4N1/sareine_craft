@@ -112,8 +112,7 @@ export const homeHero: HomeHeroData = {
 export const homeServices: HomeServicesData = {
   eyebrow: "NOTRE SAVOIR-FAIRE",
   title: "Bien plus qu’une décoration.",
-  description:
-    "Des créations uniques et des événements pensés avec passion, pour sublimer vos moments les plus précieux.",
+  description: "",
   cta: {
     label: "Découvrir nos services",
     href: "/events",

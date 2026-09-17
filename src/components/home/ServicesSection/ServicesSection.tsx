@@ -122,7 +122,7 @@ export function ServicesSection({ services }: ServicesSectionProps) {
           </div>
 
           <div className={styles.headerIntro}>
-            <p>{services.description}</p>
+            {services.description ? <p>{services.description}</p> : null}
             <Link className={styles.headerCta} href={services.cta.href}>
               <span>{services.cta.label}</span>
               <span aria-hidden="true">-&gt;</span>
