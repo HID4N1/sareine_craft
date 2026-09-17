@@ -1,0 +1,334 @@
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow-x: clip;
+  overflow-y: visible;
+  background: var(--background);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(74, 23, 53, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(74, 23, 53, 0.025) 1px, transparent 1px);
+  background-size: 34px 34px;
+  mask-image: linear-gradient(115deg, rgba(0, 0, 0, 0.22), transparent 66%);
+}
+
+.clipSvg {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.mainImage {
+  position: absolute;
+  top: -92px;
+  right: 0;
+  z-index: 1;
+  width: 49vw;
+  height: calc(84% + 92px);
+  min-height: 31rem;
+  overflow: hidden;
+  pointer-events: none;
+  clip-path: url("#hero-main-image-clip");
+}
+
+.mainImagePhoto {
+  object-fit: cover;
+  object-position: 48% 44%;
+}
+
+.mainImageBorder {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.mainImageBorder path {
+  fill: none;
+  stroke: rgba(188, 138, 79, 0.72);
+  stroke-width: 0.35;
+  vector-effect: non-scaling-stroke;
+}
+
+.secondaryImage {
+  position: absolute;
+  left: 47%;
+  bottom: 0;
+  z-index: 2;
+  width: clamp(18rem, 25vw, 27rem);
+  aspect-ratio: 0.72;
+  overflow: hidden;
+  pointer-events: none;
+  border-color: rgba(188, 138, 79, 0.82);
+  border-style: solid;
+  border-width: 4px 4px 0;
+  border-radius: 46% 46% 0 0 / 27% 27% 0 0;
+}
+
+.secondaryImagePhoto {
+  object-fit: cover;
+  object-position: 39% 47%;
+}
+
+.rightImage {
+  position: absolute;
+  top: -92px;
+  right: 0;
+  z-index: 1;
+  width: 52vw;
+  height: calc(100% + 92px);
+  min-height: 34rem;
+  overflow: hidden;
+  pointer-events: none;
+  transform-origin: 72% 52%;
+  animation: imageReveal 980ms cubic-bezier(0.2, 0.72, 0.2, 1) 120ms both;
+}
+
+.rightImagePhoto {
+  animation: imageFloat 8s ease-in-out 1.1s infinite;
+  object-fit: contain;
+  object-position: right bottom;
+}
+
+.content {
+  position: relative;
+  z-index: 3;
+}
+
+.eyebrowRow,
+.headline,
+.divider,
+.description,
+.ctaGroup,
+.microCopy {
+  animation: riseIn 760ms cubic-bezier(0.2, 0.72, 0.2, 1) both;
+}
+
+.eyebrowRow {
+  animation-delay: 90ms;
+}
+
+.headline {
+  animation-delay: 190ms;
+}
+
+.divider {
+  display: block;
+  width: 5rem;
+  height: 1px;
+  margin-top: 2rem;
+  background: rgba(184, 137, 74, 0.7);
+  animation-delay: 280ms;
+  transform-origin: left center;
+}
+
+.description {
+  animation-delay: 360ms;
+}
+
+.ctaGroup {
+  animation-delay: 440ms;
+}
+
+.microCopy {
+  animation-delay: 540ms;
+}
+
+.headline {
+  font-size: clamp(3.5rem, 5.3vw, 6.5rem);
+  line-height: 0.96;
+}
+
+.highlight {
+  color: var(--sareine-gold-500);
+  font-style: italic;
+}
+
+.primaryCta {
+  color: var(--sareine-ivory);
+}
+
+.heroInner {
+  position: relative;
+  min-height: min(42rem, calc(88svh - 92px));
+  padding-bottom: clamp(2.25rem, 3.8vw, 3.5rem);
+  padding-top: clamp(2.25rem, 3.8vw, 3.75rem);
+}
+
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes imageReveal {
+  from {
+    opacity: 0;
+    transform: translateX(32px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes imageFloat {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+
+  50% {
+    transform: translateY(-10px) scale(1.012);
+  }
+}
+
+@media (max-width: 1199px) {
+  .headline {
+    font-size: clamp(3rem, 7vw, 5.2rem);
+  }
+
+  .rightImage {
+    width: 49vw;
+  }
+
+  .heroInner {
+    min-height: min(40rem, calc(86svh - 92px));
+  }
+
+}
+
+@media (max-width: 1023px) {
+  .mainImage,
+  .secondaryImage {
+    display: none;
+  }
+
+  .rightImage {
+    top: -3.5rem;
+    width: 50vw;
+    height: calc(100% + 3.5rem);
+    min-height: 30rem;
+    opacity: 0.42;
+  }
+
+  .rightImagePhoto {
+    object-position: right center;
+  }
+
+  .content {
+    max-width: min(100%, 36rem);
+  }
+}
+
+@media (max-width: 860px) {
+  .rightImage {
+    right: -10vw;
+    width: 62vw;
+    opacity: 0.3;
+  }
+
+  .headline {
+    max-width: 11ch;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero {
+    overflow-y: clip;
+  }
+
+  .hero::before {
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.16), transparent 72%);
+  }
+
+  .rightImage {
+    position: relative;
+    top: auto;
+    right: auto;
+    width: min(100%, 32rem);
+    height: clamp(15rem, 72vw, 25rem);
+    min-height: 0;
+    margin: -1.5rem auto -1rem;
+    opacity: 1;
+  }
+
+  .rightImagePhoto {
+    object-position: center bottom;
+  }
+
+  .heroInner {
+    min-height: auto;
+    padding-bottom: 2.75rem;
+    padding-top: 1rem;
+  }
+
+  .content {
+    align-items: stretch;
+    max-width: none;
+  }
+
+  .eyebrowRow {
+    margin-bottom: 1.35rem;
+  }
+
+  .headline {
+    max-width: 10.5ch;
+    font-size: clamp(2.35rem, 12vw, 3.3rem);
+    line-height: 0.98;
+  }
+
+  .description {
+    max-width: 30rem;
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+
+  .ctaGroup {
+    flex-direction: column;
+  }
+
+  .ctaGroup a {
+    width: 100%;
+  }
+
+  .microCopy {
+    margin-top: 2.5rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .headline {
+    font-size: clamp(2.05rem, 11vw, 2.35rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rightImage,
+  .rightImagePhoto,
+  .eyebrowRow,
+  .headline,
+  .divider,
+  .description,
+  .ctaGroup,
+  .microCopy {
+    animation: none;
+  }
+}
