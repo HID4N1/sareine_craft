@@ -24,3 +24,18 @@ export const publicNavigation: NavigationItem[] = [
 ];
 
 export const footerNavigation: NavigationItem[] = publicNavigation;
+
+export const legalNavigation: NavigationItem[] = [
+  {
+    label: "Confidentialité",
+    href: "/privacy",
+  },
+  {
+    label: "Cookies",
+    href: "/cookies",
+  },
+  {
+    label: "Conditions",
+    href: "/terms",
+  },
+];

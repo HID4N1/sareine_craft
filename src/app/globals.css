@@ -12,6 +12,7 @@
   --sareine-plum-300: #a87b92;
   --sareine-plum-500: #4a1735;
   --sareine-plum-700: #351025;
+  --sareine-plum-800: #2c0f20;
   --sareine-plum-900: #241019;
 
   --sareine-white: #ffffff;
@@ -21,7 +22,7 @@
   --sareine-taupe: #8a7c77;
   --sareine-charcoal: #292124;
 
-  --background: var(--sareine-ivory);
+  --background: var(--sareine-gold-100);
   --surface: var(--sareine-white);
   --foreground: var(--sareine-charcoal);
   --muted: var(--sareine-taupe);
@@ -35,8 +36,8 @@
 
   --container-max: 90rem;
   --container-readable: 45rem;
-  --section-space: clamp(4.5rem, 9vw, 10rem);
-  --page-padding: clamp(1.25rem, 4vw, 4rem);
+  --section-space: clamp(4.5rem, 8.1vw, 10rem);
+  --page-padding: clamp(1.25rem, 3.6vw, 4rem);
 }
 
 @theme inline {
@@ -60,6 +61,7 @@
   --color-plum-300: var(--sareine-plum-300);
   --color-plum-500: var(--sareine-plum-500);
   --color-plum-700: var(--sareine-plum-700);
+  --color-plum-800: var(--sareine-plum-800);
   --color-plum-900: var(--sareine-plum-900);
   --color-ivory: var(--sareine-ivory);
   --color-cream: var(--sareine-cream);
@@ -80,6 +82,7 @@
 html {
   min-height: 100%;
   background: var(--background);
+  font-size: 90%;
   scroll-behavior: smooth;
 }
 
@@ -130,28 +133,28 @@ a {
 @layer utilities {
   .type-display-xl {
     font-family: var(--font-display), Georgia, serif;
-    font-size: clamp(3rem, 9vw, 5.5rem);
+    font-size: clamp(3rem, 8.1vw, 5.5rem);
     font-weight: 500;
     line-height: 0.94;
   }
 
   .type-h1 {
     font-family: var(--font-display), Georgia, serif;
-    font-size: clamp(2.75rem, 7vw, 4rem);
+    font-size: clamp(2.75rem, 6.3vw, 4rem);
     font-weight: 500;
     line-height: 0.98;
   }
 
   .type-h2 {
     font-family: var(--font-display), Georgia, serif;
-    font-size: clamp(2.25rem, 5vw, 3rem);
+    font-size: clamp(2.25rem, 4.5vw, 3rem);
     font-weight: 500;
     line-height: 1.04;
   }
 
   .type-h3 {
     font-family: var(--font-display), Georgia, serif;
-    font-size: clamp(1.75rem, 3.5vw, 2rem);
+    font-size: clamp(1.75rem, 3.15vw, 2rem);
     font-weight: 500;
     line-height: 1.12;
   }

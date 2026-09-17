@@ -20,9 +20,14 @@ export interface SiteBrand {
 
 export interface SiteData {
   name: string;
+  shortName: string;
   legalName: string | null;
   tagline: string;
   description: string;
+  footerDescription: string;
+  footerEditorialLine: string;
+  footerProjectText: string;
+  footerSignature: string;
   contact: SiteContact;
   address: SiteAddress;
   openingHours: string | null;

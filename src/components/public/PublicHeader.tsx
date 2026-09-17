@@ -6,8 +6,8 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 import { publicNavigation, siteData, socialLinks } from "@/data";
-import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
+import { ProjectCTA } from "@/components/public/ProjectCTA";
 
 function joinClasses(...classes: Array<string | undefined | false>) {
   return classes.filter(Boolean).join(" ");
@@ -48,12 +48,28 @@ function getWhatsAppHref(value: string | null) {
   return digits ? `https://wa.me/${digits}` : null;
 }
 
+type LanguageCode = "fr" | "en" | "ar";
+
+const languages: Array<{ code: LanguageCode; label: string }> = [
+  {
+    code: "fr",
+    label: "FR",
+  },
+  {
+    code: "en",
+    label: "EN",
+  },
+  {
+    code: "ar",
+    label: "AR",
+  },
+];
+
 export function PublicHeader() {
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isProjectOpen, setIsProjectOpen] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const projectRef = useRef<HTMLDivElement>(null);
+  const [activeLanguage, setActiveLanguage] = useState<LanguageCode>("fr");
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -74,29 +90,11 @@ export function PublicHeader() {
   }, []);
 
   useEffect(() => {
-    function handlePointerDown(event: PointerEvent) {
-      if (
-        projectRef.current &&
-        !projectRef.current.contains(event.target as Node)
-      ) {
-        setIsProjectOpen(false);
-      }
-    }
-
-    document.addEventListener("pointerdown", handlePointerDown);
-
-    return () => {
-      document.removeEventListener("pointerdown", handlePointerDown);
-    };
-  }, []);
-
-  useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key !== "Escape") {
         return;
       }
 
-      setIsProjectOpen(false);
       setIsMobileOpen(false);
       menuButtonRef.current?.focus();
     }
@@ -140,7 +138,7 @@ export function PublicHeader() {
     <>
       <header
         className={joinClasses(
-          "sticky top-0 z-50 bg-ivory/88 backdrop-blur-md transition-[height,border-color,background-color] duration-200",
+          "sticky top-0 z-50 bg-transparent backdrop-blur-md transition-[height,border-color,background-color] duration-200",
           isScrolled
             ? "border-b border-sand/80"
             : "border-b border-transparent",
@@ -202,10 +200,32 @@ export function PublicHeader() {
             })}
           </nav>
 
-          <div
-            className="relative hidden items-center gap-3 lg:flex"
-            ref={projectRef}
-          >
+          <div className="relative hidden items-center gap-3 lg:flex">
+            <div
+              aria-label="Choisir la langue"
+              className="flex items-center gap-1 border-l border-sand pl-4"
+              role="group"
+            >
+              {languages.map((language) => {
+                const isActiveLanguage = activeLanguage === language.code;
+
+                return (
+                  <button
+                    aria-pressed={isActiveLanguage}
+                    className={joinClasses(
+                      "min-h-9 px-2 font-sans text-xs font-bold text-secondary transition-colors duration-200 hover:text-primary",
+                      isActiveLanguage ? "text-primary" : undefined,
+                    )}
+                    key={language.code}
+                    onClick={() => setActiveLanguage(language.code)}
+                    type="button"
+                  >
+                    {language.label}
+                  </button>
+                );
+              })}
+            </div>
+
             {whatsappHref ? (
               <a
                 aria-label="Contacter Sareine sur WhatsApp"
@@ -227,58 +247,10 @@ export function PublicHeader() {
               </button>
             )}
 
-            <Button
-              aria-controls="project-choice"
-              aria-expanded={isProjectOpen}
-              className="min-h-10 px-4 text-[0.8125rem]"
-              onClick={() => setIsProjectOpen((current) => !current)}
+            <ProjectCTA
+              triggerClassName="min-h-10 px-4 text-[0.8125rem]"
               size="sm"
-              type="button"
-            >
-              Contacter nous
-            </Button>
-
-            <div
-              className={joinClasses(
-                "absolute right-0 top-[calc(100%+0.875rem)] w-72 rounded-[6px] border border-sand bg-surface p-5 text-secondary shadow-[0_18px_50px_rgba(36,16,25,0.12)] transition duration-200",
-                isProjectOpen
-                  ? "pointer-events-auto translate-y-0 opacity-100"
-                  : "pointer-events-none -translate-y-1 opacity-0",
-              )}
-              id="project-choice"
-            >
-              <p className="font-display text-2xl leading-tight text-secondary">
-                Quel projet imaginez-vous ?
-              </p>
-              <div className="mt-4 grid gap-2">
-                <Link
-                  className="group flex items-center justify-between border-t border-sand/80 py-3 font-sans text-sm font-semibold transition-colors duration-200 hover:text-primary"
-                  href="/craft"
-                  onClick={() => setIsProjectOpen(false)}
-                >
-                  Une création Craft
-                  <span
-                    aria-hidden="true"
-                    className="transition-transform duration-200 group-hover:translate-x-1"
-                  >
-                    -&gt;
-                  </span>
-                </Link>
-                <Link
-                  className="group flex items-center justify-between border-t border-sand/80 py-3 font-sans text-sm font-semibold transition-colors duration-200 hover:text-primary"
-                  href="/events"
-                  onClick={() => setIsProjectOpen(false)}
-                >
-                  Un événement
-                  <span
-                    aria-hidden="true"
-                    className="transition-transform duration-200 group-hover:translate-x-1"
-                  >
-                    -&gt;
-                  </span>
-                </Link>
-              </div>
-            </div>
+            />
           </div>
 
           <button
@@ -359,6 +331,33 @@ export function PublicHeader() {
             </nav>
 
             <div className="pt-10">
+              <div
+                aria-label="Choisir la langue"
+                className="mb-6 flex items-center gap-2"
+                role="group"
+              >
+                {languages.map((language) => {
+                  const isActiveLanguage = activeLanguage === language.code;
+
+                  return (
+                    <button
+                      aria-pressed={isActiveLanguage}
+                      className={joinClasses(
+                        "min-h-9 min-w-11 border border-gold-300/35 px-3 font-sans text-xs font-bold text-ivory transition-colors duration-200 hover:border-gold-300 hover:text-gold-300",
+                        isActiveLanguage
+                          ? "border-gold-300 bg-gold-300 text-plum-900"
+                          : undefined,
+                      )}
+                      key={language.code}
+                      onClick={() => setActiveLanguage(language.code)}
+                      type="button"
+                    >
+                      {language.label}
+                    </button>
+                  );
+                })}
+              </div>
+
               <div className="border-t border-gold-300/35 pt-6">
                 <p className="type-label text-gold-300">
                   Quel projet imaginez-vous ?
