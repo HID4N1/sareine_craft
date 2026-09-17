@@ -32,6 +32,38 @@ export type HomeHeroData = {
   microCopy: string;
 };
 
+export type HomeServiceCard = {
+  id: "events" | "decoration" | "craft" | "complete";
+  eyebrow: string;
+  title: string;
+  description: string;
+  href: string;
+  image: {
+    src: string;
+    alt: string;
+    position: string;
+  };
+  variant: "small" | "wide" | "feature";
+};
+
+export type HomeServiceValue = {
+  icon: "spark" | "guide" | "memory";
+  title: string;
+  description: string;
+};
+
+export type HomeServicesData = {
+  eyebrow: string;
+  title: string;
+  description: string;
+  cta: {
+    label: string;
+    href: string;
+  };
+  cards: HomeServiceCard[];
+  values: HomeServiceValue[];
+};
+
 export const homeHero: HomeHeroData = {
   eyebrow: "CRÉATIONS • ÉVÉNEMENTS • CASABLANCA",
   headline: [
@@ -75,4 +107,87 @@ export const homeHero: HomeHeroData = {
     },
   },
   microCopy: "L’ART DE CÉLÉBRER LE QUOTIDIEN",
+};
+
+export const homeServices: HomeServicesData = {
+  eyebrow: "NOTRE SAVOIR-FAIRE",
+  title: "Bien plus qu’une décoration.",
+  description:
+    "Des créations uniques et des événements pensés avec passion, pour sublimer vos moments les plus précieux.",
+  cta: {
+    label: "Découvrir nos services",
+    href: "/events",
+  },
+  cards: [
+    {
+      id: "events",
+      eyebrow: "ÉVÉNEMENTS",
+      title: "Organisation\nd’événements",
+      description: "Des moments pensés autour de vous.",
+      href: "/events",
+      image: {
+        src: "/images/home/services/events-organisation.png",
+        alt: "Décor de célébration chaleureux avec ballons, fleurs et table de desserts.",
+        position: "center",
+      },
+      variant: "small",
+    },
+    {
+      id: "decoration",
+      eyebrow: "DÉCORATION",
+      title: "Décoration\n& mise en scène",
+      description: "Chaque détail participe à l’histoire.",
+      href: "/events",
+      image: {
+        src: "/images/home/services/decoration-table.png",
+        alt: "Table de réception élégante avec fleurs, bougies et vaisselle raffinée.",
+        position: "58% center",
+      },
+      variant: "small",
+    },
+    {
+      id: "craft",
+      eyebrow: "CRÉATIONS ARTISANALES",
+      title: "Créations\nartisanales",
+      description: "Des pièces uniques créées avec intention.",
+      href: "/craft",
+      image: {
+        src: "/images/home/services/artisanal-creations.png",
+        alt: "Bougies artisanales, fleurs et paquets cadeaux arrangés sur une table d’atelier.",
+        position: "center",
+      },
+      variant: "wide",
+    },
+    {
+      id: "complete",
+      eyebrow: "SERVICE COMPLET",
+      title: "Organisation\nde A à Z",
+      description:
+        "Lieu, buffet, matériel,\ndécoration, coordination…\nnous pouvons tout prendre\nen charge.",
+      href: "/contact",
+      image: {
+        src: "/images/home/services/organisation-a-z.png",
+        alt: "Réception extérieure élégante au coucher du soleil avec arche fleurie et table aux chandelles.",
+        position: "62% center",
+      },
+      variant: "feature",
+    },
+  ],
+  values: [
+    {
+      icon: "spark",
+      title: "CRÉATIONS AUTHENTIQUES",
+      description: "Faites à la main avec passion",
+    },
+    {
+      icon: "guide",
+      title: "ACCOMPAGNEMENT PERSONNALISÉ",
+      description: "À chaque étape, à vos côtés",
+    },
+    {
+      icon: "memory",
+      title: "DES MOMENTS INOUBLIABLES",
+      description: "Qui restent gravés",
+    },
+  ],
 };

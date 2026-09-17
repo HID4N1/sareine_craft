@@ -1,6 +1,12 @@
 import { Hero } from "@/components/home/Hero/Hero";
-import { homeHero } from "@/data";
+import { ServicesSection } from "@/components/home/ServicesSection/ServicesSection";
+import { homeHero, homeServices } from "@/data";
 
 export default function Home() {
-  return <Hero hero={homeHero} />;
+  return (
+    <>
+      <Hero hero={homeHero} />
+      <ServicesSection services={homeServices} />
+    </>
+  );
 }
