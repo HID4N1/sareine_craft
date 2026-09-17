@@ -64,6 +64,26 @@ export type HomeServicesData = {
   values: HomeServiceValue[];
 };
 
+export type HomeEventCategory = {
+  title: string;
+  href: string;
+  image: {
+    src: string;
+    alt: string;
+    position: string;
+  };
+};
+
+export type HomeEventCategoriesData = {
+  eyebrow: string;
+  title: string;
+  cta: {
+    label: string;
+    href: string;
+  };
+  categories: HomeEventCategory[];
+};
+
 export const homeHero: HomeHeroData = {
   eyebrow: "CRÉATIONS • ÉVÉNEMENTS • CASABLANCA",
   headline: [
@@ -187,6 +207,62 @@ export const homeServices: HomeServicesData = {
       icon: "memory",
       title: "DES MOMENTS INOUBLIABLES",
       description: "Qui restent gravés",
+    },
+  ],
+};
+
+export const homeEventCategories: HomeEventCategoriesData = {
+  eyebrow: "À CHAQUE MOMENT SON UNIVERS",
+  title: "Des événements qui vous ressemblent.",
+  cta: {
+    label: "Découvrir nos événements",
+    href: "/events",
+  },
+  categories: [
+    {
+      title: "Anniversaire",
+      href: "/events",
+      image: {
+        src: "/images/home/events/anniversaire.png",
+        alt: "Décor d’anniversaire élégant avec gâteau fleuri, bougies et lumière chaleureuse.",
+        position: "50% 50%",
+      },
+    },
+    {
+      title: "Baby Shower",
+      href: "/events",
+      image: {
+        src: "/images/home/events/baby-shower.png",
+        alt: "Décoration baby shower premium avec ours en peluche, ballons blush et fleurs.",
+        position: "50% 50%",
+      },
+    },
+    {
+      title: "Graduation",
+      href: "/events",
+      image: {
+        src: "/images/home/events/graduation.png",
+        alt: "Mise en scène de graduation avec toque, diplôme, bougies et détails dorés.",
+        position: "50% 50%",
+      },
+    },
+    {
+      title: "Événement scolaire",
+      href: "/events",
+      image: {
+        src: "/images/home/events/evenement-scolaire.png",
+        alt: "Table d’activité scolaire décorée avec chaises en bois, fleurs et ballons pastel.",
+        position: "52% 50%",
+      },
+    },
+    {
+      title: "Célébration privée",
+      href: "/events",
+      image: {
+        src: "/images/home/events/celebration-privee.png",
+        alt: "Longue table de réception privée avec bougies, fleurs et lumière dorée.",
+        position: "48% 50%",
+      },
     },
   ],
 };
