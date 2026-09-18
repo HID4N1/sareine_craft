@@ -84,6 +84,24 @@ export type HomeEventCategoriesData = {
   categories: HomeEventCategory[];
 };
 
+export type HomeProcessStep = {
+  number: string;
+  title: string;
+  icon: "idea" | "concept" | "venue" | "decoration" | "logistics" | "celebration";
+};
+
+export type HomeProcessData = {
+  eyebrow: string;
+  title: string;
+  description: string;
+  cta: {
+    label: string;
+    href: string;
+  };
+  note: string;
+  steps: HomeProcessStep[];
+};
+
 export const homeHero: HomeHeroData = {
   eyebrow: "CRÉATIONS • ÉVÉNEMENTS • CASABLANCA",
   headline: [
@@ -263,6 +281,50 @@ export const homeEventCategories: HomeEventCategoriesData = {
         alt: "Longue table de réception privée avec bougies, fleurs et lumière dorée.",
         position: "48% 50%",
       },
+    },
+  ],
+};
+
+export const homeProcess: HomeProcessData = {
+  eyebrow: "DE A À Z",
+  title: "Une idée suffit.\nOn s’occupe du reste.",
+  description:
+    "Vous nous partagez votre envie. Sareine imagine, organise et coordonne chaque détail — du lieu à la décoration, en passant par le buffet, le matériel et la logistique.",
+  cta: {
+    label: "Confier mon événement",
+    href: "/contact",
+  },
+  note: "Sérénité\nà chaque étape.",
+  steps: [
+    {
+      number: "01",
+      title: "Votre idée",
+      icon: "idea",
+    },
+    {
+      number: "02",
+      title: "Le concept",
+      icon: "concept",
+    },
+    {
+      number: "03",
+      title: "Le lieu",
+      icon: "venue",
+    },
+    {
+      number: "04",
+      title: "La décoration",
+      icon: "decoration",
+    },
+    {
+      number: "05",
+      title: "Buffet & logistique",
+      icon: "logistics",
+    },
+    {
+      number: "06",
+      title: "Le grand jour",
+      icon: "celebration",
     },
   ],
 };
