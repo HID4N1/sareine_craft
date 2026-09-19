@@ -328,3 +328,183 @@ export const homeProcess: HomeProcessData = {
     },
   ],
 };
+export type HomeCraftHighlightData = {
+  eyebrow: string;
+  title: string;
+  description: string;
+  cta: {
+    label: string;
+    href: string;
+  };
+  images: {
+    main: {
+      src: string;
+      alt: string;
+    };
+    secondary: {
+      src: string;
+      alt: string;
+    };
+    detail: {
+      src: string;
+      alt: string;
+    };
+  };
+  note: string;
+};
+
+export const homeCraftHighlight: HomeCraftHighlightData = {
+  eyebrow: "CRÉÉ À LA MAIN",
+  title: "Des objets qui font partie du souvenir.",
+  description:
+    "Bougies artisanales, décorations et créations personnalisées pensées pour offrir, décorer ou compléter vos événements.",
+  cta: {
+    label: "Découvrir les créations",
+    href: "/craft",
+  },
+  images: {
+  main: {
+    src: "/images/home/services/artisanal-creations.png",
+    alt: "Bougies artisanales décorées de fleurs.",
+  },
+  secondary: {
+    src: "/images/home/services/decoration-table.png",
+    alt: "Création artisanale présentée dans un décor élégant.",
+  },
+  detail: {
+    src: "/images/home/services/events-organisation.png",
+    alt: "Détail d’une création Sareine.",
+  },
+},
+  note: "Plus qu’un objet, une émotion.",
+};
+export type HomeRealisationItem = {
+  id: string;
+  title: string;
+  href: string;
+  image: {
+    src: string;
+    alt: string;
+  };
+};
+
+export type HomeRealisationsData = {
+  eyebrow: string;
+  title: string;
+  cta: {
+    label: string;
+    href: string;
+  };
+  items: HomeRealisationItem[];
+  testimonial: {
+    quote: string;
+    author: string;
+    rating: number;
+    avatar: {
+      src: string;
+      alt: string;
+    };
+  };
+};
+
+export const homeRealisations: HomeRealisationsData = {
+  eyebrow: "NOS RÉALISATIONS",
+  title: "Quelques moments signés Sareine.",
+  cta: {
+    label: "Voir toutes nos réalisations",
+    href: "/realisations",
+  },
+  items: [
+    {
+      id: "reception-fleurie",
+      title: "Réception fleurie",
+      href: "/realisations",
+      image: {
+        src: "/images/home/events/celebration-privee.png",
+        alt: "Réception élégante décorée de fleurs.",
+      },
+    },
+    {
+      id: "baby-shower",
+      title: "Baby shower",
+      href: "/realisations",
+      image: {
+        src: "/images/home/events/baby-shower.png",
+        alt: "Décoration de baby shower avec ballons.",
+      },
+    },
+    {
+      id: "diner-prive",
+      title: "Dîner privé",
+      href: "/realisations",
+      image: {
+        src: "/images/home/services/decoration-table.png",
+        alt: "Dîner privé avec table décorée.",
+      },
+    },
+    {
+      id: "creation-florale",
+      title: "Création florale",
+      href: "/realisations",
+      image: {
+        src: "/images/home/services/artisanal-creations.png",
+        alt: "Composition florale artisanale.",
+      },
+    },
+    {
+      id: "ceremonie",
+      title: "Cérémonie",
+      href: "/realisations",
+      image: {
+        src: "/images/home/services/organisation-a-z.png",
+        alt: "Cérémonie extérieure élégante.",
+      },
+    },
+  ],
+  testimonial: {
+    quote:
+      "Tout était exactement comme nous l’avions imaginé — et même mieux.",
+    author: "Cliente Sareine Craft",
+    rating: 5,
+    avatar: {
+      src: "/images/home/events/baby-shower.png",
+      alt: "Décoration réalisée pour une cliente Sareine.",
+    },
+  },
+};
+export type HomeProjectContactData = {
+  eyebrow: string;
+  title: string;
+  description: string;
+  primaryCta: {
+    label: string;
+    href: string;
+  };
+  whatsappCta: {
+    label: string;
+    href: string;
+  };
+  backgroundImage: {
+    src: string;
+    alt: string;
+  };
+};
+
+export const homeProjectContact: HomeProjectContactData = {
+  eyebrow: "UN MOMENT À CÉLÉBRER ?",
+  title: "Parlons de votre projet.",
+  description:
+    "Qu’il s’agisse d’une simple idée ou d’un événement complet, Sareine Craft est là pour lui donner vie.",
+  primaryCta: {
+    label: "Parler de mon projet",
+    href: "/contact",
+  },
+  whatsappCta: {
+    label: "WhatsApp",
+    href: "https://wa.me/212653712245",
+  },
+  backgroundImage: {
+    src: "/images/home/services/organisation-a-z.png",
+    alt: "Décoration élégante d’un événement Sareine.",
+  },
+};

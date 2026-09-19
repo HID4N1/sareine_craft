@@ -1,0 +1,166 @@
+.section {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(22rem, 1.1fr) minmax(0, 1fr);
+  min-height: 34rem;
+  overflow: hidden;
+  background: var(--sareine-ivory);
+}
+
+.mainImage {
+  position: relative;
+  min-height: 34rem;
+}
+
+.image {
+  object-fit: cover;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: clamp(3rem, 6vw, 6rem);
+}
+
+.eyebrow {
+  margin-bottom: 1rem;
+  color: var(--sareine-gold-700);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.title {
+  max-width: 12ch;
+  color: var(--sareine-plum-500);
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(2.5rem, 4vw, 4.2rem);
+  line-height: 0.98;
+}
+
+.description {
+  max-width: 31rem;
+  margin-top: 1.4rem;
+  color: rgba(41, 33, 36, 0.72);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.cta {
+  margin-top: 1.8rem;
+  border-radius: 999px;
+}
+
+.gallery {
+  position: relative;
+  min-height: 34rem;
+  padding: clamp(3rem, 5vw, 5rem) clamp(1.5rem, 4vw, 4rem);
+}
+
+.secondaryImage {
+  position: relative;
+  width: 75%;
+  height: 58%;
+  margin-left: auto;
+  transform: rotate(4deg);
+  border: 0.5rem solid var(--sareine-white);
+  box-shadow: 0 1.25rem 3rem rgba(53, 16, 37, 0.14);
+}
+
+.detailCard {
+  position: absolute;
+  right: 8%;
+  bottom: 7%;
+  width: 58%;
+  padding: 0.45rem 0.45rem 1.2rem;
+  transform: rotate(-3deg);
+  background: var(--sareine-white);
+  box-shadow: 0 1.25rem 3rem rgba(53, 16, 37, 0.16);
+}
+
+.detailImage {
+  position: relative;
+  height: 12rem;
+}
+
+.note {
+  margin-top: 0.9rem;
+  color: var(--sareine-plum-500);
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 1.15rem;
+  font-style: italic;
+  line-height: 1.2;
+  text-align: center;
+}
+
+@media (max-width: 960px) {
+  .section {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .mainImage {
+    min-height: 28rem;
+  }
+
+  .content {
+    padding: 3.5rem 2rem;
+  }
+
+  .gallery {
+    grid-column: 1 / -1;
+    min-height: 30rem;
+  }
+
+  .secondaryImage {
+    width: 55%;
+    height: 22rem;
+    margin-right: 25%;
+  }
+
+  .detailCard {
+    right: 12%;
+    width: 32%;
+  }
+}
+
+@media (max-width: 640px) {
+  .section {
+    display: block;
+  }
+
+  .mainImage {
+    min-height: 24rem;
+  }
+
+  .content {
+    padding: 3.5rem 1.25rem;
+  }
+
+  .title {
+    font-size: clamp(2.4rem, 12vw, 3.4rem);
+  }
+
+  .gallery {
+    min-height: 28rem;
+    padding: 2rem 1.25rem 4rem;
+  }
+
+  .secondaryImage {
+    width: 75%;
+    height: 21rem;
+    margin: 0;
+  }
+
+  .detailCard {
+    right: 1.25rem;
+    bottom: 2rem;
+    width: 48%;
+  }
+
+  .detailImage {
+    height: 10rem;
+  }
+}
