@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Manrope } from "next/font/google";
+import {
+  Allura,
+  Cormorant_Garamond,
+  Manrope,
+  
+} from "next/font/google";
 import "./globals.css";
 
 const cormorantGaramond = Cormorant_Garamond({
@@ -11,6 +16,13 @@ const cormorantGaramond = Cormorant_Garamond({
 const manrope = Manrope({
   variable: "--font-sans",
   subsets: ["latin"],
+  display: "swap",
+});
+
+const allura = Allura({
+  variable: "--font-script",
+  subsets: ["latin"],
+  weight: "400",
   display: "swap",
 });
 
@@ -33,7 +45,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="fr"
-      className={`${cormorantGaramond.variable} ${manrope.variable} h-full antialiased`}
+      className={`${cormorantGaramond.variable} ${manrope.variable} ${allura.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
