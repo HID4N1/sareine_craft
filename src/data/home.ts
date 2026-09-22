@@ -265,12 +265,12 @@ export const homeEventCategories: HomeEventCategoriesData = {
       },
     },
     {
-      title: "Événement scolaire",
+      title: "Naissance",
       href: "/events",
       image: {
-        src: "/images/home/events/evenement-scolaire.png",
-        alt: "Table d’activité scolaire décorée avec chaises en bois, fleurs et ballons pastel.",
-        position: "52% 50%",
+        src: "/images/home/events/baby-shower.png",
+        alt: "Décoration de naissance douce avec ballons blush, fleurs et détails tendres.",
+        position: "50% 50%",
       },
     },
     {

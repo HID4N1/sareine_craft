@@ -1,7 +1,22 @@
 export { crafts, craftCategories } from "./craft";
 export type { CraftCategory } from "./craft";
-export { events, eventCategories, eventServices } from "./events";
-export type { EventCategory, EventService } from "./events";
+export {
+  eventPageCategories,
+  events,
+  eventCategories,
+  eventsFinalCta,
+  eventsPageHero,
+  eventServices,
+  eventsServiceSection,
+} from "./events";
+export type {
+  EventCategory,
+  EventRecordCategory,
+  EventService,
+  EventsFinalCta,
+  EventsPageHero,
+  EventsServiceSection,
+} from "./events";
 export {
   homeCraftHighlight,
   homeEventCategories,
