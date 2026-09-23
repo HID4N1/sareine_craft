@@ -52,3 +52,7 @@ export { siteData } from "./site";
 export { socialLinks } from "./social";
 export { testimonials } from "./testimonials";
 export { craftPageData } from "./craft-page";
+export {
+  craftCollections,
+  getCraftCollection,
+} from "./craft-collections";

@@ -2,11 +2,9 @@
   scroll-margin-top: 100px;
   padding: 60px 0 90px;
   background:
-    radial-gradient(
-      circle at 85% 15%,
+    radial-gradient(circle at 85% 15%,
       rgba(223, 196, 156, 0.16),
-      transparent 28%
-    ),
+      transparent 28%),
     var(--sareine-ivory);
 }
 
@@ -103,11 +101,11 @@
 
 .cardContent {
   display: flex;
-  min-height: 96px;
-  align-items: center;
+  min-height: 165px;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 15px;
-  padding: 15px;
+  padding: 17px 15px;
 }
 
 .category {
@@ -127,9 +125,17 @@
   line-height: 1.1;
 }
 
+.shortDescription {
+  margin: 8px 0 0;
+  color: var(--sareine-taupe);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
 .cardLink {
   display: grid;
   width: 40px;
+  margin-top: 10px;
   min-width: 40px;
   height: 40px;
   place-items: center;
