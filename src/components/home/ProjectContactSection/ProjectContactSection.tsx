@@ -18,6 +18,7 @@ export function ProjectContactSection({
         src={project.backgroundImage.src}
         alt={project.backgroundImage.alt}
         fill
+        quality={78}
         sizes="100vw"
         className={styles.backgroundImage}
       />

@@ -59,6 +59,7 @@ export function CraftStorySection({ data }: CraftStorySectionProps) {
                 src={data.images.primary.src}
                 alt={data.images.primary.alt}
                 fill
+                quality={78}
                 sizes="(max-width: 800px) 80vw, 38vw"
                 className={styles.image}
               />
@@ -69,6 +70,7 @@ export function CraftStorySection({ data }: CraftStorySectionProps) {
                 src={data.images.secondary.src}
                 alt={data.images.secondary.alt}
                 fill
+                quality={76}
                 sizes="(max-width: 800px) 48vw, 20vw"
                 className={styles.image}
               />

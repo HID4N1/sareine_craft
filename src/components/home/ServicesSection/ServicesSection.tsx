@@ -65,6 +65,7 @@ function ServiceCard({ card }: { card: HomeServiceCard }) {
         src={card.image.src}
         alt={card.image.alt}
         fill
+        quality={78}
         sizes={
           isFeature
             ? "(min-width: 1024px) 31vw, (min-width: 768px) 50vw, 100vw"

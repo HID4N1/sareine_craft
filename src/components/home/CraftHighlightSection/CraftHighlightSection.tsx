@@ -19,7 +19,7 @@ export function CraftHighlightSection({
           src={craft.images.main.src}
           alt={craft.images.main.alt}
           fill
-          loading="eager"
+          quality={78}
           sizes="(max-width: 768px) 100vw, 34vw"
           className={styles.image}
         />
@@ -43,6 +43,7 @@ export function CraftHighlightSection({
             src={craft.images.secondary.src}
             alt={craft.images.secondary.alt}
             fill
+            quality={76}
             sizes="(max-width: 768px) 50vw, 18vw"
             className={styles.image}
           />
@@ -54,6 +55,7 @@ export function CraftHighlightSection({
               src={craft.images.detail.src}
               alt={craft.images.detail.alt}
               fill
+              quality={76}
               sizes="(max-width: 768px) 50vw, 14vw"
               className={styles.image}
             />

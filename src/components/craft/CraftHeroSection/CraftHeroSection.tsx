@@ -44,7 +44,9 @@ export function CraftHeroSection({ data }: CraftHeroSectionProps) {
           src={data.image.src}
           alt={data.image.alt}
           fill
+          loading="eager"
           priority
+          quality={84}
           sizes="(max-width: 800px) 100vw, 58vw"
           className={styles.image}
           style={{ objectPosition: data.image.position }}

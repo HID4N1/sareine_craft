@@ -19,7 +19,7 @@ export function OverlapChapter({
       id={category.id}
     >
       <Container className="grid gap-10 lg:grid-cols-[minmax(0,58%)_minmax(21rem,34%)] lg:items-center">
-        <div className="relative min-h-[34rem] lg:min-h-[45rem]">
+        <div className="relative h-[34rem] lg:h-[45rem]">
           <ChapterNumber className="absolute -left-3 -top-8 z-10">
             {category.order}
           </ChapterNumber>

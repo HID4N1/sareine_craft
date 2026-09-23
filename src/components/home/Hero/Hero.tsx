@@ -64,6 +64,7 @@ export function Hero({ hero }: HeroProps) {
           alt=""
           fill
           priority
+          quality={86}
           sizes="(min-width: 1200px) 49vw, 100vw"
           className={styles.rightImagePhoto}
         />

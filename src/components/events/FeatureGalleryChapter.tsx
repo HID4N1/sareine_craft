@@ -25,7 +25,7 @@ export function FeatureGalleryChapter({
           </ChapterNumber>
           <ChapterCopy category={category} inquiryHref={inquiryHref} />
         </div>
-        <div className="relative min-h-[36rem] lg:min-h-[47rem]">
+        <div className="relative h-[36rem] lg:h-[47rem]">
           {category.images[0] ? (
             <EventImageButton
               className="absolute inset-y-0 right-0 w-[76%] shadow-[0_28px_86px_rgba(36,16,25,0.13)]"

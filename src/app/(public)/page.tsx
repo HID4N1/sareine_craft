@@ -8,11 +8,9 @@ import {
   homeHero,
   homeProcess,
   homeProjectContact,
-  homeRealisations,
   homeServices,
 } from "@/data";
 import { CraftHighlightSection } from "@/components/home/CraftHighlightSection/CraftHighlightSection";
-import { RealisationsSection } from "@/components/home/RealisationsSection/RealisationsSection";
 import { ProjectContactSection } from "@/components/home/ProjectContactSection/ProjectContactSection";
 
 export default function Home() {
@@ -23,7 +21,6 @@ export default function Home() {
       <EventCategoriesSection events={homeEventCategories} />
       <ProcessSection process={homeProcess} />
       <CraftHighlightSection craft={homeCraftHighlight} />
-      {/* <RealisationsSection realisations={homeRealisations} /> */}
       <ProjectContactSection project={homeProjectContact} />
     </>
   );

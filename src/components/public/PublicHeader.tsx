@@ -225,6 +225,7 @@ export function PublicHeader() {
                 isScrolled ? "md:w-[124px]" : undefined,
               )}
               height={214}
+              sizes="(max-width: 767px) 126px, 138px"
               src={siteData.brand.logoHorizontal}
               width={512}
             />
@@ -361,6 +362,7 @@ export function PublicHeader() {
                   alt={siteData.name}
                   className="h-auto w-[138px]"
                   height={214}
+                  sizes="138px"
                   src={siteData.brand.logoHorizontal}
                   width={512}
                 />

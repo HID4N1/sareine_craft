@@ -102,6 +102,7 @@ export function EventsLightbox({
           alt={image.alt}
           className="object-contain"
           fill
+          quality={88}
           sizes="100vw"
           src={image.src}
         />

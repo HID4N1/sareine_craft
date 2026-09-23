@@ -45,6 +45,7 @@ export function CraftCreationsSection({
                   src={collection.cover.src}
                   alt={collection.cover.alt}
                   fill
+                  quality={78}
                   sizes="(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 25vw"
                   className={styles.image}
                   style={{

@@ -42,7 +42,7 @@ export function GraduationChapter({
             inquiryHref={inquiryHref}
           />
         </div>
-        <div className="relative min-h-[39rem] lg:min-h-[52rem]">
+        <div className="relative h-[39rem] lg:h-[52rem]">
           {category.images[0] ? (
             <EventImageButton
               className="absolute inset-y-0 right-[8%] w-[66%] rounded-t-[999px] shadow-[0_34px_90px_rgba(0,0,0,0.34)]"

@@ -38,6 +38,7 @@ export function EventCategoriesSection({ events }: EventCategoriesSectionProps) 
                 src={category.image.src}
                 alt={category.image.alt}
                 fill
+                quality={76}
                 sizes="(min-width: 1024px) 18vw, (min-width: 680px) 31vw, 86vw"
                 className={styles.image}
                 style={{ objectPosition: category.image.position }}

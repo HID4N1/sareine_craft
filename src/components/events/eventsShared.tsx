@@ -36,6 +36,7 @@ export function EventImageButton({
   imageClassName,
   onOpen,
   priority,
+  quality = 78,
   sizes,
 }: {
   className: string;
@@ -43,6 +44,7 @@ export function EventImageButton({
   imageClassName?: string;
   onOpen: () => void;
   priority?: boolean;
+  quality?: number;
   sizes: string;
 }) {
   return (
@@ -63,6 +65,7 @@ export function EventImageButton({
         )}
         fill
         priority={priority}
+        quality={quality}
         sizes={sizes}
         src={image.src}
         style={{ objectPosition: image.objectPosition ?? "50% 50%" }}

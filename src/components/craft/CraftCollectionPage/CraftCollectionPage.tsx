@@ -38,6 +38,7 @@ function CollectionItemCard({
           src={displayedImage.src}
           alt={displayedImage.alt}
           fill
+          quality={78}
           sizes="(max-width: 650px) 100vw, (max-width: 1000px) 50vw, 33vw"
           className={styles.cardImage}
           style={{
@@ -105,6 +106,7 @@ export function CraftCollectionPage({
               alt={collection.cover.alt}
               fill
               priority
+              quality={84}
               sizes="(max-width: 800px) 100vw, 50vw"
               className={styles.heroImage}
               style={{

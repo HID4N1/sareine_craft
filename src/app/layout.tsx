@@ -45,6 +45,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="fr"
+      data-scroll-behavior="smooth"
       className={`${cormorantGaramond.variable} ${manrope.variable} ${allura.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>

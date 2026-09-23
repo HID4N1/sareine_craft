@@ -203,6 +203,7 @@ export function PublicFooter() {
                   alt={siteData.name}
                   className="h-auto w-full"
                   height={214}
+                  sizes="200px"
                   src={siteData.brand.logoHorizontal}
                   width={512}
                 />

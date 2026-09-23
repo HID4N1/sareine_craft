@@ -43,6 +43,7 @@ export function EventsHero({
             image={primaryImage}
             onOpen={() => onOpen(0)}
             priority
+            quality={84}
             sizes="(min-width: 1024px) 42vw, 100vw"
           />
         ) : null}
