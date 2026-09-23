@@ -5,20 +5,34 @@ import type {
 } from "@/types";
 import { eventCategories } from "@/types";
 
+import { siteData } from "./site";
+
 export { eventCategories };
 export type { EventRecordCategory, EventService };
 
+export type EventCategoryImage = {
+  src: string;
+  alt: string;
+  role: "primary" | "secondary" | "detail";
+  objectPosition?: string;
+  temporary?: boolean;
+};
+
 export type EventCategory = {
   id: string;
-  navigationLabel: string;
+  order: string;
   eyebrow: string;
   title: string;
   description: string;
-  imageAlt: string;
-  images: string[];
   ctaLabel: string;
-  theme: "light" | "plum" | "soft";
-  details: string[];
+  images: EventCategoryImage[];
+  layout:
+    | "editorial-grid"
+    | "overlap"
+    | "feature-gallery"
+    | "graduation-arch"
+    | "cinematic";
+  theme: "ivory" | "blush" | "plum";
 };
 
 export type EventsPageHero = {
@@ -26,10 +40,9 @@ export type EventsPageHero = {
   title: string;
   description: string;
   primaryCta: string;
-  secondaryCta: string;
-  accent: string;
-  images: string[];
-  imageAlt: string;
+  footerLine: string;
+  statement: string;
+  images: EventCategoryImage[];
 };
 
 export type EventServiceStep = {
@@ -41,9 +54,7 @@ export type EventServiceStep = {
 export type EventsServiceSection = {
   eyebrow: string;
   title: string;
-  description: string;
   steps: EventServiceStep[];
-  capabilities: string[];
 };
 
 export type EventsFinalCta = {
@@ -51,8 +62,22 @@ export type EventsFinalCta = {
   title: string;
   description: string;
   primaryCta: string;
-  secondaryCta: string;
+  image: EventCategoryImage;
 };
+
+function createWhatsAppHref(message: string) {
+  const phone = siteData.contact.whatsapp?.replace(/\D/g, "");
+
+  if (!phone) {
+    return "/";
+  }
+
+  return `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+}
+
+export const eventInquiryHref = createWhatsAppHref(
+  "Bonjour Sareine Craft, j'aimerais parler d'un projet événementiel.",
+);
 
 export const eventServices: EventService[] = [
   "venue-rental",
@@ -64,187 +89,208 @@ export const eventServices: EventService[] = [
 export const events: Event[] = [];
 
 export const eventsPageHero: EventsPageHero = {
-  eyebrow: "Sareine Craft · Événementiel",
-  title: "Des instants précieux, imaginés dans les moindres détails",
+  eyebrow: "Des émotions en scène",
+  title: "Chaque célébration mérite un décor qui lui ressemble",
   description:
-    "Sareine Craft conçoit des célébrations personnalisées, de la première idée à l’installation finale, pour donner à chaque moment une atmosphère sensible, cohérente et profondément personnelle.",
-  primaryCta: "Imaginer mon événement",
-  secondaryCta: "Découvrir nos univers",
-  accent: "fait main, avec coeur",
+    "Des expériences sur mesure, pensées avec cœur, pour sublimer vos moments les plus précieux.",
+  primaryCta: "Découvrir nos événements",
+  footerLine: "Artisanat — Émotions — Souvenirs durables",
+  statement: "Plus qu'un événement, une histoire à vivre",
   images: [
-    "/images/events/birth/birth-01.webp",
-    "/images/events/baby-shower/baby-shower-01.webp",
-    "/images/events/private-event/private-event-01.webp",
+    {
+      src: "/images/events/birth/birth-03.webp",
+      alt: "Grand décor de naissance Sareine Craft avec table douce, ballons et détails personnalisés",
+      role: "primary",
+      objectPosition: "50% 42%",
+    },
+    {
+      src: "/images/events/private-event/private-event-02.webp",
+      alt: "Détail chaleureux de célébration privée avec lumière douce et décor raffiné",
+      role: "detail",
+      objectPosition: "50% 50%",
+    },
   ],
-  imageAlt:
-    "Décorations événementielles Sareine Craft avec compositions florales, tables décorées et détails personnalisés",
 };
 
 export const eventPageCategories: EventCategory[] = [
   {
     id: "naissance",
-    navigationLabel: "Naissance",
-    eyebrow: "01 · Naissance",
-    title: "Célébrer une nouvelle histoire",
+    order: "01",
+    eyebrow: "Premiers moments, grands souvenirs",
+    title: "Naissance",
     description:
-      "Des décors délicats et personnalisés pour accueillir un nouveau-né, réunir les proches et créer une atmosphère douce autour de ce premier chapitre.",
-    imageAlt:
-      "Décoration de naissance personnalisée par Sareine Craft avec détails tendres et mise en scène soignée",
+      "Accueillir un nouveau chapitre avec douceur et élégance. Nous créons des décors tendres et raffinés pour célébrer l'arrivée de bébé.",
+    ctaLabel: "Découvrir nos décors naissance",
     images: [
-      "/images/events/birth/birth-01.webp",
-      "/images/events/birth/birth-02.webp",
-      "/images/events/birth/birth-03.webp",
-      "/images/events/birth/birth-04.webp",
-      "/images/events/birth/birth-05.webp",
-      "/images/events/birth/birth-06.webp",
-      "/images/events/birth/birth-07.webp",
-      "/images/events/birth/birth-08.webp",
+      {
+        src: "/images/events/birth/birth-03.webp",
+        alt: "Décor de naissance complet avec table personnalisée et composition douce",
+        role: "primary",
+        objectPosition: "50% 43%",
+      },
+      {
+        src: "/images/events/birth/birth-01.webp",
+        alt: "Détail de décoration naissance dans une palette tendre",
+        role: "secondary",
+        objectPosition: "50% 48%",
+      },
+      {
+        src: "/images/events/birth/birth-02.webp",
+        alt: "Table naissance Sareine Craft avec accessoires personnalisés",
+        role: "detail",
+        objectPosition: "50% 42%",
+      },
     ],
-    ctaLabel: "Imaginer une célébration de naissance",
-    theme: "light",
-    details: [
-      "Décor personnalisé",
-      "Mise en scène de table",
-      "Coins souvenirs",
-      "Installation complète",
-    ],
+    layout: "editorial-grid",
+    theme: "ivory",
   },
   {
     id: "baby-shower",
-    navigationLabel: "Baby shower",
-    eyebrow: "02 · Baby shower",
-    title: "Une parenthèse douce avant la rencontre",
+    order: "02",
+    eyebrow: "Une parenthèse pleine d'amour",
+    title: "Baby shower",
     description:
-      "Des thèmes délicats, des détails sur mesure et une ambiance accueillante pour célébrer l’attente, entourée des personnes qui comptent.",
-    imageAlt:
-      "Baby shower Sareine Craft dans une atmosphère douce avec décoration personnalisée",
+      "Célébrer la maternité, entourée de celles et ceux qui comptent. Des ambiances délicates et poétiques pour des instants inoubliables.",
+    ctaLabel: "Découvrir nos baby showers",
     images: [
-      "/images/events/baby-shower/baby-shower-01.webp",
-      "/images/events/baby-shower/baby-shower-02.webp",
+      {
+        src: "/images/events/baby-shower/baby-shower-01.webp",
+        alt: "Décor baby shower Sareine Craft avec ambiance délicate et féminine",
+        role: "primary",
+        objectPosition: "50% 48%",
+      },
+      {
+        src: "/images/events/baby-shower/baby-shower-02.webp",
+        alt: "Détail baby shower avec composition poétique et accessoires raffinés",
+        role: "detail",
+        objectPosition: "50% 44%",
+      },
     ],
-    ctaLabel: "Créer ma baby shower",
-    theme: "soft",
-    details: [
-      "Univers chromatique",
-      "Décor photo",
-      "Buffet coordonné",
-      "Détails invités",
-    ],
+    layout: "overlap",
+    theme: "blush",
   },
   {
     id: "anniversaire",
-    navigationLabel: "Anniversaire",
-    eyebrow: "03 · Anniversaire",
-    title: "Chaque âge mérite son propre décor",
+    order: "03",
+    eyebrow: "Des souvenirs à tout âge",
+    title: "Anniversaire",
     description:
-      "Chaque anniversaire est imaginé autour de la personne, du thème, du lieu et de l’atmosphère souhaitée, avec une énergie festive toujours raffinée.",
-    imageAlt:
-      "Décoration d’anniversaire Sareine Craft avec table thématique et détails festifs",
+      "Petits et grands, chaque anniversaire est une histoire unique. Nous imaginons des décors créatifs et élégants pour faire de ce jour un moment inoubliable.",
+    ctaLabel: "Découvrir nos anniversaires",
     images: [
-      "/images/events/birthday/birthday-01.webp",
-      "/images/events/birthday/birthday-02.webp",
-      "/images/events/birthday/birthday-03.webp",
+      {
+        src: "/images/events/birthday/birthday-01.webp",
+        alt: "Décor d'anniversaire Sareine Craft avec scénographie festive et élégante",
+        role: "primary",
+        objectPosition: "50% 48%",
+      },
+      {
+        src: "/images/events/birthday/birthday-02.webp",
+        alt: "Détail de table d'anniversaire avec éléments personnalisés",
+        role: "secondary",
+        objectPosition: "50% 42%",
+      },
+      {
+        src: "/images/events/birthday/birthday-03.webp",
+        alt: "Composition anniversaire raffinée avec accessoires festifs",
+        role: "detail",
+        objectPosition: "50% 52%",
+      },
     ],
-    ctaLabel: "Préparer mon anniversaire",
-    theme: "light",
-    details: [
-      "Scénographie thématique",
-      "Table et buffet",
-      "Décor photo",
-      "Coordination du jour J",
-    ],
+    layout: "feature-gallery",
+    theme: "ivory",
   },
   {
     id: "graduation",
-    navigationLabel: "Graduation",
-    eyebrow: "04 · Graduation",
-    title: "Mettre en scène une réussite",
+    order: "04",
+    eyebrow: "Des rêves plus haut",
+    title: "Graduation",
     description:
-      "Une étape importante mérite une célébration à sa hauteur, avec une décoration raffinée, des espaces photo et des détails personnalisés pour honorer le chemin parcouru.",
-    imageAlt:
-      "Décoration de graduation Sareine Craft avec espace photo et détails personnalisés",
-    images: [],
-    ctaLabel: "Célébrer une réussite",
-    theme: "soft",
-    details: [
-      "Espace photo",
-      "Table d’honneur",
-      "Marquage personnalisé",
-      "Installation sur lieu",
+      "Célébrer un parcours, saluer un nouveau départ. Des mises en scène élégantes pour marquer cette étape importante avec fierté.",
+    ctaLabel: "Découvrir nos graduations",
+    images: [
+      {
+        src: "/images/events/graduation/graduation-mock-01.webp",
+        alt: "Image temporaire de buffet graduation élégant avec diplômes, fleurs crème, bougies et accents plum et or",
+        role: "primary",
+        objectPosition: "50% 48%",
+        temporary: true,
+      },
+      {
+        src: "/images/events/graduation/graduation-mock-02.webp",
+        alt: "Image temporaire de détail graduation avec diplômes noués, fleurs crème, bougie et toque",
+        role: "detail",
+        objectPosition: "50% 50%",
+        temporary: true,
+      },
     ],
+    layout: "graduation-arch",
+    theme: "plum",
   },
   {
     id: "celebration-privee",
-    navigationLabel: "Célébration privée",
-    eyebrow: "05 · Célébration privée",
-    title: "Vos moments, selon vos envies",
+    order: "05",
+    eyebrow: "Des instants hors du temps",
+    title: "Célébration privée",
     description:
-      "Dîners intimes, réunions familiales, surprises ou occasions singulières : Sareine Craft compose une expérience sur mesure, élégante et fidèle à votre histoire.",
-    imageAlt:
-      "Célébration privée Sareine Craft avec décoration élégante et ambiance intimiste",
+      "Dîners intimistes, demandes en mariage, fiançailles ou tout autre moment précieux. Nous créons des ambiances sur mesure pour vos plus belles intentions.",
+    ctaLabel: "Découvrir nos célébrations privées",
     images: [
-      "/images/events/private-event/private-event-01.webp",
-      "/images/events/private-event/private-event-02.webp",
+      {
+        src: "/images/events/private-event/private-event-01.webp",
+        alt: "Célébration privée Sareine Craft avec décor chaleureux et ambiance intimiste",
+        role: "primary",
+        objectPosition: "50% 50%",
+      },
+      {
+        src: "/images/events/private-event/private-event-02.webp",
+        alt: "Détail de célébration privée avec lumière douce et décor élégant",
+        role: "detail",
+        objectPosition: "50% 47%",
+      },
     ],
-    ctaLabel: "Parler de mon événement",
-    theme: "plum",
-    details: [
-      "Dîners et réceptions",
-      "Surprises privées",
-      "Décor sur mesure",
-      "Logistique discrète",
-    ],
+    layout: "cinematic",
+    theme: "ivory",
   },
 ];
 
 export const eventsServiceSection: EventsServiceSection = {
-  eyebrow: "De l’idée au dernier détail",
-  title: "Vous profitez du moment. Nous orchestrons le reste.",
-  description:
-    "Selon le projet, Sareine Craft peut accompagner la direction créative, la décoration, les éléments faits main, le stylisme de table, la coordination du buffet, la logistique, la recherche d’un lieu ou d’une maison, puis l’installation finale.",
+  eyebrow: "Notre accompagnement",
+  title: "Une expérience en toute sérénité",
   steps: [
     {
       number: "01",
-      title: "Échange et découverte",
-      description:
-        "Nous clarifions l’occasion, vos envies, les contraintes du lieu et l’émotion que vous souhaitez transmettre.",
+      title: "Écoute & conseil",
+      description: "Nous prenons le temps de comprendre vos envies.",
     },
     {
       number: "02",
-      title: "Concept et personnalisation",
-      description:
-        "Nous dessinons une direction visuelle cohérente, des couleurs aux détails faits main.",
+      title: "Création sur mesure",
+      description: "Des concepts uniques, inspirés de votre histoire.",
     },
     {
       number: "03",
-      title: "Préparation et coordination",
-      description:
-        "Nous organisons les éléments, les prestataires nécessaires et le rythme d’installation.",
+      title: "Organisation détaillée",
+      description: "Nous coordonnons chaque étape avec soin.",
     },
     {
       number: "04",
-      title: "Installation et célébration",
-      description:
-        "Nous mettons en place le décor final pour que vous puissiez vivre pleinement le moment.",
+      title: "Réalisation le jour J",
+      description: "Vous profitez, nous nous occupons du reste.",
     },
-  ],
-  capabilities: [
-    "Direction créative",
-    "Décoration",
-    "Éléments faits main",
-    "Stylisme de table",
-    "Coordination food et buffet",
-    "Logistique",
-    "Recherche de lieu ou maison",
-    "Installation finale",
   ],
 };
 
 export const eventsFinalCta: EventsFinalCta = {
-  eyebrow: "Votre événement commence ici",
-  title: "Racontez-nous ce que vous imaginez",
+  eyebrow: "Votre histoire mérite un décor unique",
+  title: "Parlons de votre projet",
   description:
-    "Quelques mots, une date, une envie ou même une idée encore floue : nous vous aidons à la transformer en expérience sensible et mémorable.",
-  primaryCta: "Parler de mon projet",
-  secondaryCta: "Écrire sur WhatsApp",
+    "Racontez-nous vos envies, nous les transformons en une célébration inoubliable.",
+  primaryCta: "Demander un devis",
+  image: {
+    src: "/images/events/private-event/private-event-01.webp",
+    alt: "Décor de célébration privée Sareine Craft dans une ambiance intime et cinématographique",
+    role: "primary",
+    objectPosition: "50% 50%",
+  },
 };
