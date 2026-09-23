@@ -163,9 +163,9 @@ export const homeServices: HomeServicesData = {
       description: "Des moments pensés autour de vous.",
       href: "/events",
       image: {
-        src: "/images/home/services/events-organisation.png",
-        alt: "Décor de célébration chaleureux avec ballons, fleurs et table de desserts.",
-        position: "center",
+        src: "/images/events/birth/birth-03.webp",
+        alt: "Décor de naissance complet avec table personnalisée et composition douce.",
+        position: "50% 43%",
       },
       variant: "small",
     },
@@ -176,9 +176,9 @@ export const homeServices: HomeServicesData = {
       description: "Chaque détail participe à l’histoire.",
       href: "/events",
       image: {
-        src: "/images/home/services/decoration-table.png",
-        alt: "Table de réception élégante avec fleurs, bougies et vaisselle raffinée.",
-        position: "58% center",
+        src: "/images/events/private-event/private-event-01.webp",
+        alt: "Célébration privée Sareine Craft avec décor chaleureux et ambiance intimiste.",
+        position: "50% 50%",
       },
       variant: "small",
     },
@@ -189,8 +189,8 @@ export const homeServices: HomeServicesData = {
       description: "Des pièces uniques créées avec intention.",
       href: "/craft",
       image: {
-        src: "/images/home/services/artisanal-creations.png",
-        alt: "Bougies artisanales, fleurs et paquets cadeaux arrangés sur une table d’atelier.",
+        src: "/images/craft/creations/IMG_4367.jpg",
+        alt: "Création artisanale Sareine Craft photographiée en atelier.",
         position: "center",
       },
       variant: "wide",
@@ -203,9 +203,9 @@ export const homeServices: HomeServicesData = {
         "Lieu, buffet, matériel,\ndécoration, coordination…\nnous pouvons tout prendre\nen charge.",
       href: "/contact",
       image: {
-        src: "/images/home/services/organisation-a-z.png",
-        alt: "Réception extérieure élégante au coucher du soleil avec arche fleurie et table aux chandelles.",
-        position: "62% center",
+        src: "/images/events/birthday/birthday-01.webp",
+        alt: "Décor d'anniversaire Sareine Craft avec scénographie festive et élégante.",
+        position: "50% 48%",
       },
       variant: "feature",
     },
@@ -241,18 +241,18 @@ export const homeEventCategories: HomeEventCategoriesData = {
       title: "Anniversaire",
       href: "/events",
       image: {
-        src: "/images/home/events/anniversaire.png",
-        alt: "Décor d’anniversaire élégant avec gâteau fleuri, bougies et lumière chaleureuse.",
-        position: "50% 50%",
+        src: "/images/events/birthday/birthday-02.webp",
+        alt: "Décor d'anniversaire Sareine Craft avec scénographie festive et élégante.",
+        position: "50% 48%",
       },
     },
     {
       title: "Baby Shower",
       href: "/events",
       image: {
-        src: "/images/home/events/baby-shower.png",
-        alt: "Décoration baby shower premium avec ours en peluche, ballons blush et fleurs.",
-        position: "50% 50%",
+        src: "/images/events/baby-shower/baby-shower-01.webp",
+        alt: "Décor baby shower Sareine Craft avec ambiance délicate et féminine.",
+        position: "50% 48%",
       },
     },
     {
@@ -268,18 +268,18 @@ export const homeEventCategories: HomeEventCategoriesData = {
       title: "Naissance",
       href: "/events",
       image: {
-        src: "/images/home/events/baby-shower.png",
-        alt: "Décoration de naissance douce avec ballons blush, fleurs et détails tendres.",
-        position: "50% 50%",
+        src: "/images/events/birth/birth-01.webp",
+        alt: "Décor de naissance complet avec table personnalisée et composition douce.",
+        position: "50% 43%",
       },
     },
     {
       title: "Célébration privée",
       href: "/events",
       image: {
-        src: "/images/home/events/celebration-privee.png",
-        alt: "Longue table de réception privée avec bougies, fleurs et lumière dorée.",
-        position: "48% 50%",
+        src: "/images/events/private-event/private-event-01.webp",
+        alt: "Célébration privée Sareine Craft avec décor chaleureux et ambiance intimiste.",
+        position: "50% 50%",
       },
     },
   ],
@@ -363,19 +363,19 @@ export const homeCraftHighlight: HomeCraftHighlightData = {
     href: "/craft",
   },
   images: {
-  main: {
-    src: "/images/home/services/artisanal-creations.png",
-    alt: "Bougies artisanales décorées de fleurs.",
+    main: {
+      src: "/images/craft/creations/IMG_4367.jpg",
+      alt: "Création artisanale Sareine Craft photographiée en atelier.",
+    },
+    secondary: {
+      src: "/images/craft/creations/IMG_6446.jpg",
+      alt: "Création Sareine Craft aux détails floraux et faits main.",
+    },
+    detail: {
+      src: "/images/craft/creations/IMG_4580.jpg",
+      alt: "Détail d'une création artisanale Sareine.",
+    },
   },
-  secondary: {
-    src: "/images/home/services/decoration-table.png",
-    alt: "Création artisanale présentée dans un décor élégant.",
-  },
-  detail: {
-    src: "/images/home/services/events-organisation.png",
-    alt: "Détail d’une création Sareine.",
-  },
-},
   note: "Plus qu’un objet, une émotion.",
 };
 export type HomeRealisationItem = {
@@ -420,8 +420,8 @@ export const homeRealisations: HomeRealisationsData = {
       title: "Réception fleurie",
       href: "/realisations",
       image: {
-        src: "/images/home/events/celebration-privee.png",
-        alt: "Réception élégante décorée de fleurs.",
+        src: "/images/events/private-event/private-event-01.webp",
+        alt: "Célébration privée Sareine Craft avec décor chaleureux et ambiance intimiste.",
       },
     },
     {
@@ -429,8 +429,8 @@ export const homeRealisations: HomeRealisationsData = {
       title: "Baby shower",
       href: "/realisations",
       image: {
-        src: "/images/home/events/baby-shower.png",
-        alt: "Décoration de baby shower avec ballons.",
+        src: "/images/events/baby-shower/baby-shower-01.webp",
+        alt: "Décor baby shower Sareine Craft avec ambiance délicate et féminine.",
       },
     },
     {
@@ -438,8 +438,8 @@ export const homeRealisations: HomeRealisationsData = {
       title: "Dîner privé",
       href: "/realisations",
       image: {
-        src: "/images/home/services/decoration-table.png",
-        alt: "Dîner privé avec table décorée.",
+        src: "/images/events/private-event/private-event-02.webp",
+        alt: "Détail de célébration privée avec lumière douce et décor élégant.",
       },
     },
     {
@@ -447,8 +447,8 @@ export const homeRealisations: HomeRealisationsData = {
       title: "Création florale",
       href: "/realisations",
       image: {
-        src: "/images/home/services/artisanal-creations.png",
-        alt: "Composition florale artisanale.",
+        src: "/images/craft/creations/IMG_6446.jpg",
+        alt: "Création Sareine Craft aux détails floraux et faits main.",
       },
     },
     {
@@ -456,8 +456,8 @@ export const homeRealisations: HomeRealisationsData = {
       title: "Cérémonie",
       href: "/realisations",
       image: {
-        src: "/images/home/services/organisation-a-z.png",
-        alt: "Cérémonie extérieure élégante.",
+        src: "/images/events/birthday/birthday-02.webp",
+        alt: "Détail de table d'anniversaire avec éléments personnalisés.",
       },
     },
   ],
@@ -467,8 +467,8 @@ export const homeRealisations: HomeRealisationsData = {
     author: "Cliente Sareine Craft",
     rating: 5,
     avatar: {
-      src: "/images/home/events/baby-shower.png",
-      alt: "Décoration réalisée pour une cliente Sareine.",
+      src: "/images/events/baby-shower/baby-shower-02.webp",
+      alt: "Détail baby shower avec composition poétique et accessoires raffinés.",
     },
   },
 };
@@ -504,7 +504,7 @@ export const homeProjectContact: HomeProjectContactData = {
     href: "https://wa.me/212653712245",
   },
   backgroundImage: {
-    src: "/images/home/services/organisation-a-z.png",
-    alt: "Décoration élégante d’un événement Sareine.",
+    src: "/images/events/private-event/private-event-01.webp",
+    alt: "Décoration élégante d'un événement Sareine.",
   },
 };

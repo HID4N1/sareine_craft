@@ -17,9 +17,21 @@
 .imageOverlay {
   position: absolute;
   inset: 0;
+  pointer-events: none;
   background:
-    linear-gradient(90deg, rgba(53, 16, 37, 0.35), transparent 36%),
-    linear-gradient(0deg, rgba(36, 16, 25, 0.15), transparent 45%);
+    linear-gradient(
+      90deg,
+      rgba(36, 16, 25, 0.74) 0%,
+      rgba(53, 16, 37, 0.46) 34%,
+      rgba(53, 16, 37, 0.12) 66%,
+      rgba(36, 16, 25, 0.08) 100%
+    ),
+    linear-gradient(
+      0deg,
+      rgba(36, 16, 25, 0.42) 0%,
+      rgba(36, 16, 25, 0.12) 48%,
+      transparent 100%
+    );
 }
 
 .plumShape {
@@ -199,11 +211,14 @@
   }
 
   .imageOverlay {
-    background: linear-gradient(
-      0deg,
-      var(--sareine-plum-700),
-      transparent 45%
-    );
+    background:
+      linear-gradient(
+        0deg,
+        var(--sareine-plum-700) 0%,
+        rgba(53, 16, 37, 0.74) 22%,
+        transparent 64%
+      ),
+      linear-gradient(90deg, rgba(36, 16, 25, 0.24), transparent 62%);
   }
 
   .plumShape {

@@ -23,17 +23,6 @@ function joinClasses(...classes: Array<string | undefined | false>) {
   return classes.filter(Boolean).join(" ");
 }
 
-function ArrowCircle({ dark = false }: { dark?: boolean }) {
-  return (
-    <span
-      className={joinClasses(styles.arrowCircle, dark && styles.arrowCircleDark)}
-      aria-hidden="true"
-    >
-      <span>-&gt;</span>
-    </span>
-  );
-}
-
 function ValueIcon({ icon }: ValueIconProps) {
   if (icon === "guide") {
     return (
@@ -96,9 +85,6 @@ function ServiceCard({ card }: { card: HomeServiceCard }) {
         <p className={styles.cardEyebrow}>{card.eyebrow}</p>
         <h3 className={styles.cardTitle}>{card.title}</h3>
         <p className={styles.cardDescription}>{card.description}</p>
-        <Link className={styles.cardLink} href={card.href} aria-label={`Découvrir ${card.eyebrow.toLowerCase()}`}>
-          <ArrowCircle dark={isFeature} />
-        </Link>
       </div>
     </article>
   );

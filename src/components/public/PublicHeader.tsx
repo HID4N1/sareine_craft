@@ -21,8 +21,55 @@ function isActiveLink(href: string, pathname: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
+function isDarkColor(color: string) {
+  if (color === "transparent") {
+    return false;
+  }
 
+  const rgbMatch = color.match(/rgba?\(([^)]+)\)/);
+  const srgbMatch = color.match(/color\(srgb\s+([^)]+)\)/);
 
+  const channels = rgbMatch?.[1]
+    .split(",")
+    .map((value) => value.trim()) ?? srgbMatch?.[1].split(/\s+/);
+
+  if (!channels) {
+    return false;
+  }
+
+  const usesUnitInterval = Boolean(srgbMatch);
+  const [red, green, blue, alpha = "1"] = channels;
+  const opacity = Number(alpha);
+
+  if (opacity < 0.2) {
+    return false;
+  }
+
+  const redChannel = Number(red) * (usesUnitInterval ? 255 : 1);
+  const greenChannel = Number(green) * (usesUnitInterval ? 255 : 1);
+  const blueChannel = Number(blue) * (usesUnitInterval ? 255 : 1);
+  const luminance =
+    (0.2126 * redChannel + 0.7152 * greenChannel + 0.0722 * blueChannel) /
+    255;
+
+  return luminance < 0.42;
+}
+
+function hasDarkBackground(element: Element | null) {
+  let current: Element | null = element;
+
+  while (current && current !== document.documentElement) {
+    const backgroundColor = window.getComputedStyle(current).backgroundColor;
+
+    if (isDarkColor(backgroundColor)) {
+      return true;
+    }
+
+    current = current.parentElement;
+  }
+
+  return false;
+}
 
 type LanguageCode = "fr" | "en" | "ar";
 
@@ -44,24 +91,60 @@ const languages: Array<{ code: LanguageCode; label: string }> = [
 export function PublicHeader() {
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isHeaderOnDark, setIsHeaderOnDark] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [activeLanguage, setActiveLanguage] = useState<LanguageCode>("fr");
+  const headerRef = useRef<HTMLElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   const configuredSocialLinks = socialLinks.filter((social) => social.url);
 
-
   useEffect(() => {
+    let animationFrame = 0;
+
     const updateScrollState = () => {
       setIsScrolled(window.scrollY > 12);
+
+      window.cancelAnimationFrame(animationFrame);
+      animationFrame = window.requestAnimationFrame(() => {
+        const header = headerRef.current;
+        const headerRect = header?.getBoundingClientRect();
+
+        if (!header || !headerRect) {
+          setIsHeaderOnDark(false);
+          return;
+        }
+
+        const sampleY = Math.min(
+          window.innerHeight - 1,
+          headerRect.top + headerRect.height / 2,
+        );
+        const samplePoints = [0.2, 0.5, 0.8].map((ratio) =>
+          Math.min(window.innerWidth - 1, window.innerWidth * ratio),
+        );
+
+        const isOverDarkContent = samplePoints.some((sampleX) => {
+          const sampledElements = document.elementsFromPoint(sampleX, sampleY);
+          const sampledContent = sampledElements.find(
+            (element) => !header.contains(element),
+          );
+
+          return hasDarkBackground(sampledContent ?? null);
+        });
+
+        setIsHeaderOnDark(isOverDarkContent);
+      });
     };
 
     updateScrollState();
     window.addEventListener("scroll", updateScrollState, { passive: true });
+    window.addEventListener("resize", updateScrollState);
 
     return () => {
+      window.cancelAnimationFrame(animationFrame);
       window.removeEventListener("scroll", updateScrollState);
+      window.removeEventListener("resize", updateScrollState);
     };
   }, []);
 
@@ -113,10 +196,13 @@ export function PublicHeader() {
   return (
     <>
       <header
+        ref={headerRef}
         className={joinClasses(
           "sticky top-0 z-50 bg-transparent backdrop-blur-md transition-[height,border-color,background-color] duration-200",
           isScrolled
-            ? "border-b border-sand/80"
+            ? isHeaderOnDark
+              ? "border-b border-gold-300/25"
+              : "border-b border-sand/80"
             : "border-b border-transparent",
         )}
       >
@@ -155,8 +241,14 @@ export function PublicHeader() {
                 <Link
                   aria-current={isActive ? "page" : undefined}
                   className={joinClasses(
-                    "group relative py-2 font-sans text-sm font-semibold text-secondary transition-colors duration-200 hover:text-plum-700",
-                    isActive ? "text-plum-700" : undefined,
+                    "group relative py-2 font-sans text-sm font-semibold transition-colors duration-200",
+                    isActive
+                      ? isHeaderOnDark
+                        ? "text-gold-300"
+                        : "text-plum-700"
+                      : isHeaderOnDark
+                        ? "text-ivory/90 hover:text-gold-300"
+                        : "text-secondary hover:text-plum-700",
                   )}
                   href={item.href}
                   key={item.href}
@@ -165,7 +257,8 @@ export function PublicHeader() {
                   <span
                     aria-hidden="true"
                     className={joinClasses(
-                      "absolute inset-x-0 -bottom-0.5 h-px origin-center bg-primary transition-transform duration-200",
+                      "absolute inset-x-0 -bottom-0.5 h-px origin-center transition-transform duration-200",
+                      isHeaderOnDark ? "bg-gold-300" : "bg-primary",
                       isActive
                         ? "scale-x-100"
                         : "scale-x-0 group-hover:scale-x-100",
@@ -189,8 +282,14 @@ export function PublicHeader() {
                   <button
                     aria-pressed={isActiveLanguage}
                     className={joinClasses(
-                      "min-h-9 px-2 font-sans text-xs font-bold text-secondary transition-colors duration-200 hover:text-primary",
-                      isActiveLanguage ? "text-primary" : undefined,
+                      "min-h-9 px-2 font-sans text-xs font-bold transition-colors duration-200",
+                      isActiveLanguage
+                        ? isHeaderOnDark
+                          ? "text-gold-300"
+                          : "text-primary"
+                        : isHeaderOnDark
+                          ? "text-ivory/82 hover:text-gold-300"
+                          : "text-secondary hover:text-primary",
                     )}
                     key={language.code}
                     onClick={() => setActiveLanguage(language.code)}
@@ -213,15 +312,28 @@ export function PublicHeader() {
             aria-controls="mobile-navigation"
             aria-expanded={isMobileOpen}
             aria-label="Ouvrir le menu"
-            className="relative z-10 inline-flex min-h-11 items-center gap-3 font-sans text-xs font-bold uppercase tracking-[0.18em] text-secondary lg:hidden"
+            className={joinClasses(
+              "relative z-10 inline-flex min-h-11 items-center gap-3 font-sans text-xs font-bold uppercase tracking-[0.18em] transition-colors duration-200 lg:hidden",
+              isHeaderOnDark ? "text-ivory" : "text-secondary",
+            )}
             onClick={openMobileMenu}
             ref={menuButtonRef}
             type="button"
           >
             Menu
             <span aria-hidden="true" className="grid gap-1">
-              <span className="block h-px w-6 bg-primary" />
-              <span className="block h-px w-6 bg-primary" />
+              <span
+                className={joinClasses(
+                  "block h-px w-6 transition-colors duration-200",
+                  isHeaderOnDark ? "bg-gold-300" : "bg-primary",
+                )}
+              />
+              <span
+                className={joinClasses(
+                  "block h-px w-6 transition-colors duration-200",
+                  isHeaderOnDark ? "bg-gold-300" : "bg-primary",
+                )}
+              />
             </span>
           </button>
         </Container>

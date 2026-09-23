@@ -54,17 +54,21 @@
 }
 
 .card {
+  display: block;
   overflow: hidden;
   border: 1px solid rgba(184, 137, 74, 0.2);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.68);
+  color: inherit;
   box-shadow: 0 8px 30px rgba(53, 16, 37, 0.045);
+  text-decoration: none;
   transition:
     transform 200ms ease,
     box-shadow 200ms ease;
 }
 
-.card:hover {
+.card:hover,
+.card:focus-visible {
   transform: translateY(-5px);
   box-shadow: 0 16px 38px rgba(53, 16, 37, 0.1);
 }
@@ -149,7 +153,8 @@
     transform 180ms ease;
 }
 
-.cardLink:hover {
+.card:hover .cardLink,
+.card:focus-visible .cardLink {
   background: var(--sareine-gold-500);
   color: var(--sareine-plum-900);
   transform: rotate(-8deg);

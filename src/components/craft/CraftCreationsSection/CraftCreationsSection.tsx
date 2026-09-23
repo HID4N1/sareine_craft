@@ -34,7 +34,12 @@ export function CraftCreationsSection({
 
         <div className={styles.grid}>
           {collections.map((collection) => (
-            <article className={styles.card} key={collection.slug}>
+            <Link
+              className={styles.card}
+              href={`/craft/${collection.slug}`}
+              key={collection.slug}
+              aria-label={`Découvrir la collection ${collection.name}`}
+            >
               <div className={styles.imageWrapper}>
                 <Image
                   src={collection.cover.src}
@@ -70,15 +75,14 @@ export function CraftCreationsSection({
                   </p>
                 </div>
 
-                <Link
-                  href={`/craft/${collection.slug}`}
+                <span
                   className={styles.cardLink}
-                  aria-label={`Découvrir la collection ${collection.name}`}
+                  aria-hidden="true"
                 >
                   <span aria-hidden="true">→</span>
-                </Link>
+                </span>
               </div>
-            </article>
+            </Link>
           ))}
         </div>
       </Container>

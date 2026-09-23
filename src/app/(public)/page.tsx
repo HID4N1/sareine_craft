@@ -23,7 +23,7 @@ export default function Home() {
       <EventCategoriesSection events={homeEventCategories} />
       <ProcessSection process={homeProcess} />
       <CraftHighlightSection craft={homeCraftHighlight} />
-      <RealisationsSection realisations={homeRealisations} />
+      {/* <RealisationsSection realisations={homeRealisations} /> */}
       <ProjectContactSection project={homeProjectContact} />
     </>
   );
