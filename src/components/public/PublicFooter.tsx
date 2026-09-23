@@ -364,6 +364,9 @@ export function PublicFooter() {
                 © {currentYear} {siteData.shortName}
               </p>
               <p className="mt-1">Tous droits réservés</p>
+              <p className="mt-2 text-xs uppercase tracking-[0.16em] text-ivory/58">
+                Powered by SmartDex
+              </p>
             </div>
 
             <p className="flex items-center gap-4 font-display text-[1.45rem] italic leading-tight text-gold-300 md:justify-center md:text-center">

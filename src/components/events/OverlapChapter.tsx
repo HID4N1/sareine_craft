@@ -15,11 +15,11 @@ export function OverlapChapter({
   return (
     <section
       aria-labelledby={`${category.id}-title`}
-      className="relative overflow-hidden bg-[#fff3ef] py-[clamp(4.25rem,7vw,7.5rem)] scroll-mt-36"
+      className="scroll-rise relative overflow-hidden bg-[#fff3ef] py-[clamp(4.25rem,7vw,7.5rem)] scroll-mt-36"
       id={category.id}
     >
       <Container className="grid gap-10 lg:grid-cols-[minmax(0,58%)_minmax(21rem,34%)] lg:items-center">
-        <div className="relative h-[34rem] lg:h-[45rem]">
+        <div className="scroll-rise-soft relative h-[34rem] lg:h-[45rem]">
           <ChapterNumber className="absolute -left-3 -top-8 z-10">
             {category.order}
           </ChapterNumber>
@@ -40,7 +40,9 @@ export function OverlapChapter({
             />
           ) : null}
         </div>
-        <ChapterCopy category={category} inquiryHref={inquiryHref} />
+        <div className="scroll-rise-soft">
+          <ChapterCopy category={category} inquiryHref={inquiryHref} />
+        </div>
       </Container>
     </section>
   );

@@ -51,7 +51,7 @@ export function EventImageButton({
     <button
       aria-label={`Agrandir l'image : ${image.alt}`}
       className={joinClasses(
-        "group relative block overflow-hidden bg-sand text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring",
+        "group relative block overflow-hidden bg-sand text-left transition-[box-shadow,transform] duration-300 hover:-translate-y-1 hover:shadow-[0_22px_70px_rgba(36,16,25,0.16)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring",
         className,
       )}
       onClick={onOpen}

@@ -184,6 +184,51 @@ a {
   }
 }
 
+@keyframes scrollRise {
+  from {
+    opacity: 0.001;
+    transform: translateY(2.25rem) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes scrollLineGrow {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .scroll-rise {
+      animation: scrollRise both;
+      animation-timeline: view();
+      animation-range: entry 4% cover 30%;
+    }
+
+    .scroll-rise-soft {
+      animation: scrollRise both;
+      animation-timeline: view();
+      animation-range: entry 8% cover 34%;
+    }
+
+    .scroll-line-grow {
+      animation: scrollLineGrow both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 36%;
+      transform-origin: left center;
+    }
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

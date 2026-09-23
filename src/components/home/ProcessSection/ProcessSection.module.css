@@ -225,6 +225,52 @@
   color: var(--sareine-plum-500);
 }
 
+@keyframes processScrollRise {
+  from {
+    opacity: 0.001;
+    transform: translateY(2rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes processLineGrow {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .content,
+    .processArea {
+      animation: processScrollRise both;
+      animation-timeline: view();
+      animation-range: entry 8% cover 34%;
+    }
+
+    .timeline::before {
+      animation: processLineGrow both;
+      animation-timeline: view();
+      animation-range: entry 12% cover 44%;
+      transform-origin: left center;
+    }
+
+    .step {
+      animation: processScrollRise both;
+      animation-timeline: view();
+      animation-range: entry 8% cover 28%;
+    }
+  }
+}
+
 @media (max-width: 1120px) {
   .layout {
     grid-template-columns: 1fr;

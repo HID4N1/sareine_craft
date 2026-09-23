@@ -11,6 +11,7 @@
   gap: clamp(1.5rem, 4.8vw, 5rem);
   align-items: end;
   margin-bottom: clamp(1.6rem, 3.2vw, 3.25rem);
+  animation: serviceRise 680ms cubic-bezier(0.2, 0.72, 0.2, 1) both;
 }
 
 .headerTitleGroup {
@@ -121,6 +122,20 @@
   border: 1px solid rgba(184, 137, 74, 0.2);
   border-radius: 0.85rem;
   background: var(--sareine-cream);
+  box-shadow: 0 10px 34px rgba(53, 16, 37, 0.045);
+  transition:
+    border-color 260ms ease,
+    box-shadow 260ms ease,
+    transform 260ms ease;
+  animation: serviceRise 680ms cubic-bezier(0.2, 0.72, 0.2, 1) both;
+}
+
+.card:nth-child(2) {
+  animation-delay: 70ms;
+}
+
+.card:nth-child(3) {
+  animation-delay: 140ms;
 }
 
 .cardWide {
@@ -220,6 +235,12 @@
   transform: scale(1.035);
 }
 
+.card:hover {
+  border-color: rgba(184, 137, 74, 0.36);
+  box-shadow: 0 18px 46px rgba(53, 16, 37, 0.095);
+  transform: translateY(-4px);
+}
+
 .card:hover .lightOverlay {
   opacity: 0.92;
 }
@@ -242,6 +263,13 @@
   gap: 0.8rem;
   align-items: center;
   padding: clamp(1rem, 1.65vw, 1.35rem) clamp(0.85rem, 2vw, 1.6rem);
+  transition:
+    background-color 240ms ease,
+    color 240ms ease;
+}
+
+.valueItem:hover {
+  background: rgba(255, 249, 243, 0.5);
 }
 
 .valueItem + .valueItem {
@@ -256,6 +284,30 @@
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-width: 1.45;
+  transition: transform 240ms ease;
+}
+
+.valueItem:hover .valueIcon {
+  transform: translateY(-2px) rotate(-3deg);
+}
+
+@keyframes serviceRise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header,
+  .card {
+    animation: none;
+  }
 }
 
 .valueItem h3 {

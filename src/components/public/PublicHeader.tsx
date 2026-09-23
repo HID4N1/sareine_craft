@@ -60,6 +60,17 @@ function hasDarkBackground(element: Element | null) {
 
   while (current && current !== document.documentElement) {
     const backgroundColor = window.getComputedStyle(current).backgroundColor;
+    const className =
+      typeof current.className === "string" ? current.className : "";
+
+    if (
+      className.includes("bg-plum") ||
+      className.includes("bg-secondary") ||
+      className.includes("bg-[#") ||
+      current.getAttribute("data-header-tone") === "dark"
+    ) {
+      return true;
+    }
 
     if (isDarkColor(backgroundColor)) {
       return true;
@@ -91,10 +102,15 @@ const languages: Array<{ code: LanguageCode; label: string }> = [
 export function PublicHeader() {
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isHeaderOnDark, setIsHeaderOnDark] = useState(false);
+  const [headerTone, setHeaderTone] = useState({
+    desktop: false,
+    border: false,
+    mobile: false,
+  });
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [activeLanguage, setActiveLanguage] = useState<LanguageCode>("fr");
   const headerRef = useRef<HTMLElement>(null);
+  const actionsRef = useRef<HTMLDivElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -112,28 +128,67 @@ export function PublicHeader() {
         const headerRect = header?.getBoundingClientRect();
 
         if (!header || !headerRect) {
-          setIsHeaderOnDark(false);
+          setHeaderTone({
+            desktop: false,
+            border: false,
+            mobile: false,
+          });
           return;
         }
 
-        const sampleY = Math.min(
+        const currentHeader = header;
+        const currentHeaderRect = headerRect;
+
+        function isAreaOverDark(element: Element | null) {
+          const rect = element?.getBoundingClientRect() ?? currentHeaderRect;
+          const sampleY = Math.min(
+            window.innerHeight - 1,
+            rect.top + rect.height / 2,
+          );
+          const samplePoints = [0.18, 0.5, 0.82].map((ratio) =>
+            Math.min(
+              window.innerWidth - 1,
+              Math.max(0, rect.left + rect.width * ratio),
+            ),
+          );
+
+          return samplePoints.some((sampleX) => {
+            const sampledElements = document.elementsFromPoint(sampleX, sampleY);
+            const sampledContent = sampledElements.find(
+              (element) => !currentHeader.contains(element),
+            );
+
+            return hasDarkBackground(sampledContent ?? null);
+          });
+        }
+
+        const borderSampleY = Math.min(
           window.innerHeight - 1,
-          headerRect.top + headerRect.height / 2,
+          currentHeaderRect.top + currentHeaderRect.height / 2,
         );
-        const samplePoints = [0.2, 0.5, 0.8].map((ratio) =>
+        const borderSamplePoints = [0.18, 0.5, 0.82].map((ratio) =>
           Math.min(window.innerWidth - 1, window.innerWidth * ratio),
         );
 
-        const isOverDarkContent = samplePoints.some((sampleX) => {
-          const sampledElements = document.elementsFromPoint(sampleX, sampleY);
+        const borderIsOverDark = borderSamplePoints.some((sampleX) => {
+          const sampledElements = document.elementsFromPoint(
+            sampleX,
+            borderSampleY,
+          );
           const sampledContent = sampledElements.find(
-            (element) => !header.contains(element),
+            (element) => !currentHeader.contains(element),
           );
 
           return hasDarkBackground(sampledContent ?? null);
         });
 
-        setIsHeaderOnDark(isOverDarkContent);
+        const actionsAreOverDark = isAreaOverDark(actionsRef.current);
+
+        setHeaderTone({
+          desktop: actionsAreOverDark,
+          border: borderIsOverDark,
+          mobile: isAreaOverDark(menuButtonRef.current),
+        });
       });
     };
 
@@ -200,7 +255,7 @@ export function PublicHeader() {
         className={joinClasses(
           "sticky top-0 z-50 bg-transparent backdrop-blur-md transition-[height,border-color,background-color] duration-200",
           isScrolled
-            ? isHeaderOnDark
+            ? headerTone.border
               ? "border-b border-gold-300/25"
               : "border-b border-sand/80"
             : "border-b border-transparent",
@@ -233,7 +288,10 @@ export function PublicHeader() {
 
           <nav
             aria-label="Navigation principale"
-            className="hidden items-center gap-11 lg:flex"
+            className={joinClasses(
+              "hidden items-center gap-11 transition-colors duration-200 lg:flex",
+              headerTone.desktop ? "text-ivory" : "text-secondary",
+            )}
           >
             {publicNavigation.map((item) => {
               const isActive = isActiveLink(item.href, pathname);
@@ -244,12 +302,12 @@ export function PublicHeader() {
                   className={joinClasses(
                     "group relative py-2 font-sans text-sm font-semibold transition-colors duration-200",
                     isActive
-                      ? isHeaderOnDark
+                      ? headerTone.desktop
                         ? "text-gold-300"
                         : "text-plum-700"
-                      : isHeaderOnDark
-                        ? "text-ivory/90 hover:text-gold-300"
-                        : "text-secondary hover:text-plum-700",
+                      : headerTone.desktop
+                        ? "text-inherit hover:text-gold-300"
+                        : "text-inherit hover:text-plum-700",
                   )}
                   href={item.href}
                   key={item.href}
@@ -259,7 +317,7 @@ export function PublicHeader() {
                     aria-hidden="true"
                     className={joinClasses(
                       "absolute inset-x-0 -bottom-0.5 h-px origin-center transition-transform duration-200",
-                      isHeaderOnDark ? "bg-gold-300" : "bg-primary",
+                      headerTone.desktop ? "bg-gold-300" : "bg-primary",
                       isActive
                         ? "scale-x-100"
                         : "scale-x-0 group-hover:scale-x-100",
@@ -270,10 +328,16 @@ export function PublicHeader() {
             })}
           </nav>
 
-          <div className="relative hidden items-center gap-3 lg:flex">
+          <div
+            className="relative hidden items-center gap-3 lg:flex"
+            ref={actionsRef}
+          >
             <div
               aria-label="Choisir la langue"
-              className="flex items-center gap-1 border-l border-sand pl-4"
+              className={joinClasses(
+                "flex items-center gap-1 border-l pl-4 transition-colors duration-200",
+                headerTone.desktop ? "border-gold-300/35" : "border-sand",
+              )}
               role="group"
             >
               {languages.map((language) => {
@@ -285,10 +349,10 @@ export function PublicHeader() {
                     className={joinClasses(
                       "min-h-9 px-2 font-sans text-xs font-bold transition-colors duration-200",
                       isActiveLanguage
-                        ? isHeaderOnDark
+                        ? headerTone.desktop
                           ? "text-gold-300"
                           : "text-primary"
-                        : isHeaderOnDark
+                        : headerTone.desktop
                           ? "text-ivory/82 hover:text-gold-300"
                           : "text-secondary hover:text-primary",
                     )}
@@ -315,7 +379,7 @@ export function PublicHeader() {
             aria-label="Ouvrir le menu"
             className={joinClasses(
               "relative z-10 inline-flex min-h-11 items-center gap-3 font-sans text-xs font-bold uppercase tracking-[0.18em] transition-colors duration-200 lg:hidden",
-              isHeaderOnDark ? "text-ivory" : "text-secondary",
+              headerTone.mobile ? "text-ivory" : "text-secondary",
             )}
             onClick={openMobileMenu}
             ref={menuButtonRef}
@@ -326,13 +390,13 @@ export function PublicHeader() {
               <span
                 className={joinClasses(
                   "block h-px w-6 transition-colors duration-200",
-                  isHeaderOnDark ? "bg-gold-300" : "bg-primary",
+                  headerTone.mobile ? "bg-gold-300" : "bg-primary",
                 )}
               />
               <span
                 className={joinClasses(
                   "block h-px w-6 transition-colors duration-200",
-                  isHeaderOnDark ? "bg-gold-300" : "bg-primary",
+                  headerTone.mobile ? "bg-gold-300" : "bg-primary",
                 )}
               />
             </span>

@@ -8,10 +8,13 @@
 .imageWrapper {
   position: absolute;
   inset: 0 0 0 45%;
+  animation: craftImageReveal 900ms cubic-bezier(0.2, 0.72, 0.2, 1) 120ms both;
 }
 
 .image {
   object-fit: cover;
+  transform: scale(1.015);
+  animation: craftImageSettle 1400ms cubic-bezier(0.2, 0.72, 0.2, 1) 120ms both;
 }
 
 .imageOverlay {
@@ -50,6 +53,7 @@
     ),
     var(--sareine-plum-700);
   border-right: 1px solid rgba(184, 137, 74, 0.75);
+  animation: craftShapeReveal 780ms cubic-bezier(0.2, 0.72, 0.2, 1) both;
 }
 
 .container {
@@ -66,6 +70,7 @@
   justify-content: center;
   padding-block: 70px 45px;
   color: var(--sareine-ivory);
+  animation: craftTextRise 720ms cubic-bezier(0.2, 0.72, 0.2, 1) 130ms both;
 }
 
 .eyebrow {
@@ -175,6 +180,72 @@
   white-space: pre-line;
   transform: rotate(-2deg);
   text-shadow: 0 2px 18px rgba(36, 16, 25, 0.2);
+  animation: craftNoteFloat 5.8s ease-in-out 1s infinite;
+}
+
+@keyframes craftTextRise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes craftImageReveal {
+  from {
+    opacity: 0;
+    transform: translateX(26px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes craftImageSettle {
+  from {
+    transform: scale(1.045);
+  }
+
+  to {
+    transform: scale(1.015);
+  }
+}
+
+@keyframes craftShapeReveal {
+  from {
+    transform: translateX(-2.5rem);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes craftNoteFloat {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+
+  50% {
+    transform: translateY(-7px) rotate(-1deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .imageWrapper,
+  .image,
+  .plumShape,
+  .content,
+  .note {
+    animation: none;
+  }
 }
 
 @media (max-width: 1050px) {
@@ -239,9 +310,7 @@
   }
 
   .note {
-    top: 55px;
-    right: 24px;
-    font-size: 1.65rem;
+    display: none;
   }
 
   .values {

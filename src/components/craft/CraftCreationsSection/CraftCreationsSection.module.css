@@ -14,6 +14,7 @@
   justify-content: space-between;
   gap: 30px;
   margin-bottom: 34px;
+  animation: craftGridRise 660ms cubic-bezier(0.2, 0.72, 0.2, 1) both;
 }
 
 .eyebrow {
@@ -63,12 +64,23 @@
   box-shadow: 0 8px 30px rgba(53, 16, 37, 0.045);
   text-decoration: none;
   transition:
+    border-color 220ms ease,
     transform 200ms ease,
     box-shadow 200ms ease;
+  animation: craftGridRise 660ms cubic-bezier(0.2, 0.72, 0.2, 1) both;
+}
+
+.card:nth-child(2n) {
+  animation-delay: 70ms;
+}
+
+.card:nth-child(3n) {
+  animation-delay: 140ms;
 }
 
 .card:hover,
 .card:focus-visible {
+  border-color: rgba(184, 137, 74, 0.38);
   transform: translateY(-5px);
   box-shadow: 0 16px 38px rgba(53, 16, 37, 0.1);
 }
@@ -101,6 +113,15 @@
   font-size: 0.7rem;
   font-weight: 700;
   backdrop-filter: blur(8px);
+  transition:
+    background-color 220ms ease,
+    transform 220ms ease;
+}
+
+.card:hover .badge,
+.card:focus-visible .badge {
+  background: rgba(255, 249, 243, 0.95);
+  transform: translateY(-2px);
 }
 
 .cardContent {
@@ -158,6 +179,25 @@
   background: var(--sareine-gold-500);
   color: var(--sareine-plum-900);
   transform: rotate(-8deg);
+}
+
+@keyframes craftGridRise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header,
+  .card {
+    animation: none;
+  }
 }
 
 @media (max-width: 1050px) {

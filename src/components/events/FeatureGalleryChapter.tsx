@@ -15,17 +15,17 @@ export function FeatureGalleryChapter({
   return (
     <section
       aria-labelledby={`${category.id}-title`}
-      className="relative overflow-hidden bg-ivory py-[clamp(4.25rem,7vw,7.5rem)] scroll-mt-36"
+      className="scroll-rise relative overflow-hidden bg-ivory py-[clamp(4.25rem,7vw,7.5rem)] scroll-mt-36"
       id={category.id}
     >
       <Container className="grid gap-10 lg:grid-cols-[minmax(20rem,36%)_minmax(0,64%)] lg:items-center">
-        <div className="relative">
+        <div className="scroll-rise-soft relative">
           <ChapterNumber className="-ml-3 mb-[-1.25rem]">
             {category.order}
           </ChapterNumber>
           <ChapterCopy category={category} inquiryHref={inquiryHref} />
         </div>
-        <div className="relative h-[36rem] lg:h-[47rem]">
+        <div className="scroll-rise-soft relative h-[36rem] lg:h-[47rem]">
           {category.images[0] ? (
             <EventImageButton
               className="absolute inset-y-0 right-0 w-[76%] shadow-[0_28px_86px_rgba(36,16,25,0.13)]"

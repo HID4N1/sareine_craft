@@ -14,9 +14,9 @@ export function EventsFinalCta({
   onOpen: () => void;
 }) {
   return (
-    <section className="relative overflow-hidden bg-plum-900 py-[clamp(4.5rem,8vw,8rem)] text-ivory">
+    <section className="scroll-rise relative overflow-hidden bg-plum-900 py-[clamp(4.5rem,8vw,8rem)] text-ivory">
       <Container className="relative grid gap-10 lg:grid-cols-[minmax(0,52%)_minmax(19rem,34%)] lg:items-center lg:justify-between">
-        <div>
+        <div className="scroll-rise-soft">
           <p className="type-label text-gold-300">{cta.eyebrow}</p>
           <h2 className="mt-5 max-w-[11ch] font-display text-[clamp(3.3rem,6vw,6.5rem)] font-medium leading-[0.9] text-ivory">
             {cta.title}
@@ -34,7 +34,7 @@ export function EventsFinalCta({
             {cta.primaryCta}
           </Button>
         </div>
-        <div className="relative min-h-[31rem]">
+        <div className="scroll-rise-soft relative min-h-[31rem]">
           <span
             aria-hidden="true"
             className="absolute -left-8 top-10 hidden h-px w-24 bg-gold-300/65 lg:block"

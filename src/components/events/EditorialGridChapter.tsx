@@ -15,17 +15,17 @@ export function EditorialGridChapter({
   return (
     <section
       aria-labelledby={`${category.id}-title`}
-      className="relative overflow-hidden bg-ivory py-[clamp(4.25rem,7vw,7.5rem)] scroll-mt-36"
+      className="scroll-rise relative overflow-hidden bg-ivory py-[clamp(4.25rem,7vw,7.5rem)] scroll-mt-36"
       id={category.id}
     >
       <Container className="grid gap-10 lg:grid-cols-[minmax(0,38%)_minmax(0,62%)] lg:items-center">
-        <div className="relative">
+        <div className="scroll-rise-soft relative">
           <ChapterNumber className="-ml-3 mb-[-1.25rem]">
             {category.order}
           </ChapterNumber>
           <ChapterCopy category={category} inquiryHref={inquiryHref} />
         </div>
-        <div className="grid min-h-[34rem] gap-4 sm:grid-cols-[minmax(0,1.4fr)_minmax(12rem,0.72fr)] lg:min-h-[44rem]">
+        <div className="scroll-rise-soft grid min-h-[34rem] gap-4 sm:grid-cols-[minmax(0,1.4fr)_minmax(12rem,0.72fr)] lg:min-h-[44rem]">
           {category.images[0] ? (
             <EventImageButton
               className="min-h-[26rem]"

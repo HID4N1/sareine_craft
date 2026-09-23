@@ -15,7 +15,7 @@ export function GraduationChapter({
   return (
     <section
       aria-labelledby={`${category.id}-title`}
-      className="relative isolate overflow-hidden bg-plum-900 py-[clamp(4.75rem,8vw,8.25rem)] text-ivory scroll-mt-36"
+      className="scroll-rise relative isolate overflow-hidden bg-plum-900 py-[clamp(4.75rem,8vw,8.25rem)] text-ivory scroll-mt-36"
       id={category.id}
     >
       <svg
@@ -32,7 +32,7 @@ export function GraduationChapter({
         />
       </svg>
       <Container className="relative z-10 grid gap-11 lg:grid-cols-[minmax(22rem,37%)_minmax(0,63%)] lg:items-center">
-        <div>
+        <div className="scroll-rise-soft">
           <ChapterNumber className="text-gold-300/45">
             {category.order}
           </ChapterNumber>
@@ -42,7 +42,7 @@ export function GraduationChapter({
             inquiryHref={inquiryHref}
           />
         </div>
-        <div className="relative h-[39rem] lg:h-[52rem]">
+        <div className="scroll-rise-soft relative h-[39rem] lg:h-[52rem]">
           {category.images[0] ? (
             <EventImageButton
               className="absolute inset-y-0 right-[8%] w-[66%] rounded-t-[999px] shadow-[0_34px_90px_rgba(0,0,0,0.34)]"
