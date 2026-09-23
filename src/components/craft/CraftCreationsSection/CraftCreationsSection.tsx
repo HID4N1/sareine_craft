@@ -3,35 +3,24 @@ import Link from "next/link";
 
 import { Container } from "@/components/ui/Container";
 import type {
-  CraftCategoryFilter,
-  CraftCollection,
+  CraftCollectionData,
   CraftPageData,
 } from "@/types/craft";
 
 import styles from "./CraftCreationsSection.module.css";
 
 type CraftCreationsSectionProps = {
-  data: CraftPageData["creations"];
-  activeCategory: CraftCategoryFilter;
-};
-
-const categoryLabels: Record<CraftCollection, string> = {
-  gourmandise: "Bougie gourmande",
-  princesse: "Collection princesse",
-  silhouette: "Collection silhouette",
-  ange: "Ange & figurine",
-  floral: "Création florale",
+  data: Pick<
+    CraftPageData["creations"],
+    "eyebrow" | "title" | "description"
+  >;
+  collections: CraftCollectionData[];
 };
 
 export function CraftCreationsSection({
   data,
-  activeCategory,
+  collections,
 }: CraftCreationsSectionProps) {
-  const visibleItems =
-    activeCategory === "all"
-      ? data.items
-      : data.items.filter((item) => item.category === activeCategory);
-
   return (
     <section id="creations" className={styles.section}>
       <Container>
@@ -41,43 +30,50 @@ export function CraftCreationsSection({
             <h2 className={styles.title}>{data.title}</h2>
             <p className={styles.description}>{data.description}</p>
           </div>
-
-          <p className={styles.count}>
-            {visibleItems.length}{" "}
-            {visibleItems.length > 1 ? "créations" : "création"}
-          </p>
         </header>
 
         <div className={styles.grid}>
-          {visibleItems.map((item) => (
-            <article className={styles.card} key={item.id}>
+          {collections.map((collection) => (
+            <article className={styles.card} key={collection.slug}>
               <div className={styles.imageWrapper}>
                 <Image
-                  src={item.image.src}
-                  alt={item.image.alt}
+                  src={collection.cover.src}
+                  alt={collection.cover.alt}
                   fill
                   sizes="(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 25vw"
                   className={styles.image}
-                  style={{ objectPosition: item.image.position }}
+                  style={{
+                    objectPosition: collection.cover.position,
+                    transform: collection.cover.zoom
+                      ? `scale(${collection.cover.zoom})`
+                      : undefined,
+                    transformOrigin:
+                      collection.cover.position ?? "center",
+                  }}
                 />
 
-                <span className={styles.badge}>
-                  Fait main
-                </span>
+                <span className={styles.badge}>Collection</span>
               </div>
 
               <div className={styles.cardContent}>
                 <div>
                   <p className={styles.category}>
-                    {categoryLabels[item.category]}
+                    {collection.eyebrow}
                   </p>
-                  <h3 className={styles.cardTitle}>{item.name}</h3>
+
+                  <h3 className={styles.cardTitle}>
+                    {collection.name}
+                  </h3>
+
+                  <p className={styles.shortDescription}>
+                    {collection.shortDescription}
+                  </p>
                 </div>
 
                 <Link
-                  href="/contact"
+                  href={`/craft/${collection.slug}`}
                   className={styles.cardLink}
-                  aria-label={`Demander des informations sur ${item.name}`}
+                  aria-label={`Découvrir la collection ${collection.name}`}
                 >
                   <span aria-hidden="true">→</span>
                 </Link>

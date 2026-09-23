@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
-import { CraftCatalog } from "@/components/craft/CraftCatalog";
+import { CraftCreationsSection } from "@/components/craft/CraftCreationsSection/CraftCreationsSection";
 import { CraftHeroSection } from "@/components/craft/CraftHeroSection/CraftHeroSection";
 import { CraftStorySection } from "@/components/craft/CraftStorySection/CraftStorySection";
-import { craftPageData } from "@/data";
+import { craftCollections, craftPageData } from "@/data";
 
 export const metadata: Metadata = {
   title: "Créations artisanales | Sareine Craft",
@@ -16,9 +16,9 @@ export default function CraftPage() {
     <main>
       <CraftHeroSection data={craftPageData.hero} />
 
-      <CraftCatalog
-        categories={craftPageData.categories}
-        creations={craftPageData.creations}
+      <CraftCreationsSection
+        data={craftPageData.creations}
+        collections={craftCollections}
       />
 
       <CraftStorySection data={craftPageData.story} />

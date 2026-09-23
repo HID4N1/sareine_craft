@@ -36,12 +36,12 @@ export type CraftPageCategory = {
   id: CraftCategoryFilter;
   label: string;
   icon:
-    | "all"
-    | "cake"
-    | "princess"
-    | "dress"
-    | "angel"
-    | "flower";
+  | "all"
+  | "cake"
+  | "princess"
+  | "dress"
+  | "angel"
+  | "flower";
 };
 
 export type CraftCreation = {
@@ -112,4 +112,44 @@ export type CraftPageData = {
     items: CraftCreation[];
   };
   story: CraftStoryData;
+};
+export type CraftColorOption = {
+  id: string;
+  label: string;
+  hex: string;
+  image?: {
+    src: string;
+    alt: string;
+    position?: string;
+    zoom?: number;
+  };
+};
+
+export type CraftCollectionItem = {
+  id: string;
+  name: string;
+  description: string;
+  image: {
+    src: string;
+    alt: string;
+    position?: string;
+    zoom?: number;
+  };
+  colors?: CraftColorOption[];
+};
+
+export type CraftCollectionData = {
+  slug: string;
+  eyebrow: string;
+  name: string;
+  title: string;
+  shortDescription: string;
+  description: string;
+  cover: {
+    src: string;
+    alt: string;
+    position?: string;
+    zoom?: number;
+  };
+  items: CraftCollectionItem[];
 };
