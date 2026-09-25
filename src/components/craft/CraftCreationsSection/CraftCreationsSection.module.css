@@ -92,6 +92,18 @@
   background: var(--sareine-cream);
 }
 
+.imageLink {
+  position: absolute;
+  inset: 0;
+  display: block;
+  cursor: pointer;
+}
+
+.imageLink:focus-visible {
+  outline: 3px solid var(--sareine-gold-500);
+  outline-offset: -3px;
+}
+
 .image {
   object-fit: cover;
   transition: transform 450ms ease;

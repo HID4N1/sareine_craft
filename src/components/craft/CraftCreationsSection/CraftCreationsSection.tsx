@@ -41,22 +41,27 @@ export function CraftCreationsSection({
               aria-label={`Découvrir la collection ${collection.name}`}
             >
               <div className={styles.imageWrapper}>
-                <Image
-                  src={collection.cover.src}
-                  alt={collection.cover.alt}
-                  fill
-                  quality={78}
-                  sizes="(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 25vw"
-                  className={styles.image}
-                  style={{
-                    objectPosition: collection.cover.position,
-                    transform: collection.cover.zoom
-                      ? `scale(${collection.cover.zoom})`
-                      : undefined,
-                    transformOrigin:
-                      collection.cover.position ?? "center",
-                  }}
-                />
+                <Link
+                  href={`/craft/${collection.slug}`}
+                  className={styles.imageLink}
+                  aria-label={`Voir la collection ${collection.name}`}
+                >
+                  <Image
+                    src={collection.cover.src}
+                    alt={collection.cover.alt}
+                    fill
+                    quality={78}
+                    sizes="(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 25vw"
+                    className={styles.image}
+                    style={{
+                      objectPosition: collection.cover.position,
+                      transform: collection.cover.zoom
+                        ? `scale(${collection.cover.zoom})`
+                        : undefined,
+                      transformOrigin: collection.cover.position ?? "center",
+                    }}
+                  />
+                </Link>
 
                 <span className={styles.badge}>Collection</span>
               </div>

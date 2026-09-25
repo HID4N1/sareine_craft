@@ -129,7 +129,7 @@ export const craftCollections: CraftCollectionData[] = [
                         label: "Ivoire",
                         hex: "#eee2c9",
                         image: {
-                            src: "/images/craft/collections/Figurines_ivoire/Figurines_ivoire_06.png",
+                            src: "/images/craft/collections/Figurines_ivoire/Figurines_ivoire_02.png",
                             alt: "Princesse romantique ivoire.",
                         },
                     },
@@ -158,7 +158,7 @@ export const craftCollections: CraftCollectionData[] = [
                         label: "Ivoire",
                         hex: "#eee2c9",
                         image: {
-                            src: "/images/craft/collections/Figurines_ivoire/Figurines_ivoire_01.png",
+                            src: "/images/craft/collections/Figurines_ivoire/Figurines_ivoire_03.png",
                             alt: "Princesse au nœud ivoire.",
                         },
                     },
@@ -216,7 +216,7 @@ export const craftCollections: CraftCollectionData[] = [
                         label: "Ivoire",
                         hex: "#eee2c9",
                         image: {
-                            src: "/images/craft/collections/Figurines_ivoire/Figurines_ivoire_03.png",
+                            src: "/images/craft/collections/Figurines_ivoire/Figurines_ivoire_05.png",
                             alt: "Princesse rêveuse ivoire.",
                         },
                     },
@@ -245,7 +245,7 @@ export const craftCollections: CraftCollectionData[] = [
                         label: "Ivoire",
                         hex: "#eee2c9",
                         image: {
-                            src: "/images/craft/collections/Figurines_ivoire/Figurines_ivoire_02.png",
+                            src: "/images/craft/collections/Figurines_ivoire/Figurines_ivoire_06.png",
                             alt: "Princesse royale ivoire.",
                         },
                     },
