@@ -51,7 +51,7 @@ export function EventImageButton({
     <button
       aria-label={`Agrandir l'image : ${image.alt}`}
       className={joinClasses(
-        "group relative block overflow-hidden bg-sand text-left transition-[box-shadow,transform] duration-300 hover:-translate-y-1 hover:shadow-[0_22px_70px_rgba(36,16,25,0.16)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring",
+        "group relative block overflow-hidden rounded-[6px] bg-sand text-left transition-[box-shadow,transform,filter] duration-500 hover:-translate-y-1 hover:saturate-[1.04] hover:shadow-[0_34px_96px_rgba(36,16,25,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring",
         className,
       )}
       onClick={onOpen}
@@ -72,8 +72,11 @@ export function EventImageButton({
       />
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-plum-900/5"
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,249,243,0.08)_0%,rgba(36,16,25,0.02)_48%,rgba(36,16,25,0.22)_100%)] ring-1 ring-inset ring-plum-900/10"
       />
+      <span className="pointer-events-none absolute bottom-4 right-4 translate-y-2 rounded-[3px] border border-gold-300/45 bg-plum-900/62 px-3 py-2 text-[0.64rem] font-bold uppercase leading-none tracking-[0.16em] text-ivory opacity-0 backdrop-blur-md transition duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+        Voir
+      </span>
     </button>
   );
 }
@@ -101,7 +104,7 @@ export function ChapterCopy({
       </p>
       <h2
         className={joinClasses(
-          "mt-4 font-display text-[clamp(3rem,5vw,5.9rem)] font-medium leading-[0.9]",
+          "mt-5 max-w-[10ch] font-display text-[clamp(3rem,5vw,5.9rem)] font-medium leading-[0.9]",
           isDark ? "text-ivory" : "text-secondary",
         )}
         id={`${category.id}-title`}
@@ -110,12 +113,35 @@ export function ChapterCopy({
       </h2>
       <p
         className={joinClasses(
-          "mt-6 max-w-[33rem] text-[1.06rem] leading-8",
+          "mt-7 max-w-[35rem] text-[1.06rem] leading-8",
           isDark ? "text-ivory/76" : "text-charcoal/76",
         )}
       >
         {category.description}
       </p>
+      <div
+        className={joinClasses(
+          "mt-7 flex max-w-[24rem] items-center gap-4 border-y py-4",
+          isDark ? "border-gold-300/24" : "border-gold-300/45",
+        )}
+      >
+        <span
+          className={joinClasses(
+            "font-display text-[2rem] leading-none",
+            isDark ? "text-gold-300" : "text-primary",
+          )}
+        >
+          {category.order}
+        </span>
+        <span
+          className={joinClasses(
+            "text-[0.72rem] font-bold uppercase leading-5 tracking-[0.18em]",
+            isDark ? "text-ivory/68" : "text-charcoal/58",
+          )}
+        >
+          Scénographie, détails personnalisés et coordination
+        </span>
+      </div>
       <Button
         className="mt-8"
         href={inquiryHref}

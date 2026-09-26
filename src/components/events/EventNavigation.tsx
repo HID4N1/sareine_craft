@@ -61,10 +61,10 @@ export function EventNavigation({ categories }: { categories: EventCategory[] })
   return (
     <nav
       aria-label="Index des événements"
-      className="sticky top-20 z-40 border-y border-gold-300/50 bg-ivory/96 shadow-[0_10px_30px_rgba(36,16,25,0.06)] backdrop-blur-md"
+      className="sticky top-20 z-40 border-y border-gold-300/45 bg-ivory/92 shadow-[0_16px_40px_rgba(36,16,25,0.07)] backdrop-blur-xl"
     >
       <Container>
-        <div className="grid auto-cols-[max-content] grid-flow-col gap-8 overflow-x-auto py-4 [scrollbar-width:none] lg:grid-flow-row lg:grid-cols-5 lg:gap-0 [&::-webkit-scrollbar]:hidden">
+        <div className="grid auto-cols-[max-content] grid-flow-col gap-3 overflow-x-auto py-3 [scrollbar-width:none] lg:grid-flow-row lg:grid-cols-5 [&::-webkit-scrollbar]:hidden">
           {categories.map((category) => {
             const isActive = activeId === category.id;
 
@@ -72,17 +72,19 @@ export function EventNavigation({ categories }: { categories: EventCategory[] })
               <a
                 aria-current={isActive ? "true" : undefined}
                 className={joinClasses(
-                  "group flex min-h-12 items-center gap-3 border-r border-gold-300/30 pr-8 font-sans transition-colors last:border-r-0 lg:justify-center lg:px-5",
-                  isActive ? "text-secondary" : "text-charcoal/72",
+                  "group flex min-h-14 items-center gap-3 rounded-[4px] border border-transparent px-4 font-sans transition-all duration-300 lg:justify-center",
+                  isActive
+                    ? "border-gold-300/55 bg-white/70 text-secondary shadow-[0_10px_26px_rgba(36,16,25,0.06)]"
+                    : "text-charcoal/62 hover:border-gold-300/35 hover:bg-white/40 hover:text-secondary",
                 )}
                 href={`#${category.id}`}
                 key={category.id}
                 onClick={(event) => handleClick(event, category.id)}
               >
-                <span className="font-display text-[1.65rem] leading-none text-primary">
+                <span className="font-display text-[1.45rem] leading-none text-primary">
                   {category.order}
                 </span>
-                <span className="relative text-[0.92rem] font-bold uppercase tracking-[0.08em]">
+                <span className="relative text-[0.78rem] font-bold uppercase tracking-[0.14em]">
                   {category.title}
                   <span
                     aria-hidden="true"

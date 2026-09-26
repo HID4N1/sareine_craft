@@ -86,7 +86,7 @@ export function EventsLightbox({
     <div
       aria-label="Image agrandie"
       aria-modal="true"
-      className="fixed inset-0 z-[120] flex items-center justify-center bg-plum-900/94 p-4 text-ivory backdrop-blur-sm"
+      className="fixed inset-0 z-[120] flex items-center justify-center bg-plum-900/94 p-4 text-ivory backdrop-blur-md"
       onClick={onClose}
       onTouchEnd={handleTouchEnd}
       onTouchStart={(event) => {
@@ -95,7 +95,7 @@ export function EventsLightbox({
       role="dialog"
     >
       <div
-        className="relative h-[min(84dvh,52rem)] w-full max-w-7xl"
+        className="relative h-[min(84dvh,52rem)] w-full max-w-7xl rounded-[6px] border border-gold-300/24 bg-plum-900/35 shadow-[0_30px_100px_rgba(0,0,0,0.4)]"
         onClick={(event) => event.stopPropagation()}
       >
         <Image
@@ -108,7 +108,7 @@ export function EventsLightbox({
         />
         <button
           aria-label="Fermer l'image"
-          className="absolute right-0 top-0 z-10 min-h-11 bg-ivory px-4 font-sans text-sm font-bold text-secondary"
+          className="absolute right-3 top-3 z-10 min-h-11 rounded-[4px] border border-gold-300/35 bg-ivory/92 px-4 font-sans text-sm font-bold text-secondary shadow-[0_12px_30px_rgba(0,0,0,0.18)] backdrop-blur-md transition hover:bg-gold-100"
           onClick={onClose}
           ref={closeButtonRef}
           type="button"
@@ -119,7 +119,7 @@ export function EventsLightbox({
           <>
             <button
               aria-label="Image précédente"
-              className="absolute left-0 top-1/2 z-10 grid size-12 -translate-y-1/2 place-items-center bg-ivory font-sans text-xl font-bold text-secondary"
+              className="absolute left-3 top-1/2 z-10 grid size-12 -translate-y-1/2 place-items-center rounded-full border border-gold-300/35 bg-ivory/92 font-sans text-xl font-bold text-secondary shadow-[0_12px_30px_rgba(0,0,0,0.18)] backdrop-blur-md transition hover:bg-gold-100"
               onClick={onPrevious}
               type="button"
             >
@@ -127,13 +127,13 @@ export function EventsLightbox({
             </button>
             <button
               aria-label="Image suivante"
-              className="absolute right-0 top-1/2 z-10 grid size-12 -translate-y-1/2 place-items-center bg-ivory font-sans text-xl font-bold text-secondary"
+              className="absolute right-3 top-1/2 z-10 grid size-12 -translate-y-1/2 place-items-center rounded-full border border-gold-300/35 bg-ivory/92 font-sans text-xl font-bold text-secondary shadow-[0_12px_30px_rgba(0,0,0,0.18)] backdrop-blur-md transition hover:bg-gold-100"
               onClick={onNext}
               type="button"
             >
               →
             </button>
-            <p className="absolute bottom-0 left-1/2 z-10 -translate-x-1/2 bg-plum-900/78 px-3 py-2 font-sans text-xs font-bold text-ivory">
+            <p className="absolute bottom-3 left-1/2 z-10 -translate-x-1/2 rounded-full border border-gold-300/24 bg-plum-900/78 px-4 py-2 font-sans text-xs font-bold text-ivory backdrop-blur-md">
               {active.index + 1} / {imageCount}
             </p>
           </>

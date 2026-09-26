@@ -4,7 +4,7 @@ export const socialLinks: SocialLink[] = [
   {
     platform: "instagram",
     label: "Instagram",
-    url: null,
+    url: "https://www.instagram.com/sareinecraft/?hl=fr",
   },
   {
     platform: "facebook",

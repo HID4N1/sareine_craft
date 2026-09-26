@@ -4,14 +4,11 @@ import { useCallback, useMemo, useRef, useState } from "react";
 
 import type {
   EventCategory,
-  EventsFinalCta as EventsFinalCtaData,
   EventsPageHero,
   EventsServiceSection,
 } from "@/data/events";
 
 import { EventChapter } from "./EventChapter";
-import { EventNavigation } from "./EventNavigation";
-import { EventsFinalCta } from "./EventsFinalCta";
 import { EventsHero } from "./EventsHero";
 import { EventsLightbox } from "./EventsLightbox";
 import { ServiceProcess } from "./ServiceProcess";
@@ -21,13 +18,11 @@ type EventsExperienceProps = {
   hero: EventsPageHero;
   categories: EventCategory[];
   service: EventsServiceSection;
-  finalCta: EventsFinalCtaData;
   inquiryHref: string;
 };
 
 export function EventsExperience({
   categories,
-  finalCta,
   hero,
   inquiryHref,
   service,
@@ -39,18 +34,14 @@ export function EventsExperience({
     () => [
       {
         id: "hero",
-        images: hero.images,
+        images: [hero.image],
       },
       ...categories.map((category) => ({
         id: category.id,
         images: category.images,
       })),
-      {
-        id: "final-cta",
-        images: [finalCta.image],
-      },
     ],
-    [categories, finalCta.image, hero.images],
+    [categories, hero.image],
   );
 
   const openLightbox = useCallback((galleryId: string, index: number) => {
@@ -106,7 +97,6 @@ export function EventsExperience({
   return (
     <>
       <EventsHero hero={hero} onOpen={(index) => openLightbox("hero", index)} />
-      <EventNavigation categories={categories} />
       {categories.map((category) => (
         <EventChapter
           category={category}
@@ -115,12 +105,7 @@ export function EventsExperience({
           onOpen={openLightbox}
         />
       ))}
-      <ServiceProcess service={service} />
-      <EventsFinalCta
-        cta={finalCta}
-        inquiryHref={inquiryHref}
-        onOpen={() => openLightbox("final-cta", 0)}
-      />
+      <ServiceProcess inquiryHref={inquiryHref} service={service} />
       <EventsLightbox
         active={activeLightbox}
         galleries={galleries}

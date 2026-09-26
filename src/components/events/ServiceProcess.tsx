@@ -1,34 +1,68 @@
+import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import type { EventsServiceSection } from "@/data/events";
 
-export function ServiceProcess({ service }: { service: EventsServiceSection }) {
+export function ServiceProcess({
+  inquiryHref,
+  service,
+}: {
+  inquiryHref: string;
+  service: EventsServiceSection;
+}) {
   return (
-    <section className="scroll-rise bg-cream py-[clamp(4.25rem,7vw,7rem)]">
-      <Container className="grid gap-10 lg:grid-cols-[minmax(19rem,28%)_minmax(0,72%)]">
-        <div className="scroll-rise-soft">
-          <p className="type-label text-primary">{service.eyebrow}</p>
-          <h2 className="mt-4 max-w-[10ch] font-display text-[clamp(2.8rem,4.5vw,4.8rem)] font-medium leading-[0.92] text-secondary">
+    <section className="relative isolate overflow-hidden bg-plum-900 py-[clamp(6.5rem,10vw,10rem)] text-ivory">
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-[radial-gradient(circle_at_18%_12%,rgba(223,196,156,0.13),transparent_34%),radial-gradient(circle_at_92%_80%,rgba(168,123,146,0.12),transparent_30%)]"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute left-[43%] top-0 h-full w-px bg-gold-300/18"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute -bottom-24 left-[38%] h-[32rem] w-[18rem] rounded-t-full border border-gold-300/12"
+      />
+      <Container className="relative grid gap-[clamp(4rem,8vw,8rem)] lg:grid-cols-[minmax(20rem,0.9fr)_minmax(0,1.1fr)]">
+        <div className="scroll-rise-soft max-w-[42rem]">
+          <p className="type-label text-gold-300">{service.eyebrow}</p>
+          <h2 className="mt-6 max-w-[12ch] font-display text-[clamp(3.25rem,5.8vw,6rem)] font-medium leading-[0.94] text-ivory">
             {service.title}
           </h2>
+          <p className="mt-8 max-w-[34rem] text-[1.08rem] leading-8 text-ivory/76">
+            {service.description}
+          </p>
+          <Button
+            className="mt-9 shadow-[0_18px_48px_rgba(0,0,0,0.2)] hover:translate-x-0.5"
+            href={inquiryHref}
+            rel="noreferrer"
+            size="lg"
+            target="_blank"
+            variant="secondary"
+            arrow
+          >
+            {service.primaryCta}
+          </Button>
         </div>
-        <ol className="scroll-rise-soft grid border-gold-300/45 lg:grid-cols-4 lg:border-l">
-          {service.steps.map((step) => (
+
+        <ul className="scroll-rise-soft grid content-center gap-x-12 gap-y-7 sm:grid-cols-2">
+          {service.services.map((item) => (
             <li
-              className="border-l border-gold-300/45 pb-9 pl-6 lg:border-l-0 lg:border-r lg:pb-0 lg:pl-8 lg:pr-8"
-              key={step.number}
+              className="group flex min-h-20 items-center gap-5 border-b border-gold-300/16 pb-6"
+              key={item.title}
             >
-              <p className="font-display text-[clamp(3.4rem,6vw,5.8rem)] leading-none text-primary/72">
-                {step.number}
-              </p>
-              <h3 className="mt-5 font-sans text-[1rem] font-bold uppercase leading-5 tracking-[0.08em] text-secondary">
-                {step.title}
-              </h3>
-              <p className="mt-4 text-[0.98rem] leading-7 text-charcoal/72">
-                {step.description}
-              </p>
+              <span
+                aria-hidden="true"
+                className="grid size-12 shrink-0 place-items-center border border-gold-300/24 font-display text-[2.2rem] leading-none text-gold-300 transition duration-300 group-hover:border-gold-300/48 group-hover:bg-ivory/5"
+              >
+                {item.icon}
+              </span>
+              <span className="max-w-[14rem] text-[0.96rem] font-semibold leading-6 text-ivory/84 transition duration-300 group-hover:text-ivory">
+                {item.title}
+              </span>
             </li>
           ))}
-        </ol>
+        </ul>
       </Container>
     </section>
   );

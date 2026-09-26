@@ -15,26 +15,30 @@ export function EditorialGridChapter({
   return (
     <section
       aria-labelledby={`${category.id}-title`}
-      className="scroll-rise relative overflow-hidden bg-ivory py-[clamp(4.25rem,7vw,7.5rem)] scroll-mt-36"
+      className="scroll-rise relative overflow-hidden bg-ivory py-[clamp(5rem,8vw,8.5rem)] scroll-mt-36"
       id={category.id}
     >
-      <Container className="grid gap-10 lg:grid-cols-[minmax(0,38%)_minmax(0,62%)] lg:items-center">
+      <div
+        aria-hidden="true"
+        className="absolute inset-x-[var(--page-padding)] top-0 h-px bg-linear-to-r from-transparent via-gold-300/70 to-transparent"
+      />
+      <Container className="grid gap-12 lg:grid-cols-[minmax(0,36%)_minmax(0,64%)] lg:items-center">
         <div className="scroll-rise-soft relative">
           <ChapterNumber className="-ml-3 mb-[-1.25rem]">
             {category.order}
           </ChapterNumber>
           <ChapterCopy category={category} inquiryHref={inquiryHref} />
         </div>
-        <div className="scroll-rise-soft grid min-h-[34rem] gap-4 sm:grid-cols-[minmax(0,1.4fr)_minmax(12rem,0.72fr)] lg:min-h-[44rem]">
+        <div className="scroll-rise-soft grid min-h-[34rem] gap-5 sm:grid-cols-[minmax(0,1.35fr)_minmax(12rem,0.75fr)] lg:min-h-[46rem]">
           {category.images[0] ? (
             <EventImageButton
-              className="min-h-[26rem]"
+              className="min-h-[27rem] shadow-[0_30px_86px_rgba(36,16,25,0.12)]"
               image={category.images[0]}
               onOpen={() => onOpen(category.id, 0)}
               sizes="(min-width: 1024px) 42vw, 100vw"
             />
           ) : null}
-          <div className="grid gap-4">
+          <div className="grid gap-5 sm:py-10">
             {category.images.slice(1, 3).map((image, index) => {
               const actualIndex = index + 1;
 
