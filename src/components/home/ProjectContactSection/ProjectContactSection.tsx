@@ -12,6 +12,8 @@ type ProjectContactSectionProps = {
 export function ProjectContactSection({
   project,
 }: ProjectContactSectionProps) {
+  const primaryCtaIsExternal = project.primaryCta.href.startsWith("http");
+
   return (
     <section className={styles.section}>
       <Image
@@ -33,7 +35,12 @@ export function ProjectContactSection({
         </div>
 
         <div className={styles.actions}>
-          <Link className={styles.primaryCta} href={project.primaryCta.href}>
+          <Link
+            className={styles.primaryCta}
+            href={project.primaryCta.href}
+            rel={primaryCtaIsExternal ? "noreferrer" : undefined}
+            target={primaryCtaIsExternal ? "_blank" : undefined}
+          >
             {project.primaryCta.label}
             <span aria-hidden="true">→</span>
           </Link>

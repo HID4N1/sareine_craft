@@ -81,6 +81,8 @@ function ProcessStep({ step }: { step: HomeProcessStep }) {
 }
 
 export function ProcessSection({ process }: ProcessSectionProps) {
+  const ctaIsExternal = process.cta.href.startsWith("http");
+
   return (
     <Section className={styles.section} surface="cream" aria-labelledby="home-process-title">
       <Container>
@@ -94,7 +96,12 @@ export function ProcessSection({ process }: ProcessSectionProps) {
               {process.title}
             </h2>
             <p className={styles.description}>{process.description}</p>
-            <Link className={styles.cta} href={process.cta.href}>
+            <Link
+              className={styles.cta}
+              href={process.cta.href}
+              rel={ctaIsExternal ? "noreferrer" : undefined}
+              target={ctaIsExternal ? "_blank" : undefined}
+            >
               <span>{process.cta.label}</span>
               <span aria-hidden="true">-&gt;</span>
             </Link>

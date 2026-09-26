@@ -1,18 +1,5 @@
 import { siteData } from "@/data";
-
-function getWhatsAppHref(value: string | null) {
-  if (!value) {
-    return null;
-  }
-
-  if (value.startsWith("http://") || value.startsWith("https://")) {
-    return value;
-  }
-
-  const digits = value.replace(/\D/g, "");
-
-  return digits ? `https://wa.me/${digits}` : null;
-}
+import { getWhatsAppHref } from "@/lib/whatsapp";
 
 function WhatsAppIcon() {
   return (

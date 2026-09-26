@@ -131,6 +131,7 @@ function Icon({ name }: IconProps) {
 
 export function AboutExperience() {
   const { hero, trustItems, pillars, process, finalCta } = aboutPageData;
+  const primaryCtaIsExternal = finalCta.primary.href.startsWith("http");
 
   return (
     <main className={styles.page}>
@@ -280,6 +281,8 @@ export function AboutExperience() {
               <Link
                 className={styles.primaryCta}
                 href={finalCta.primary.href}
+                rel={primaryCtaIsExternal ? "noreferrer" : undefined}
+                target={primaryCtaIsExternal ? "_blank" : undefined}
               >
                 <span>{finalCta.primary.label}</span>
                 <span aria-hidden="true">→</span>

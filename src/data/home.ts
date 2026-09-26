@@ -1,3 +1,13 @@
+import { getWhatsAppHref } from "@/lib/whatsapp";
+
+import { siteData } from "./site";
+
+const projectWhatsAppHref =
+  getWhatsAppHref(
+    siteData.contact.whatsapp,
+    "Bonjour Sareine Craft, j'aimerais parler de mon projet.",
+  ) ?? "/";
+
 export type HomeHeroWord = {
   text: string;
   highlight?: boolean;
@@ -201,7 +211,7 @@ export const homeServices: HomeServicesData = {
       title: "Organisation\nde A à Z",
       description:
         "Lieu, buffet, matériel,\ndécoration, coordination…\nnous pouvons tout prendre\nen charge.",
-      href: "/contact",
+      href: projectWhatsAppHref,
       image: {
         src: "/images/events/birthday/birthday-01.webp",
         alt: "Décor d'anniversaire Sareine Craft avec scénographie festive et élégante.",
@@ -292,7 +302,7 @@ export const homeProcess: HomeProcessData = {
     "Vous nous partagez votre envie. Sareine imagine, organise et coordonne chaque détail — du lieu à la décoration, en passant par le buffet, le matériel et la logistique.",
   cta: {
     label: "Confier mon événement",
-    href: "/contact",
+    href: projectWhatsAppHref,
   },
   note: "Sérénité\nà chaque étape.",
   steps: [
@@ -497,11 +507,11 @@ export const homeProjectContact: HomeProjectContactData = {
     "Qu’il s’agisse d’une simple idée ou d’un événement complet, Sareine Craft est là pour lui donner vie.",
   primaryCta: {
     label: "Parler de mon projet",
-    href: "/contact",
+    href: projectWhatsAppHref,
   },
   whatsappCta: {
     label: "WhatsApp",
-    href: "https://wa.me/212653712245",
+    href: projectWhatsAppHref,
   },
   backgroundImage: {
     src: "/images/events/private-event/private-event-01.webp",

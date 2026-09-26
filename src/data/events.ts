@@ -4,6 +4,7 @@ import type {
   EventService,
 } from "@/types";
 import { eventCategories } from "@/types";
+import { getWhatsAppHref } from "@/lib/whatsapp";
 
 import { siteData } from "./site";
 
@@ -66,13 +67,7 @@ export type EventsFinalCta = {
 };
 
 function createWhatsAppHref(message: string) {
-  const phone = siteData.contact.whatsapp?.replace(/\D/g, "");
-
-  if (!phone) {
-    return "/";
-  }
-
-  return `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+  return getWhatsAppHref(siteData.contact.whatsapp, message) ?? "/";
 }
 
 export const eventInquiryHref = createWhatsAppHref(

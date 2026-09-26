@@ -7,7 +7,8 @@ import { useEffect, useRef, useState } from "react";
 
 import { publicNavigation, siteData, socialLinks } from "@/data";
 import { Container } from "@/components/ui/Container";
-import { ProjectCTA } from "@/components/public/ProjectCTA";
+import { Button } from "@/components/ui/Button";
+import { getWhatsAppHref } from "@/lib/whatsapp";
 
 function joinClasses(...classes: Array<string | undefined | false>) {
   return classes.filter(Boolean).join(" ");
@@ -115,6 +116,11 @@ export function PublicHeader() {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   const configuredSocialLinks = socialLinks.filter((social) => social.url);
+  const projectWhatsAppHref =
+    getWhatsAppHref(
+      siteData.contact.whatsapp,
+      "Bonjour Sareine Craft, j'aimerais parler de mon projet.",
+    ) ?? "/";
 
   useEffect(() => {
     let animationFrame = 0;
@@ -367,10 +373,15 @@ export function PublicHeader() {
             </div>
 
 
-            <ProjectCTA
-              triggerClassName="min-h-10 px-4 text-[0.8125rem]"
+            <Button
+              className="min-h-10 px-4 text-[0.8125rem]"
+              href={projectWhatsAppHref}
+              rel="noreferrer"
               size="sm"
-            />
+              target="_blank"
+            >
+              Nous contacter
+            </Button>
           </div>
 
           <button

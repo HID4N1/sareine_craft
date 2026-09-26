@@ -8,21 +8,8 @@ import {
   socialLinks,
 } from "@/data";
 import { Container } from "@/components/ui/Container";
-import { ProjectCTA } from "@/components/public/ProjectCTA";
-
-function getWhatsAppHref(value: string | null) {
-  if (!value) {
-    return null;
-  }
-
-  if (value.startsWith("http://") || value.startsWith("https://")) {
-    return value;
-  }
-
-  const digits = value.replace(/\D/g, "");
-
-  return digits ? `https://wa.me/${digits}` : null;
-}
+import { Button } from "@/components/ui/Button";
+import { getWhatsAppHref } from "@/lib/whatsapp";
 
 function getAddressDisplay() {
   const addressParts = [
@@ -150,6 +137,11 @@ const currentYear = new Date().getFullYear();
 
 export function PublicFooter() {
   const whatsappHref = getWhatsAppHref(siteData.contact.whatsapp);
+  const projectWhatsAppHref =
+    getWhatsAppHref(
+      siteData.contact.whatsapp,
+      "Bonjour Sareine Craft, j'aimerais parler de mon projet.",
+    ) ?? "/";
   const addressDisplay = getAddressDisplay();
   const footerSocialLinks = socialLinks.filter((social) =>
     ["instagram", "tiktok"].includes(social.platform),
@@ -341,14 +333,14 @@ export function PublicFooter() {
               <p className="mt-5 max-w-[16rem] font-display text-[1.55rem] leading-[1.08] text-secondary">
                 {siteData.footerProjectText}
               </p>
-              <ProjectCTA
-                align="left"
-                className="mt-6 inline-block"
-                label="Nous contacter"
-                panelClassName="max-w-[calc(100vw-2.5rem)]"
-                triggerClassName="min-h-11 px-5 text-sm"
-                size="md"
-              />
+              <Button
+                className="mt-6"
+                href={projectWhatsAppHref}
+                rel="noreferrer"
+                target="_blank"
+              >
+                Nous contacter
+              </Button>
             </section>
           </div>
         </Container>

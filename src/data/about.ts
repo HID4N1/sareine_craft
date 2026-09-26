@@ -1,3 +1,13 @@
+import { getWhatsAppHref } from "@/lib/whatsapp";
+
+import { siteData } from "./site";
+
+const projectWhatsAppHref =
+  getWhatsAppHref(
+    siteData.contact.whatsapp,
+    "Bonjour Sareine Craft, j'aimerais parler de mon projet.",
+  ) ?? "/";
+
 export type AboutImage = {
   src: string;
   alt: string;
@@ -139,7 +149,7 @@ export const aboutPageData = {
     title: "Donnons vie à votre prochain moment",
     primary: {
       label: "Parler de mon projet",
-      href: "/contact",
+      href: projectWhatsAppHref,
     },
     secondary: {
       label: "Voir nos réalisations",
