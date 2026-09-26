@@ -1,12 +1,9 @@
-import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import type { EventsServiceSection } from "@/data/events";
 
 export function ServiceProcess({
-  inquiryHref,
   service,
 }: {
-  inquiryHref: string;
   service: EventsServiceSection;
 }) {
   return (
@@ -26,23 +23,12 @@ export function ServiceProcess({
       <Container className="relative grid gap-[clamp(4rem,8vw,8rem)] lg:grid-cols-[minmax(20rem,0.9fr)_minmax(0,1.1fr)]">
         <div className="scroll-rise-soft max-w-[42rem]">
           <p className="type-label text-gold-300">{service.eyebrow}</p>
-          <h2 className="mt-6 max-w-[12ch] font-display text-[clamp(3.25rem,5.8vw,6rem)] font-medium leading-[0.94] text-ivory">
+          <h2 className="mt-6 max-w-[12ch] font-display text-[clamp(3.25rem,5.8vw,6rem)] font-medium leading-[0.94] !text-white">
             {service.title}
           </h2>
           <p className="mt-8 max-w-[34rem] text-[1.08rem] leading-8 text-ivory/76">
             {service.description}
           </p>
-          <Button
-            className="mt-9 shadow-[0_18px_48px_rgba(0,0,0,0.2)] hover:translate-x-0.5"
-            href={inquiryHref}
-            rel="noreferrer"
-            size="lg"
-            target="_blank"
-            variant="secondary"
-            arrow
-          >
-            {service.primaryCta}
-          </Button>
         </div>
 
         <ul className="scroll-rise-soft grid content-center gap-x-12 gap-y-7 sm:grid-cols-2">

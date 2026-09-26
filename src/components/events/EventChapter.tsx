@@ -71,42 +71,46 @@ function ImageStack({
     .slice(0, 2);
 
   return (
-    <div className="relative pb-0 md:pb-24">
-      <div
-        aria-hidden="true"
-        className={joinClasses(
-          "absolute -inset-5 hidden border border-gold-300/28 md:block",
-          contentFirst
-            ? "translate-x-5 translate-y-5"
-            : "-translate-x-5 translate-y-5",
-        )}
-      />
-      <div
-        aria-hidden="true"
-        className={joinClasses(
-          "absolute top-10 hidden h-[78%] w-[34%] bg-plum-500/8 md:block",
-          contentFirst ? "-right-6" : "-left-6",
-        )}
-      />
+    <div className="relative mx-auto w-full max-w-[48rem] pb-0 md:pb-20">
       {primary ? (
-        <EventImageButton
-          className="aspect-[1.12/1] w-full shadow-[0_28px_90px_rgba(36,16,25,0.16)] md:aspect-[1.32/1]"
-          image={primary}
-          onOpen={() => onOpen(categoryId, images.indexOf(primary))}
-          quality={84}
-          sizes="(min-width: 1024px) 58vw, 100vw"
-        />
+        <div className="relative">
+          <div
+            aria-hidden="true"
+            className={joinClasses(
+              "absolute inset-0 bg-plum-900/18 shadow-[0_30px_70px_rgba(36,16,25,0.24)]",
+              contentFirst
+                ? "translate-x-4 translate-y-4 md:translate-x-6 md:translate-y-6"
+                : "-translate-x-4 translate-y-4 md:-translate-x-6 md:translate-y-6",
+            )}
+          />
+          <div
+            aria-hidden="true"
+            className={joinClasses(
+              "absolute -inset-2 border border-gold-500/65 md:-inset-3",
+              contentFirst ? "translate-x-2" : "-translate-x-2",
+            )}
+          />
+          <EventImageButton
+            className="aspect-[5/4] w-full border-2 border-gold-300 shadow-[0_24px_64px_rgba(36,16,25,0.2)] md:aspect-[4/3]"
+            image={primary}
+            onOpen={() => onOpen(categoryId, images.indexOf(primary))}
+            quality={84}
+            sizes="(min-width: 1024px) 56vw, 100vw"
+          />
+        </div>
       ) : null}
       {supporting.length > 0 ? (
         <div
           className={joinClasses(
-            "mt-4 grid grid-cols-2 gap-3 md:absolute md:-bottom-1 md:mt-0 md:gap-4",
-            contentFirst ? "md:left-[8%] md:right-[7%]" : "md:left-[7%] md:right-[8%]",
+            "relative z-10 mt-4 grid gap-3 md:absolute md:-bottom-1 md:mt-0 md:gap-4",
+            supporting.length === 1
+              ? "w-[72%] grid-cols-1 md:left-[8%] md:w-[46%]"
+              : "grid-cols-2 md:left-[8%] md:right-[8%]",
           )}
         >
           {supporting.map((image) => (
             <EventImageButton
-              className="aspect-[1.42/1] border border-ivory/75 shadow-[0_18px_54px_rgba(36,16,25,0.14)]"
+              className="aspect-[4/3] border-2 border-gold-300 bg-ivory shadow-[0_18px_46px_rgba(36,16,25,0.24)] md:aspect-[3/2]"
               image={image}
               key={image.src}
               onOpen={() => onOpen(categoryId, images.indexOf(image))}
@@ -137,7 +141,7 @@ export function EventChapter({
     <section
       aria-labelledby={`${category.id}-title`}
       className={joinClasses(
-        "scroll-rise relative overflow-hidden py-[clamp(6rem,9vw,9rem)]",
+        "scroll-rise relative overflow-hidden py-[clamp(5rem,8vw,8rem)]",
         sectionTone,
       )}
       id={category.id}
@@ -155,7 +159,7 @@ export function EventChapter({
       />
       <div
         className={joinClasses(
-          "mx-auto grid w-full max-w-[90rem] items-center gap-[clamp(3rem,6vw,6rem)] px-[var(--page-padding)] lg:grid-cols-[minmax(20rem,0.78fr)_minmax(0,1.22fr)]",
+          "mx-auto grid w-full max-w-[90rem] items-center gap-[clamp(3.5rem,6vw,6.5rem)] px-[var(--page-padding)] lg:grid-cols-[minmax(20rem,0.82fr)_minmax(0,1.18fr)]",
           contentFirst ? "" : "lg:grid-cols-[minmax(0,1.18fr)_minmax(20rem,0.82fr)]",
         )}
       >

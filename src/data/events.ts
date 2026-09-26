@@ -90,10 +90,10 @@ export const eventsPageHero: EventsPageHero = {
     "De la conception à la réalisation, nous imaginons et organisons vos événements pour des souvenirs inoubliables.",
   primaryCta: "Découvrir nos événements",
   image: {
-    src: "/images/events/private-event/private-event-01.webp",
-    alt: "Table de réception élégante avec décor floral et lumière chaude",
+    src: "/images/events/graduation/graduation-mock-01.webp",
+    alt: "Table de célébration élégante aux tons bordeaux et dorés",
     role: "primary",
-    objectPosition: "50% 45%",
+    objectPosition: "50% 43%",
   },
   values: [
     {

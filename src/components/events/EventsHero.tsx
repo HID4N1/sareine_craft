@@ -11,7 +11,7 @@ export function EventsHero({
   onOpen: (index: number) => void;
 }) {
   return (
-    <section className="relative isolate min-h-[calc(100svh-92px)] overflow-hidden bg-plum-900 text-ivory lg:min-h-[clamp(40rem,72svh,46rem)]">
+    <section className="relative isolate min-h-[40rem] overflow-hidden bg-plum-900 text-ivory lg:min-h-[clamp(36rem,64svh,40rem)]">
       <button
         aria-label={`Agrandir l'image : ${hero.image.alt}`}
         className="absolute inset-0 z-0 cursor-zoom-in text-left"
@@ -38,19 +38,19 @@ export function EventsHero({
         className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-[38%] bg-[linear-gradient(0deg,rgba(36,16,25,0.9)_0%,rgba(36,16,25,0.46)_48%,rgba(36,16,25,0)_100%)]"
       />
 
-      <div className="relative z-10 mx-auto flex min-h-[calc(100svh-92px)] w-full max-w-[90rem] flex-col justify-between px-[var(--page-padding)] py-[clamp(2.75rem,6vw,5.25rem)] lg:min-h-[clamp(40rem,72svh,46rem)]">
-        <div className="max-w-[38rem] lg:pt-4">
+      <div className="relative z-10 mx-auto flex min-h-[40rem] w-full max-w-[90rem] flex-col justify-between px-[var(--page-padding)] py-10 lg:min-h-[clamp(36rem,64svh,40rem)]">
+        <div className="max-w-[38rem]">
           <p className="type-label w-fit border-l-2 border-gold-300 pl-3 text-gold-300">
             {hero.eyebrow}
           </p>
-          <h1 className="mt-5 max-w-[11ch] font-display text-[clamp(3.35rem,6vw,6.25rem)] font-medium leading-[0.92] text-[#fffaf5] [text-shadow:0_3px_24px_rgba(20,7,13,0.32)]">
+          <h1 className="mt-4 max-w-[11ch] font-display text-[clamp(3.35rem,6vw,5.6rem)] font-medium leading-[0.92] !text-white [text-shadow:0_3px_24px_rgba(20,7,13,0.32)]">
             {hero.title}
           </h1>
-          <p className="mt-6 max-w-[32rem] text-[clamp(1rem,1.2vw,1.12rem)] leading-7 text-[#f8ede5] sm:leading-8">
+          <p className="mt-5 max-w-[32rem] text-[clamp(1rem,1.2vw,1.12rem)] leading-7 text-[#f8ede5] sm:leading-8">
             {hero.description}
           </p>
           <Button
-            className="mt-7 border-gold-300 bg-gold-300 text-plum-900 shadow-[0_14px_38px_rgba(20,7,13,0.3)] hover:border-ivory hover:bg-ivory hover:text-plum-700"
+            className="mt-6 border-gold-300 bg-gold-300 text-plum-900 shadow-[0_14px_38px_rgba(20,7,13,0.3)] hover:border-ivory hover:bg-ivory hover:text-plum-700"
             href="#baby-shower"
             size="lg"
             arrow
@@ -59,7 +59,7 @@ export function EventsHero({
           </Button>
         </div>
 
-        <ul className="mt-10 grid grid-cols-2 gap-x-5 gap-y-5 border-t border-gold-300/38 pt-6 lg:grid-cols-4 lg:gap-x-0 lg:pt-7">
+        <ul className="mt-8 grid grid-cols-2 gap-x-5 gap-y-5 border-t border-gold-300/38 pt-5 lg:grid-cols-4 lg:gap-x-0">
           {hero.values.map((value) => (
             <li
               className="flex items-center gap-3 border-gold-300/24 lg:border-l lg:px-7 lg:first:border-l-0 lg:first:pl-0"

@@ -105,7 +105,7 @@ export function EventsExperience({
           onOpen={openLightbox}
         />
       ))}
-      <ServiceProcess inquiryHref={inquiryHref} service={service} />
+      <ServiceProcess service={service} />
       <EventsLightbox
         active={activeLightbox}
         galleries={galleries}
