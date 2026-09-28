@@ -10,6 +10,8 @@ import "./globals.css";
 
 import { defaultLocale, isLocale, isRTL, localeCookieName } from "@/i18n/config";
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://sareinecraft.com";
+
 const cormorantGaramond = Cormorant_Garamond({
   variable: "--font-display",
   subsets: ["latin"],
@@ -36,6 +38,7 @@ const notoNaskhArabic = Noto_Naskh_Arabic({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: "Sareine — Craft & Events",
   description:
     "Sareine imagine des créations artisanales et des expériences événementielles pensées avec soin pour vos moments précieux.",
