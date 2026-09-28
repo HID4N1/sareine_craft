@@ -2,8 +2,9 @@
 
 ## Audit Information
 - Audit date: 2026-09-28
+- Last updated: 2026-09-28
 - Framework: Next.js 16.3.5 App Router with React 19.2.8
-- Rendering architecture: static public pages, SSG craft collection detail pages, one dynamic empty event detail route, client-side interactive headers/events/lightbox
+- Rendering architecture: localized public pages, SSG craft collection detail pages, metadata routes for sitemap/robots/manifest, client-side interactive headers/events/lightbox
 - Styling system: Tailwind CSS v4 via `@import "tailwindcss"`, global CSS variables, utility classes, and CSS Modules
 - Language: TypeScript / TSX
 - Scope: repository audit of `src/`, `public/`, app routes, components, data files, configuration, assets, navigation, UX, SEO, accessibility, performance, API readiness, screenshots, and build/lint verification
@@ -12,9 +13,9 @@
 
 The Sareine Craft website is a polished visual Next.js App Router project with a strong brand direction, centralized static data for most public content, and a production build that completes successfully. The strongest implementation areas are the public homepage, craft collection routing, global brand tokens, image-heavy editorial sections, and the reusable site data/navigation layer.
 
-The weakest areas are launch completeness and route consistency. Several real routes render `null`: `/contact`, `/privacy`, `/terms`, `/cookies`, `/events/[slug]`, all auth routes, and all admin routes. These routes build successfully, but users and crawlers receive blank pages. Footer legal links therefore point to empty legal pages, and the header/footer expose `/contact` indirectly only through the footer contact label context rather than a complete contact page.
+The weakest areas are now concentrated in unfinished private surfaces and navigation refinement. The public contact and legal pages are implemented through `InfoPage` and localized content in `src/data/info-pages.ts`, and metadata routes now exist for `/sitemap.xml`, `/robots.txt`, and `/manifest.webmanifest`. Auth and admin routes still render `null` and have no guard, so they should be protected, removed, or explicitly noindexed before launch.
 
-The public experience currently concentrates on three meaningful content pages: `/`, `/events`, and `/craft`, plus `/about` and seven craft collection pages. Events are section-based only; there are event category anchors but no linked event detail pages. Craft detail pages are more mature: slugs are generated from `craftCollections`, metadata is generated per collection, and invalid craft collection slugs are excluded with `dynamicParams = false`.
+The public experience currently includes `/`, `/events`, `/craft`, `/about`, `/contact`, `/privacy`, `/cookies`, `/terms`, their localized `/fr`, `/en`, and `/ar` equivalents, and seven craft collection pages. Events remain section-based only; there is no current event detail route. Craft detail pages remain the most mature dynamic surface: slugs are generated from `craftCollections`, metadata is generated per collection, and invalid craft collection slugs are excluded with `dynamicParams = false`.
 
 Severity summary:
 
@@ -22,13 +23,13 @@ Severity summary:
 |---|---:|---|
 | Public visual direction | GOOD | Strong premium/artisanal identity with plum, gold, ivory, editorial imagery, and consistent tone. |
 | Build health | GOOD | `npm run build` and `npm run lint` pass. |
-| Empty public/legal routes | HIGH | Linked legal pages and contact page exist but return `null`. |
-| Empty auth/admin/event detail routes | MEDIUM | Real routable URLs exist with no UI, auth, or guard. |
+| Public/legal routes | GOOD | Contact, privacy, cookies, and terms pages now render localized `InfoPage` content. |
+| Empty auth/admin routes | MEDIUM | Real auth/admin URLs exist with no UI, auth, or guard. |
 | Navigation clarity | MEDIUM | Header/footer navigation is stable, but event cards all route to `/events` rather than category anchors or details. |
 | Data architecture | GOOD | Site, navigation, home, events, about, craft, and collections are mostly centralized. |
 | API readiness | MEDIUM | Static data is typed, but content is still imported directly into pages/components and several record arrays are empty. |
-| Accessibility | MEDIUM | Good alt text and focus outlines exist; lightbox focus trapping, empty route semantics, hidden scrollbars, and decorative full-page screenshots reveal risks. |
-| SEO | MEDIUM | Root/craft/events/about metadata exists; many pages inherit generic or empty metadata and blank pages are indexable unless controlled elsewhere. |
+| Accessibility | MEDIUM | Good alt text and focus outlines exist; remaining risks include lightbox focus trapping, hidden scrollbars, and manual mobile/keyboard QA. |
+| SEO | MEDIUM | Metadata routes exist and public/legal pages have content; remaining risk is thin page metadata and auth/admin routes without route-level noindex. |
 | Performance | MEDIUM | Next Image is used heavily, but assets include large PNG/JPEG files and many above-the-fold/client sections. |
 
 ## Table of Contents
@@ -75,14 +76,17 @@ Sareine Website
 │   │   │   ├── layout.tsx                # PublicHeader + main + PublicFooter + FloatingWhatsApp
 │   │   │   ├── page.tsx                  # Homepage
 │   │   │   ├── events/page.tsx           # Events experience
-│   │   │   ├── events/[slug]/page.tsx    # Empty event detail route
 │   │   │   ├── craft/page.tsx            # Craft landing page
 │   │   │   ├── craft/[slug]/page.tsx     # SSG craft collection details
 │   │   │   ├── about/page.tsx            # About page
-│   │   │   ├── contact/page.tsx          # Empty route
-│   │   │   ├── privacy/page.tsx          # Empty legal route
-│   │   │   ├── terms/page.tsx            # Empty legal route
-│   │   │   └── cookies/page.tsx          # Empty legal route
+│   │   │   ├── contact/page.tsx          # InfoPage contact route
+│   │   │   ├── privacy/page.tsx          # InfoPage legal route
+│   │   │   ├── terms/page.tsx            # InfoPage legal route
+│   │   │   └── cookies/page.tsx          # InfoPage legal route
+│   │   ├── [locale]/                     # Localized public pages
+│   │   ├── sitemap.ts                    # /sitemap.xml
+│   │   ├── robots.ts                     # /robots.txt
+│   │   ├── manifest.ts                   # /manifest.webmanifest
 │   │   ├── (auth)/                       # Empty auth routes
 │   │   └── (admin)/                      # Empty admin routes
 │   │
@@ -132,8 +136,9 @@ Important architecture notes:
 | Route groups | Public, auth, and admin are separated with App Router route groups. Only public pages have a shared header/footer layout. |
 | Styling | The code mixes global Tailwind utilities, CSS Modules, and hardcoded arbitrary values. This gives flexibility but creates consistency risk. |
 | Data | Most public copy/images/CTAs are centralized in `src/data`, which is a strong base for future CMS/API migration. |
-| Detail pages | Craft collections have real SSG detail routes; event details are present but empty. |
-| Features/services | `src/features` only contains `.DS_Store`; `src/services` exists but no files were found. |
+| Detail pages | Craft collections have real SSG detail routes; event detail pages are not currently present. |
+| Metadata routes | `sitemap.ts`, `robots.ts`, and `manifest.ts` are implemented under `src/app`. |
+| OS metadata noise | `.DS_Store` files remain in `src/`, `src/app/`, and `src/components/`. |
 
 ## Route Inventory
 
@@ -142,10 +147,13 @@ Build verification (`npm run build`) reported these routes:
 | Route | Page | Source | Purpose | Linked From | Type | Status |
 |---|---|---|---|---|---|---|
 | `/` | Home | `src/app/(public)/page.tsx` | Main landing page | Header, footer, logo | PUBLIC | Active |
+| `/[locale]` | Localized home | `src/app/[locale]/page.tsx` | Localized landing page | Middleware/language switcher | PUBLIC / I18N | Active |
 | `/about` | About | `src/app/(public)/about/page.tsx` | Brand/story/process | Header, footer, CTAs | PUBLIC | Active |
+| `/[locale]/about` | Localized about | `src/app/[locale]/about/page.tsx` | Localized about page | Middleware/language switcher | PUBLIC / I18N | Active |
 | `/events` | Events | `src/app/(public)/events/page.tsx` | Event services and categories | Header, footer, homepage, about | PUBLIC | Active |
-| `/events/[slug]` | Event detail | `src/app/(public)/events/[slug]/page.tsx` | Intended event detail | Not meaningfully linked | PUBLIC / DYNAMIC | Empty route |
+| `/[locale]/events` | Localized events | `src/app/[locale]/events/page.tsx` | Localized event services | Middleware/language switcher | PUBLIC / I18N | Active |
 | `/craft` | Craft | `src/app/(public)/craft/page.tsx` | Craft collections overview | Header, footer, homepage, about | PUBLIC | Active |
+| `/[locale]/craft` | Localized craft | `src/app/[locale]/craft/page.tsx` | Localized craft overview | Middleware/language switcher | PUBLIC / I18N | Active |
 | `/craft/bougies-gourmandes` | Craft collection | `src/app/(public)/craft/[slug]/page.tsx` | Collection detail | `/craft` cards | PUBLIC / SSG | Active |
 | `/craft/princesses` | Craft collection | `src/app/(public)/craft/[slug]/page.tsx` | Collection detail | `/craft` cards | PUBLIC / SSG | Active |
 | `/craft/silhouettes-robes` | Craft collection | `src/app/(public)/craft/[slug]/page.tsx` | Collection detail | `/craft` cards | PUBLIC / SSG | Active |
@@ -153,10 +161,15 @@ Build verification (`npm run build`) reported these routes:
 | `/craft/ourson-bleu` | Craft collection | `src/app/(public)/craft/[slug]/page.tsx` | Collection detail | `/craft` cards | PUBLIC / SSG | Active |
 | `/craft/anges` | Craft collection | `src/app/(public)/craft/[slug]/page.tsx` | Collection detail | `/craft` cards | PUBLIC / SSG | Active |
 | `/craft/fleurs-sculptees` | Craft collection | `src/app/(public)/craft/[slug]/page.tsx` | Collection detail | `/craft` cards | PUBLIC / SSG | Active |
-| `/contact` | Contact | `src/app/(public)/contact/page.tsx` | Intended contact page | Not in main nav | PUBLIC | Empty route |
-| `/privacy` | Privacy | `src/app/(public)/privacy/page.tsx` | Legal page | Footer legal nav | LEGAL | Empty linked route |
-| `/terms` | Terms | `src/app/(public)/terms/page.tsx` | Legal page | Footer legal nav | LEGAL | Empty linked route |
-| `/cookies` | Cookies | `src/app/(public)/cookies/page.tsx` | Legal page | Footer legal nav | LEGAL | Empty linked route |
+| `/[locale]/craft/{slug}` | Localized craft collection | `src/app/[locale]/craft/[slug]/page.tsx` | Localized collection detail | `/[locale]/craft` cards | PUBLIC / I18N / SSG | Active |
+| `/contact` | Contact | `src/app/(public)/contact/page.tsx` | Contact page | Direct URL, sitemap | PUBLIC | Active InfoPage |
+| `/[locale]/contact` | Localized contact | `src/app/[locale]/contact/page.tsx` | Localized contact page | Middleware/language switcher | PUBLIC / I18N | Active InfoPage |
+| `/privacy` | Privacy | `src/app/(public)/privacy/page.tsx` | Legal page | Footer legal nav | LEGAL | Active InfoPage |
+| `/[locale]/privacy` | Localized privacy | `src/app/[locale]/privacy/page.tsx` | Localized legal page | Middleware/language switcher | LEGAL / I18N | Active InfoPage |
+| `/terms` | Terms | `src/app/(public)/terms/page.tsx` | Legal page | Footer legal nav | LEGAL | Active InfoPage |
+| `/[locale]/terms` | Localized terms | `src/app/[locale]/terms/page.tsx` | Localized legal page | Middleware/language switcher | LEGAL / I18N | Active InfoPage |
+| `/cookies` | Cookies | `src/app/(public)/cookies/page.tsx` | Legal page | Footer legal nav | LEGAL | Active InfoPage |
+| `/[locale]/cookies` | Localized cookies | `src/app/[locale]/cookies/page.tsx` | Localized legal page | Middleware/language switcher | LEGAL / I18N | Active InfoPage |
 | `/login` | Login | `src/app/(auth)/login/page.tsx` | Intended auth | Direct URL only | AUTH | Empty route |
 | `/forgot-password` | Forgot password | `src/app/(auth)/forgot-password/page.tsx` | Intended auth | Direct URL only | AUTH | Empty route |
 | `/reset-password` | Reset password | `src/app/(auth)/reset-password/page.tsx` | Intended auth | Direct URL only | AUTH | Empty route |
@@ -167,13 +180,17 @@ Build verification (`npm run build`) reported these routes:
 | `/admin/products` | Admin products | `src/app/(admin)/admin/products/page.tsx` | Intended admin | Direct URL only | ADMIN | Empty, unguarded route |
 | `/admin/projects` | Admin projects | `src/app/(admin)/admin/projects/page.tsx` | Intended admin | Direct URL only | ADMIN | Empty, unguarded route |
 | `/admin/settings` | Admin settings | `src/app/(admin)/admin/settings/page.tsx` | Intended admin | Direct URL only | ADMIN | Empty, unguarded route |
+| `/sitemap.xml` | Sitemap | `src/app/sitemap.ts` | Search discovery | Robots/search engines | METADATA | Active |
+| `/robots.txt` | Robots | `src/app/robots.ts` | Crawler rules | Search engines | METADATA | Active |
+| `/manifest.webmanifest` | Manifest | `src/app/manifest.ts` | App/site metadata | Browser | METADATA | Active |
 | `/_not-found` | Not found | generated by Next | Error route | Framework | UTILITY | Generated |
 
 Evidence:
 
-- Empty public/legal/event detail files return `null` in `src/app/(public)/contact/page.tsx`, `privacy/page.tsx`, `terms/page.tsx`, `cookies/page.tsx`, and `events/[slug]/page.tsx`.
+- Contact/legal pages render `InfoPage` data from `src/data/info-pages.ts`.
 - Empty admin/auth routes return `null` in `src/app/(admin)/admin/**/page.tsx` and `src/app/(auth)/**/page.tsx`.
 - Craft detail paths are generated from `craftCollections` in `src/app/(public)/craft/[slug]/page.tsx`.
+- Localized public pages exist under `src/app/[locale]`.
 
 ## Internal Link Inventory
 
@@ -187,7 +204,7 @@ Evidence:
 | Global public layout | Floating WhatsApp | `https://wa.me/212607306666` | External | Active | Global conversion. |
 | Footer | Logo | `/` | Internal | Active | Footer brand block. |
 | Footer | Explore nav | `/`, `/craft`, `/events`, `/about` | Internal | Active | Mirrors header nav. |
-| Footer | Legal nav | `/privacy`, `/cookies`, `/terms` | Internal | Broken content | Routes exist but are blank. |
+| Footer | Legal nav | `/privacy`, `/cookies`, `/terms` | Internal | Active | Routes render `InfoPage` legal content. |
 | Footer | Contact WhatsApp | `https://wa.me/212607306666` | External | Active | Only configured contact method. |
 | Footer | Instagram | Instagram URL | External | Active | Configured in `src/data/social.ts`. |
 | Footer | Project CTA | WhatsApp project URL | External | Active | Good direct conversion. |
@@ -213,10 +230,9 @@ Evidence:
 | About final CTA | Primary | WhatsApp project URL | External | Active | Conversion. |
 | About final CTA | Secondary | `/events` | Internal | Active | Service discovery. |
 
-Broken/unhelpful link findings:
+Unhelpful link findings:
 
-- Footer legal links route to pages that render `null`.
-- `/contact` exists but renders `null`; it is not used as the primary conversion path.
+- `/contact` exists and renders content, but the primary conversion path remains WhatsApp.
 - Event category cards from the homepage route only to `/events`; they do not deep-link to `#baby-shower`, `#anniversaire`, `#remise-de-diplomes`, or `#evenements-prives`.
 - `EventNavigation` exists as a category anchor index but is not imported into `EventsExperience`, so users do not currently get the sticky event index.
 
@@ -262,9 +278,9 @@ flowchart TD
     FOOTER --> CRAFT
     FOOTER --> EVENTS
     FOOTER --> ABOUT
-    FOOTER --> PRIVACY["/privacy (blank)"]
-    FOOTER --> COOKIES["/cookies (blank)"]
-    FOOTER --> TERMS["/terms (blank)"]
+    FOOTER --> PRIVACY["/privacy"]
+    FOOTER --> COOKIES["/cookies"]
+    FOOTER --> TERMS["/terms"]
     FOOTER --> INSTAGRAM["Instagram (external)"]
     FOOTER --> WHATSAPP
 ```
@@ -291,7 +307,7 @@ flowchart LR
     About --> ProjectWhatsApp["WhatsApp project inquiry (external)"]
 
     Home --> FooterLegal["Legal footer links"]
-    FooterLegal --> BlankLegal["Blank legal routes"]
+    FooterLegal --> LegalInfo["Legal InfoPage routes"]
 ```
 
 ## Screenshots
@@ -417,7 +433,7 @@ Strong editorial structure and premium event imagery. Each category has image st
 Hero scrolls to `#baby-shower`. Category sections have stable IDs. A sticky `EventNavigation` component exists but is not used in `EventsExperience`, so the page lacks an in-page category index.
 
 ### UX
-Clear service categories and WhatsApp conversion. No event detail cards/pages are surfaced despite `/events/[slug]` existing.
+Clear service categories and WhatsApp conversion. Events are intentionally section-based right now; no event detail route is present in the current app tree.
 
 ### Responsive Behaviour
 Mobile screenshot shows readable hero and first event section. Full-page screenshot reveals very large blank/faded offscreen areas caused by scroll animation capture behavior; verify scroll animations manually across devices.
@@ -436,13 +452,13 @@ Several alternative event chapter components exist but are unused: `CinematicCha
 
 ### Issues
 - `NAV-002`: `EventNavigation` exists but is not rendered.
-- `ARCH-002`: `/events/[slug]` route exists and renders `null`.
+- `UX-003`: Homepage event category cards still route broadly to `/events` instead of event-specific anchors.
 - `PERF-002`: Entire events experience is client-rendered for lightbox state.
 - `UX-003`: Event category CTAs all go directly to WhatsApp; there is no secondary detail route.
 
 ### Recommendations
 - Either use `EventNavigation` or remove it from the intended current architecture.
-- Decide whether event details are section anchors only or real detail pages; then remove or implement `/events/[slug]`.
+- Decide whether event details should remain section anchors only or become real detail pages later.
 - Split static event content into server components and keep only lightbox/gallery controls client-side if performance becomes an issue.
 
 ## Page — Craft
@@ -626,16 +642,16 @@ Strongest page metadata in the app: canonical, keywords, OpenGraph, and Twitter 
 `src/app/(public)/contact/page.tsx`
 
 ### Purpose
-Intended contact page.
+Contact page with WhatsApp-oriented project inquiry content.
 
 ### Current Structure
-Returns `null`.
+Renders `InfoPage` using `getInfoPage("fr", "contact")`; localized routes use the requested locale.
 
 ### Issues
-- `HIGH`: Real public route with blank content.
+- `LOW`: Contact exists but page-level metadata is thinner than the richer About page metadata.
 
 ### Recommendations
-- Implement minimal contact content, redirect to WhatsApp, or remove the route before launch.
+- Add page-specific metadata and confirm the WhatsApp message/copy before launch.
 
 ## Page — Legal Routes
 
@@ -649,13 +665,13 @@ Returns `null`.
 Footer legal pages.
 
 ### Current Structure
-All return `null`.
+Render `InfoPage` content from `src/data/info-pages.ts` with French, English, and Arabic localized versions.
 
 ### Issues
-- `HIGH`: Footer points users to blank legal pages.
+- `LOW`: Legal copy is present but still should be reviewed/approved before launch.
 
 ### Recommendations
-- Add legal copy, mark as noindex until content is finalized, or temporarily remove footer links.
+- Review legal copy, add page-specific metadata, and decide whether temporary legal pages should be indexed.
 
 ## Page — Auth/Admin Routes
 
@@ -774,7 +790,7 @@ Architecture readiness:
 | Component | Used On | Reusable? | Consistent? | Issue | Recommendation |
 |---|---|---:|---:|---|---|
 | `PublicHeader` | All public pages | Yes | Mostly | Complex scroll tone detection; language selector state only local and non-routing | Keep but document behavior; implement real locale routing or remove inactive language UI later. |
-| `PublicFooter` | All public pages | Yes | Yes | Legal links point to blank pages | Fill legal pages or hide links. |
+| `PublicFooter` | All public pages | Yes | Yes | Legal links now resolve to InfoPage content | Review legal copy before launch. |
 | `FloatingWhatsApp` | All public pages | Yes | Yes | Can overlap content on small screens | Verify bottom spacing on all long pages. |
 | `ProjectCTA` | Header | Yes | Partly | Label default says "Contacter nous" | Correct copy in a future content pass. |
 | `Button` | Shared UI | Yes | Yes | Uses text arrow `->` rather than icon | Acceptable, but align with design system if icons are introduced. |
@@ -885,7 +901,7 @@ Risks:
 | Craft landing | GOOD | GOOD | GOOD | GOOD | Stable cards and readable flow. |
 | Craft detail | CHECK | GOOD | GOOD | GOOD | Only desktop screenshot captured for detail page; mobile should be verified before launch. |
 | About | GOOD | GOOD | GOOD | GOOD | Compact and readable. |
-| Footer | GOOD | GOOD | GOOD | GOOD | Legal links are blank destinations. |
+| Footer | GOOD | GOOD | GOOD | GOOD | Legal links now have content; copy still needs final approval. |
 
 ## Image / Asset Audit
 
@@ -982,7 +998,7 @@ Concrete risks:
 
 | Area | Source | Risk | Recommendation |
 |---|---|---|---|
-| Empty routes | `contact`, legal, auth/admin, event detail pages | Blank pages provide no heading, landmark content, or user explanation | Implement content or return `notFound()`. |
+| Empty routes | Auth/admin routes | Blank private/admin pages provide no heading, landmark content, or user explanation | Protect, remove, noindex, or implement content. |
 | Lightbox | `EventsLightbox` | Dialog has close/next/previous, but no full focus trap | Add focus trap and ensure Tab cycles within modal. |
 | Hidden scrollbars | `EventNavigation` | Scrollable category nav hides scrollbars | If used, provide visible overflow affordance. |
 | Visual-only icons | Several SVG/text icons | Mostly decorative; some text symbols may be read oddly if not hidden | Ensure all decorative icons use `aria-hidden`. |
@@ -993,18 +1009,18 @@ Concrete risks:
 
 | SEO Item | Status | Source | Recommendation |
 |---|---|---|---|
-| Root title/description | GOOD | `src/app/layout.tsx` | Add `metadataBase`, OpenGraph, Twitter, canonical defaults. |
-| Locale | GOOD | `html lang="fr"` | Keep. |
+| Root title/description | GOOD | `src/app/layout.tsx` includes `metadataBase` | Add OpenGraph, Twitter, and canonical defaults. |
+| Locale | GOOD | Root layout derives `html lang` and `dir` from locale headers/cookie | Keep locale routing/header behavior aligned. |
 | Home metadata | CHECK | Inherits root metadata | Add page-specific home OpenGraph/canonical. |
 | Events metadata | GOOD | `src/app/(public)/events/page.tsx` | Add OpenGraph image/canonical. |
 | Craft metadata | GOOD | `src/app/(public)/craft/page.tsx` | Add OpenGraph image/canonical. |
 | Craft collection metadata | GOOD | `generateMetadata` from collection | Add canonical and OG image from cover. |
 | About metadata | GOOD | Rich metadata in `about/page.tsx` | Use as pattern for others. |
-| Legal metadata | ISSUE | Blank pages, no metadata | Add noindex until content exists. |
-| Admin/auth metadata | ISSUE | Blank routes, no robots/noindex | Protect or noindex. |
-| Sitemap | MISSING | No `sitemap.ts` found | Add sitemap for active routes only. |
-| Robots | MISSING | No `robots.ts` found | Add rules, especially for admin/auth. |
-| Manifest | MISSING | No manifest found | Optional, add if PWA/social brand requires. |
+| Contact/legal metadata | CHECK | Info pages have content but no page-specific metadata | Add metadata and decide index/noindex policy. |
+| Admin/auth metadata | ISSUE | Blank routes are blocked in `robots.ts`, but no route-level noindex/guards exist | Protect or add noindex metadata. |
+| Sitemap | GOOD | `src/app/sitemap.ts` | Keep route list aligned with public pages and craft collections. |
+| Robots | GOOD | `src/app/robots.ts` | Continue blocking admin/auth/API surfaces until they are production-ready. |
+| Manifest | GOOD | `src/app/manifest.ts` | Add smaller dedicated icons later if needed. |
 | Structured data | MISSING | No JSON-LD found | Add Organization/LocalBusiness later. |
 
 Semantic structure:
@@ -1051,13 +1067,13 @@ No dependency removal is recommended from this audit.
 
 | Area | Evidence | Status | Recommendation |
 |---|---|---|---|
-| Empty public pages | `/contact`, `/privacy`, `/terms`, `/cookies` return `null` | Unfinished | Implement, redirect, noindex, or remove. |
-| Empty event detail | `/events/[slug]` returns `null` | Unfinished | Implement or remove route. |
+| Public info pages | `/contact`, `/privacy`, `/terms`, `/cookies` render `InfoPage` content | Fixed | Review copy and metadata before launch. |
+| Event detail route | No current `/events/[slug]` route found | Not present | Keep section-based events or add detail pages intentionally later. |
 | Empty auth/admin | All auth/admin page files return `null` | Unfinished | Protect or remove from production routing. |
 | Unused event components | `CinematicChapter`, `EditorialGridChapter`, `FeatureGalleryChapter`, `GraduationChapter`, `OverlapChapter`, `EventsSignature`, `EventsFinalCta`, `EventNavigation` not imported by active page | Likely abandoned/experimental | Document intent, use, or remove later. |
 | Empty records | `events: []`, `crafts: []`, `testimonials: []` | Future placeholders | Keep only if roadmap needs them. |
-| `src/features/.DS_Store` | OS metadata file | Noise | Remove later. |
-| Commented hero image block | `Hero.tsx` contains large commented image implementation | Dead/commented code | Remove during cleanup if not needed. |
+| `.DS_Store` files | OS metadata files remain in `src/`, `src/app/`, and `src/components/` | Noise | Remove now and add ignore coverage if needed. |
+| Commented hero image block | `Hero.tsx` contained large commented image implementation | Fixed | Removed. |
 
 ## User Journey Analysis
 
@@ -1089,7 +1105,7 @@ Landing
 Friction:
 
 - Homepage category cards do not deep-link to category anchors.
-- `/events/[slug]` exists but does not support detail exploration.
+- No event detail route exists; event discovery currently depends on the main `/events` page sections.
 - Sticky event index exists but is not rendered.
 
 ### Journey C — Discover crafts
@@ -1125,7 +1141,7 @@ Friction:
 | Collection cards | Craft grid | `/craft/{slug}` | Yes | Yes | Good. |
 | Voir les modèles | Craft detail | `#modeles` | Yes | Yes | None. |
 | Découvrir notre univers | Craft story | `/about` | Yes | Yes | Good trust path. |
-| Footer legal links | Footer | Blank legal pages | No | No | High-priority content gap. |
+| Footer legal links | Footer | InfoPage legal routes | Yes | Mostly | Copy still needs final approval. |
 
 ## Full Website Relationship Diagram
 
@@ -1165,34 +1181,32 @@ flowchart TD
     ABOUT --> PROCESS["Brand process"]
     ABOUT --> CONV
 
-    LEGAL --> BLANK["Blank privacy / cookies / terms"]
+    LEGAL --> INFO["Privacy / cookies / terms InfoPages"]
     EMPTY --> AUTH["Blank auth"]
     EMPTY --> ADMIN["Blank admin"]
-    EMPTY --> EDETAIL["Blank event detail"]
 ```
 
 # Issue Register
 
 | ID | Severity | Area | Page/Component | Issue | Evidence | Recommended Action |
 |---|---|---|---|---|---|---|
-| ARCH-001 | HIGH | Routing | Legal/contact pages | Public and footer-linked pages return blank content | `contact`, `privacy`, `terms`, `cookies` page files return `null` | Implement content, redirect, noindex, or remove links. |
-| ARCH-002 | MEDIUM | Routing | `/events/[slug]` | Dynamic event detail route returns blank content | `src/app/(public)/events/[slug]/page.tsx` returns `null` | Implement detail pages or remove route. |
 | ARCH-003 | MEDIUM | Routing/Security | Admin/auth pages | Admin/auth routes are routable but blank and unguarded | `src/app/(admin)` and `src/app/(auth)` pages return `null` | Add middleware/guards or remove from production. |
-| NAV-001 | HIGH | Navigation | Footer legal nav | Legal links are active but lead to blank pages | `legalNavigation` links to `/privacy`, `/cookies`, `/terms` | Fill legal routes before launch. |
+| CONTENT-001 | LOW | Legal/contact | Info pages | Legal/contact pages now exist but need final copy approval and metadata | `InfoPage` uses `src/data/info-pages.ts`; no page-specific metadata | Review copy, add metadata, decide index/noindex. |
 | NAV-002 | LOW | Events | `EventNavigation` | Sticky event nav exists but is unused | No imports found for `EventNavigation` | Use it or remove/document it. |
 | UX-001 | MEDIUM | Homepage | `ServicesSection` | Cards look like navigational tiles but are not links | `homeServices.cards` include `href`; rendered as `article` | Make cards clickable or remove href data. |
 | UX-002 | LOW | Homepage | `ProjectContactSection` | Two adjacent CTAs lead to same WhatsApp URL | `primaryCta` and `whatsappCta` both use project WhatsApp | Differentiate actions or remove duplicate. |
 | UX-003 | MEDIUM | Events | Category navigation | Homepage event category cards all go to `/events` instead of anchors | `homeEventCategories.categories[*].href` are `/events` | Deep-link to event IDs. |
 | RESP-001 | MEDIUM | Mobile | Home/events long sections | Mobile event sections are very tall and scroll-heavy | Screenshots show long vertical image sections | Review mobile section heights and density. |
 | A11Y-001 | MEDIUM | Modal | Events lightbox | Dialog lacks full focus trap | `EventsLightbox` handles close/focus restore but not Tab trap | Add focus trap and keyboard QA. |
-| A11Y-002 | HIGH | Blank pages | Empty routes | Blank routes have no headings/landmarks/content | Route files return `null` | Return notFound or meaningful content. |
-| SEO-001 | HIGH | SEO | Blank legal/contact/admin/auth routes | Blank pages are buildable/indexable unless otherwise controlled | No `robots.ts`, no noindex metadata | Add robots/noindex or remove routes. |
+| A11Y-002 | MEDIUM | Blank pages | Auth/admin routes | Blank auth/admin routes have no headings/landmarks/content | Auth/admin page files return `null` | Protect, noindex, remove, or implement content. |
+| SEO-001 | MEDIUM | SEO | Blank auth/admin routes | Auth/admin pages are buildable; robots blocks discovery but route-level noindex/guards are still absent | `robots.ts` exists; no route-level noindex metadata | Add guards, noindex, notFound, or remove routes. |
 | SEO-002 | MEDIUM | SEO | Public pages | Metadata depth is inconsistent | About rich metadata; home/craft/events thinner | Add canonical/OG/Twitter consistently. |
 | PERF-001 | MEDIUM | Assets | Large PNG/JPG images | Several assets exceed ~2 MB | `find public ... du` output | Optimize/convert source assets. |
 | PERF-002 | MEDIUM | JS | Events page | Full events experience is client component | `EventsExperience` uses `"use client"` | Split static rendering from lightbox island later. |
 | DATA-001 | MEDIUM | Data | Events/crafts records | `events`, `crafts`, `testimonials` arrays are empty placeholders | `src/data/events.ts`, `craft.ts`, `testimonials.ts` | Clarify future API model or remove unused exports. |
 | DATA-002 | LOW | Data/UI | Craft page | `craftPageData.creations.items` is not rendered by current craft page | `CraftCreationsSection` renders `craftCollections` only | Align data with UI. |
 | ASSET-001 | LOW | Assets | Filenames | `right side.png` contains a space | `public/images/home/hero/right side.png` | Rename in coordinated asset cleanup. |
+| CLEAN-001 | LOW | Repo hygiene | `.DS_Store` files | OS metadata files remain in source tree | `src/.DS_Store`, `src/app/.DS_Store`, `src/components/.DS_Store` | Remove and ignore. |
 | UI-001 | LOW | Design system | Event surfaces/shadows | Many arbitrary colors/shadows bypass tokens | Event components use hardcoded hex/arbitrary shadows | Tokenize after visual direction stabilizes. |
 
 # Prioritized Roadmap
@@ -1201,15 +1215,15 @@ flowchart TD
 
 | Task | Priority | Affected files/components | Reason | Expected impact | Dependencies |
 |---|---|---|---|---|---|
-| Implement or disable legal pages | HIGH | `src/app/(public)/privacy`, `terms`, `cookies`, `src/data/navigation.ts` | Footer links currently open blank pages | Prevent legal/SEO/user trust issues | Legal copy |
-| Resolve `/contact` | HIGH | `src/app/(public)/contact/page.tsx` | Public route is blank | Clear contact path or intentional redirect | Contact content decision |
 | Add noindex/protection for auth/admin if kept | HIGH | `src/app/(auth)`, `src/app/(admin)`, middleware/metadata | Empty admin/auth pages are routable | Avoid indexing unfinished surfaces | Auth/admin roadmap |
+| Remove `.DS_Store` files | LOW | `src/.DS_Store`, `src/app/.DS_Store`, `src/components/.DS_Store` | OS metadata noise remains in source folders | Cleaner repository | None |
+| Final-review legal/contact copy | MEDIUM | `src/data/info-pages.ts`, contact/legal pages | Pages now exist but should be approved before launch | Better trust/compliance | Copy/legal review |
 
 ## Phase 2 — Navigation & UX
 
 | Task | Priority | Affected files/components | Reason | Expected impact | Dependencies |
 |---|---|---|---|---|---|
-| Decide event detail strategy | MEDIUM | `/events/[slug]`, `events.ts`, homepage event cards | Route exists but no experience | Cleaner event navigation model | Content strategy |
+| Decide whether event details are needed | LOW | `events.ts`, future route planning | No event detail route exists now, but `events: []` remains a placeholder | Cleaner event content model | Content strategy |
 | Deep-link event category cards | MEDIUM | `src/data/home.ts`, `EventCategoriesSection` | Users expect specific category | Faster service discovery | Stable event IDs |
 | Fix service card affordance | MEDIUM | `ServicesSection`, `homeServices` | Cards imply navigation | Reduced UX friction | Design decision |
 
@@ -1240,7 +1254,7 @@ flowchart TD
 
 | Task | Priority | Affected files/components | Reason | Expected impact | Dependencies |
 |---|---|---|---|---|---|
-| Add sitemap and robots | HIGH | `src/app/sitemap.ts`, `src/app/robots.ts` | Active routes should be discoverable; unfinished routes controlled | SEO hygiene | Route decisions |
+| Maintain sitemap, robots, and manifest | LOW | `src/app/sitemap.ts`, `src/app/robots.ts`, `src/app/manifest.ts` | Metadata routes now exist and should stay aligned with launch route decisions | SEO/PWA hygiene | Route decisions |
 | Standardize metadata | MEDIUM | home/events/craft/collections/legal | About page is richer than others | Better social/SEO previews | Copy/OG images |
 | Improve lightbox accessibility | MEDIUM | `EventsLightbox` | Focus trap/keyboard completeness | Better keyboard UX | Testing |
 
@@ -1263,13 +1277,13 @@ flowchart TD
 
 ### What needs immediate attention
 
-- Blank public/legal routes must be fixed before launch.
 - Admin/auth routes should not remain publicly routable without guards or noindex behavior.
-- Event detail route strategy needs a decision: implement it, redirect it, or remove it.
+- Legal/contact copy should receive final approval before launch.
+- Remaining `.DS_Store` files should be removed from source folders.
 
 ### What should be improved before launch
 
-- Add sitemap/robots and consistent metadata.
+- Standardize metadata across public pages and add route-level noindex/guards for auth/admin if those routes remain.
 - Optimize the largest PNG assets.
 - Deep-link homepage event categories.
 - Make service cards behavior match their visual affordance.
@@ -1290,22 +1304,24 @@ flowchart TD
 
 ### UX risks
 
-- Users can hit blank legal/contact pages.
+- Auth/admin routes can still be reached directly and currently render blank surfaces.
 - Event category navigation is less precise than the content structure supports.
 - Craft browsing is strong, but craft-specific conversion is indirect.
 
 ### Recommended next development phase
 
-Phase 1 should focus on route completeness and launch hygiene: legal/contact pages, robots/sitemap/noindex/protection for unfinished areas, and navigation fixes. After that, refine event navigation and optimize assets before deeper design-system or API work.
+Phase 1 should focus on launch hygiene: protect or noindex auth/admin routes, review legal/contact copy, remove OS metadata files, and fix navigation precision. After that, refine event navigation and optimize assets before deeper design-system or API work.
 
 ## Verification
 
 Completed checks:
 
 - Re-scanned route structure with `find src/app -type f`.
+- Re-scanned source noise with `find src -name '.DS_Store' -print`.
+- Re-ran `npm run lint` successfully.
 - Verified production build route output with `npm run build`.
 - Re-scanned internal links with `rg` for `<Link`, `href`, router navigation, redirects, `window.location`, mail/tel/WhatsApp/social URLs, and anchors.
-- Verified file paths and line evidence for empty routes, navigation data, global metadata, tokens, event data, and craft collection routing.
+- Verified file paths and line evidence for remaining empty auth/admin routes, navigation data, global metadata, metadata routes, tokens, event data, and craft collection routing.
 - Verified major public pages: `/`, `/events`, `/craft`, `/craft/[slug]`, `/about`, `/contact`, legal routes.
 - Covered Navbar and Footer links.
 - Covered event category and craft collection navigation.
