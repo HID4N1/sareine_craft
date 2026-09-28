@@ -23,7 +23,6 @@ export {
   homeHero,
   homeProcess,
   homeProjectContact,
-  homeRealisations,
   homeServices,
 } from "./home";
 export type {
@@ -36,8 +35,6 @@ export type {
   HomeProcessData,
   HomeProcessStep,
   HomeProjectContactData,
-  HomeRealisationItem,
-  HomeRealisationsData,
   HomeServiceCard,
   HomeServicesData,
   HomeServiceValue,
@@ -47,7 +44,6 @@ export {
   legalNavigation,
   publicNavigation,
 } from "./navigation";
-export { realisations } from "./realisations";
 export { siteData } from "./site";
 export { socialLinks } from "./social";
 export { testimonials } from "./testimonials";

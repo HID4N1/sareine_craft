@@ -152,8 +152,8 @@ export const aboutPageData = {
       href: projectWhatsAppHref,
     },
     secondary: {
-      label: "Voir nos réalisations",
-      href: "/realisations",
+      label: "Découvrir nos événements",
+      href: "/events",
     },
   },
 };

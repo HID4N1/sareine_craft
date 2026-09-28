@@ -14,10 +14,6 @@ export const publicNavigation: NavigationItem[] = [
     href: "/events",
   },
   {
-    label: "Réalisations",
-    href: "/realisations",
-  },
-  {
     label: "À propos",
     href: "/about",
   },
