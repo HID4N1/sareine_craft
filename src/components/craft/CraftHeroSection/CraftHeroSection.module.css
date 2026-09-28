@@ -5,6 +5,11 @@
   background: var(--sareine-plum-700);
 }
 
+:global(html[dir="rtl"]) .hero {
+  direction: ltr;
+  text-align: left;
+}
+
 .imageWrapper {
   position: absolute;
   inset: 0 0 0 45%;

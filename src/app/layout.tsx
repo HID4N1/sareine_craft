@@ -3,9 +3,12 @@ import {
   Allura,
   Cormorant_Garamond,
   Manrope,
-  
+  Noto_Naskh_Arabic,
 } from "next/font/google";
+import { cookies, headers } from "next/headers";
 import "./globals.css";
+
+import { defaultLocale, isLocale, isRTL, localeCookieName } from "@/i18n/config";
 
 const cormorantGaramond = Cormorant_Garamond({
   variable: "--font-display",
@@ -26,6 +29,12 @@ const allura = Allura({
   display: "swap",
 });
 
+const notoNaskhArabic = Noto_Naskh_Arabic({
+  variable: "--font-arabic",
+  subsets: ["arabic"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Sareine — Craft & Events",
   description:
@@ -41,12 +50,25 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const cookieStore = await cookies();
+  const headerStore = await headers();
+  const headerLocale = headerStore.get("x-sareine-locale");
+  const cookieLocale = cookieStore.get(localeCookieName)?.value;
+  const locale = isLocale(headerLocale)
+    ? headerLocale
+    : isLocale(cookieLocale)
+      ? cookieLocale
+      : defaultLocale;
+
   return (
     <html
-      lang="fr"
+      lang={locale}
+      dir={isRTL(locale) ? "rtl" : "ltr"}
+      suppressHydrationWarning
       data-scroll-behavior="smooth"
-      className={`${cormorantGaramond.variable} ${manrope.variable} ${allura.variable} h-full antialiased`}
+      data-locale={locale}
+      className={`${cormorantGaramond.variable} ${manrope.variable} ${allura.variable} ${notoNaskhArabic.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

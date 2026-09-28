@@ -1,15 +1,14 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 
-import {
-  footerNavigation,
-  legalNavigation,
-  siteData,
-  socialLinks,
-} from "@/data";
+import { siteData, socialLinks } from "@/data";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { getWhatsAppHref } from "@/lib/whatsapp";
+import { useI18n } from "@/i18n/I18nProvider";
+import { legalNavigationKeys, publicNavigationKeys } from "@/i18n/navigation";
 
 function getAddressDisplay() {
   const addressParts = [
@@ -136,11 +135,12 @@ function FooterWave() {
 const currentYear = new Date().getFullYear();
 
 export function PublicFooter() {
+  const { localizedPath, t } = useI18n();
   const whatsappHref = getWhatsAppHref(siteData.contact.whatsapp);
   const projectWhatsAppHref =
     getWhatsAppHref(
       siteData.contact.whatsapp,
-      "Bonjour Sareine Craft, j'aimerais parler de mon projet.",
+      t("contact.projectMessage"),
     ) ?? "/";
   const addressDisplay = getAddressDisplay();
   const footerSocialLinks = socialLinks.filter((social) =>
@@ -187,9 +187,9 @@ export function PublicFooter() {
           <div className="grid gap-10 md:grid-cols-2 md:gap-x-12 md:gap-y-12 lg:grid-cols-[minmax(15rem,1.28fr)_minmax(8rem,0.62fr)_minmax(12rem,0.88fr)_minmax(13rem,0.82fr)] lg:items-start">
             <div className="max-w-sm">
               <Link
-                aria-label="Sareine Craft & Events - Accueil"
+                aria-label={t("header.homeAria")}
                 className="inline-flex max-w-[12.5rem]"
-                href="/"
+                href={localizedPath("/")}
               >
                 <Image
                   alt={siteData.name}
@@ -202,30 +202,30 @@ export function PublicFooter() {
               </Link>
 
               <p className="mt-6 font-display text-[1.75rem] leading-[1.08] text-secondary sm:text-[2rem]">
-                {siteData.footerDescription}
+                {t("footer.description")}
               </p>
               <p className="mt-5 font-display text-[1.35rem] italic leading-tight text-primary">
-                {siteData.footerEditorialLine}
+                {t("footer.editorialLine")}
               </p>
             </div>
 
             <nav
-              aria-label="Navigation du pied de page"
+              aria-label={t("nav.footerAria")}
               className="border-t border-sand/80 pt-7 md:border-t-0 md:pt-0"
             >
-              <p className="type-label text-secondary">Explorer</p>
+              <p className="type-label text-secondary">{t("footer.explore")}</p>
               <span
                 aria-hidden="true"
                 className="mt-3 block h-px w-10 bg-primary"
               />
               <ul className="mt-5 grid gap-2.5">
-                {footerNavigation.map((item) => (
+                {publicNavigationKeys.map((item) => (
                   <li key={item.href}>
                     <Link
                       className="font-sans text-sm font-semibold text-secondary underline decoration-primary/0 underline-offset-4 transition-colors duration-200 hover:text-primary hover:decoration-primary focus-visible:text-primary focus-visible:decoration-primary"
-                      href={item.href}
+                      href={localizedPath(item.href)}
                     >
-                      {item.label}
+                      {t(item.translationKey)}
                     </Link>
                   </li>
                 ))}
@@ -233,7 +233,7 @@ export function PublicFooter() {
             </nav>
 
             <div className="border-t border-sand/80 pt-7 md:border-t-0 md:pt-0">
-              <p className="type-label text-secondary">Nous retrouver</p>
+              <p className="type-label text-secondary">{t("footer.findUs")}</p>
               <span
                 aria-hidden="true"
                 className="mt-3 block h-px w-10 bg-primary"
@@ -253,7 +253,11 @@ export function PublicFooter() {
                         <ContactIcon type={item.icon} />
                         <span className="grid gap-0.5">
                           <span className="text-xs font-bold uppercase text-secondary">
-                            {item.label}
+                            {item.label === "Téléphone"
+                              ? t("contact.phone")
+                              : item.label === "WhatsApp"
+                                ? t("contact.whatsapp")
+                                : item.label}
                           </span>
                           <span className="break-words underline decoration-primary/0 underline-offset-4 transition-colors duration-200 group-hover:text-primary group-hover:decoration-primary">
                             {item.value}
@@ -267,7 +271,7 @@ export function PublicFooter() {
                       <ContactIcon type="location" />
                       <span className="grid gap-0.5">
                         <span className="text-xs font-bold uppercase text-secondary">
-                          Localisation
+                          {t("footer.location")}
                         </span>
                         <span>{addressDisplay}</span>
                       </span>
@@ -278,11 +282,11 @@ export function PublicFooter() {
 
               {footerSocialLinks.length > 0 ? (
                 <nav
-                  aria-label="Réseaux sociaux"
+                  aria-label={t("footer.socialAria")}
                   className="mt-6 border-t border-sand pt-5"
                 >
                   <p className="font-sans text-xs font-bold uppercase text-secondary">
-                    Suivez-nous
+                    {t("footer.followUs")}
                   </p>
                   <ul className="mt-3 flex flex-wrap gap-2.5">
                     {footerSocialLinks.map((social) => {
@@ -294,7 +298,9 @@ export function PublicFooter() {
                         <li key={social.platform}>
                           {social.url ? (
                             <a
-                              aria-label={`Suivre Sareine sur ${social.label}`}
+                              aria-label={t("footer.followOn", {
+                                platform: social.label,
+                              })}
                               className={socialClasses}
                               href={social.url}
                               rel="noreferrer"
@@ -304,7 +310,9 @@ export function PublicFooter() {
                             </a>
                           ) : (
                             <span
-                              aria-label={`${social.label} bientôt disponible`}
+                              aria-label={t("footer.soon", {
+                                platform: social.label,
+                              })}
                               className={socialClasses}
                               role="img"
                             >
@@ -324,14 +332,14 @@ export function PublicFooter() {
               className="border-t border-sand/80 pt-7 md:border-t-0 md:pt-0"
             >
               <p className="type-label text-secondary" id="footer-project">
-                Un projet ?
+                {t("footer.projectTitle")}
               </p>
               <span
                 aria-hidden="true"
                 className="mt-3 block h-px w-10 bg-primary"
               />
               <p className="mt-5 max-w-[16rem] font-display text-[1.55rem] leading-[1.08] text-secondary">
-                {siteData.footerProjectText}
+                {t("footer.projectText")}
               </p>
               <Button
                 className="mt-6"
@@ -339,7 +347,7 @@ export function PublicFooter() {
                 rel="noreferrer"
                 target="_blank"
               >
-                Nous contacter
+                {t("header.contact")}
               </Button>
             </section>
           </div>
@@ -355,7 +363,7 @@ export function PublicFooter() {
               <p>
                 © {currentYear} {siteData.shortName}
               </p>
-              <p className="mt-1">Tous droits réservés</p>
+              <p className="mt-1">{t("footer.rights")}</p>
               <p className="mt-2 text-xs uppercase tracking-[0.16em] text-ivory/58">
                 Powered by SmartDex
               </p>
@@ -363,19 +371,19 @@ export function PublicFooter() {
 
             <p className="flex items-center gap-4 font-display text-[1.45rem] italic leading-tight text-gold-300 md:justify-center md:text-center">
               <span className="hidden h-px w-9 bg-gold-300/60 sm:block" />
-              <span>{siteData.footerSignature}</span>
+              <span>{t("footer.signature")}</span>
               <span className="hidden h-px w-9 bg-gold-300/60 sm:block" />
             </p>
 
-            <nav aria-label="Navigation légale">
+            <nav aria-label={t("nav.legalAria")}>
               <ul className="flex flex-wrap gap-x-5 gap-y-2 font-sans text-sm text-ivory/76 md:justify-end">
-                {legalNavigation.map((item) => (
+                {legalNavigationKeys.map((item) => (
                   <li key={item.href}>
                     <Link
                       className="underline decoration-gold-300/0 underline-offset-4 transition-colors duration-200 hover:text-gold-300 hover:decoration-gold-300 focus-visible:text-gold-300 focus-visible:decoration-gold-300"
-                      href={item.href}
+                      href={localizedPath(item.href)}
                     >
-                      {item.label}
+                      {t(item.translationKey)}
                     </Link>
                   </li>
                 ))}

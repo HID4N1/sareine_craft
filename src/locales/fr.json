@@ -1,0 +1,105 @@
+{
+  "lang": "fr",
+  "language": {
+    "label": "Langue",
+    "aria": "Choisir la langue",
+    "switchTo": "Passer le site en {{language}}",
+    "names": {
+      "fr": "Français",
+      "en": "Anglais",
+      "ar": "Arabe"
+    }
+  },
+  "meta": {
+    "title": "Sareine — Craft & Events",
+    "description": "Sareine imagine des créations artisanales et des expériences événementielles pensées avec soin pour vos moments précieux.",
+    "keywords": "Sareine, craft, événements, Casablanca, créations artisanales, décoration événementielle"
+  },
+  "nav": {
+    "aria": "Navigation principale",
+    "mobileAria": "Navigation mobile",
+    "footerAria": "Navigation du pied de page",
+    "legalAria": "Navigation légale",
+    "home": "Accueil",
+    "craft": "Craft",
+    "events": "Événements",
+    "about": "À propos",
+    "privacy": "Confidentialité",
+    "cookies": "Cookies",
+    "terms": "Conditions"
+  },
+  "header": {
+    "homeAria": "Sareine Craft & Events - Accueil",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer",
+    "menu": "Menu",
+    "contact": "Nous contacter",
+    "projectQuestion": "Quel projet imaginez-vous ?",
+    "craftProject": "Votre projet Craft",
+    "eventProject": "Votre événement"
+  },
+  "projectCta": {
+    "defaultLabel": "Contactez-nous",
+    "question": "Quel projet imaginez-vous ?",
+    "craft": "Une création Craft",
+    "event": "Un événement"
+  },
+  "about": {
+    "commitmentsAria": "Les engagements de Sareine",
+    "universe": "L’UNIVERS SAREINE",
+    "approach": "NOTRE APPROCHE",
+    "finalEyebrow": "VOTRE PROJET, NOTRE PASSION"
+  },
+  "craft": {
+    "collection": "Collection",
+    "discoverCollection": "Découvrir la collection {{collection}}",
+    "handmade": "Fait main",
+    "handmadeCreation": "CRÉATION ARTISANALE",
+    "color": "Couleur : ",
+    "chooseColor": "Choisir la couleur {{color}}",
+    "backToCollections": "Retour aux collections",
+    "viewModels": "Voir les modèles",
+    "theCollection": "LA COLLECTION",
+    "chooseModel": "Choisissez votre modèle.",
+    "chooseModelDescription": "Sélectionnez un modèle et, lorsqu’elles sont disponibles, choisissez ses couleurs."
+  },
+  "events": {
+    "zoomImage": "Agrandir l'image : {{image}}",
+    "enlargedImage": "Image agrandie",
+    "closeImage": "Fermer l'image",
+    "close": "Fermer",
+    "previousImage": "Image précédente",
+    "nextImage": "Image suivante",
+    "indexAria": "Index des événements",
+    "view": "Voir",
+    "chapterSummary": "Scénographie, détails personnalisés et coordination"
+  },
+  "footer": {
+    "description": "Des créations et des expériences pensées avec soin pour vos moments précieux.",
+    "editorialLine": "Artisanat · Événements · Émotions",
+    "signature": "Des instants d'exception, au-delà du quotidien.",
+    "explore": "Explorer",
+    "findUs": "Nous retrouver",
+    "location": "Localisation",
+    "socialAria": "Réseaux sociaux",
+    "followUs": "Suivez-nous",
+    "followOn": "Suivre Sareine sur {{platform}}",
+    "soon": "{{platform}} bientôt disponible",
+    "projectTitle": "Un projet ?",
+    "projectText": "Une création sur mesure ou un événement inoubliable ? Parlons-en.",
+    "rights": "Tous droits réservés"
+  },
+  "contact": {
+    "whatsappAria": "Contacter Sareine sur WhatsApp",
+    "phone": "Téléphone",
+    "email": "Email",
+    "whatsapp": "WhatsApp",
+    "projectMessage": "Bonjour Sareine Craft, j'aimerais parler de mon projet."
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Une erreur s'est produite",
+    "items_one": "{{count}} élément",
+    "items_other": "{{count}} éléments"
+  }
+}

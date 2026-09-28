@@ -1,6 +1,9 @@
+"use client";
+
 import Image from "next/image";
 
 import { Button } from "@/components/ui/Button";
+import { useI18n } from "@/i18n/I18nProvider";
 import type { EventCategory, EventCategoryImage } from "@/data/events";
 
 export type Gallery = {
@@ -47,9 +50,11 @@ export function EventImageButton({
   quality?: number;
   sizes: string;
 }) {
+  const { t } = useI18n();
+
   return (
     <button
-      aria-label={`Agrandir l'image : ${image.alt}`}
+      aria-label={t("events.zoomImage", { image: image.alt })}
       className={joinClasses(
         "group relative block overflow-hidden rounded-[6px] bg-sand text-left transition-[box-shadow,transform,filter] duration-500 hover:-translate-y-1 hover:saturate-[1.04] hover:shadow-[0_34px_96px_rgba(36,16,25,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring",
         className,
@@ -75,7 +80,7 @@ export function EventImageButton({
         className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,249,243,0.08)_0%,rgba(36,16,25,0.02)_48%,rgba(36,16,25,0.22)_100%)] ring-1 ring-inset ring-plum-900/10"
       />
       <span className="pointer-events-none absolute bottom-4 right-4 translate-y-2 rounded-[3px] border border-gold-300/45 bg-plum-900/62 px-3 py-2 text-[0.64rem] font-bold uppercase leading-none tracking-[0.16em] text-ivory opacity-0 backdrop-blur-md transition duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-        Voir
+        {t("events.view")}
       </span>
     </button>
   );
@@ -90,6 +95,7 @@ export function ChapterCopy({
   contrast?: "dark" | "light";
   inquiryHref: string;
 }) {
+  const { t } = useI18n();
   const isDark = contrast === "dark";
 
   return (
@@ -139,7 +145,7 @@ export function ChapterCopy({
             isDark ? "text-ivory/68" : "text-charcoal/58",
           )}
         >
-          Scénographie, détails personnalisés et coordination
+          {t("events.chapterSummary")}
         </span>
       </div>
       <Button

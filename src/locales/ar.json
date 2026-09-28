@@ -1,0 +1,105 @@
+{
+  "lang": "ar",
+  "language": {
+    "label": "اللغة",
+    "aria": "اختيار اللغة",
+    "switchTo": "تغيير لغة الموقع إلى {{language}}",
+    "names": {
+      "fr": "الفرنسية",
+      "en": "الإنجليزية",
+      "ar": "العربية"
+    }
+  },
+  "meta": {
+    "title": "سارين — الحرف والفعاليات",
+    "description": "تصمم سارين إبداعات يدوية وتجارب مناسبات بعناية للحظاتكم الثمينة.",
+    "keywords": "سارين, حرف يدوية, فعاليات, الدار البيضاء, إبداعات يدوية, تنسيق مناسبات"
+  },
+  "nav": {
+    "aria": "التنقل الرئيسي",
+    "mobileAria": "تنقل الهاتف",
+    "footerAria": "تنقل التذييل",
+    "legalAria": "التنقل القانوني",
+    "home": "الرئيسية",
+    "craft": "الحرف اليدوية",
+    "events": "الفعاليات",
+    "about": "من نحن",
+    "privacy": "الخصوصية",
+    "cookies": "ملفات تعريف الارتباط",
+    "terms": "الشروط"
+  },
+  "header": {
+    "homeAria": "سارين للحرف والفعاليات - الرئيسية",
+    "openMenu": "فتح القائمة",
+    "closeMenu": "إغلاق",
+    "menu": "القائمة",
+    "contact": "تواصلوا معنا",
+    "projectQuestion": "ما المشروع الذي تتخيلونه؟",
+    "craftProject": "مشروعكم الحرفي",
+    "eventProject": "فعاليتكم"
+  },
+  "projectCta": {
+    "defaultLabel": "تواصلوا معنا",
+    "question": "ما المشروع الذي تتخيلونه؟",
+    "craft": "إبداع حرفي",
+    "event": "فعالية"
+  },
+  "about": {
+    "commitmentsAria": "التزامات سارين",
+    "universe": "عالم سارين",
+    "approach": "مقاربتنا",
+    "finalEyebrow": "مشروعكم، شغفنا"
+  },
+  "craft": {
+    "collection": "مجموعة",
+    "discoverCollection": "اكتشفوا مجموعة {{collection}}",
+    "handmade": "مصنوع يدويا",
+    "handmadeCreation": "إبداع يدوي",
+    "color": "اللون: ",
+    "chooseColor": "اختيار اللون {{color}}",
+    "backToCollections": "العودة إلى المجموعات",
+    "viewModels": "مشاهدة النماذج",
+    "theCollection": "المجموعة",
+    "chooseModel": "اختاروا نموذجكم.",
+    "chooseModelDescription": "اختاروا نموذجا، وعندما تكون الألوان متاحة اختاروا اللون المناسب."
+  },
+  "events": {
+    "zoomImage": "تكبير الصورة: {{image}}",
+    "enlargedImage": "صورة مكبرة",
+    "closeImage": "إغلاق الصورة",
+    "close": "إغلاق",
+    "previousImage": "الصورة السابقة",
+    "nextImage": "الصورة التالية",
+    "indexAria": "فهرس الفعاليات",
+    "view": "مشاهدة",
+    "chapterSummary": "تنسيق المشهد، تفاصيل مخصصة وتنسيق كامل"
+  },
+  "footer": {
+    "description": "إبداعات وتجارب مصممة بعناية للحظاتكم الثمينة.",
+    "editorialLine": "حرف · فعاليات · مشاعر",
+    "signature": "لحظات استثنائية تتجاوز اليومي.",
+    "explore": "استكشف",
+    "findUs": "تواصلوا معنا",
+    "location": "الموقع",
+    "socialAria": "شبكات التواصل",
+    "followUs": "تابعونا",
+    "followOn": "تابعوا سارين على {{platform}}",
+    "soon": "{{platform}} قريبا",
+    "projectTitle": "لديكم مشروع؟",
+    "projectText": "إبداع خاص أو فعالية لا تنسى؟ لنتحدث.",
+    "rights": "جميع الحقوق محفوظة"
+  },
+  "contact": {
+    "whatsappAria": "تواصلوا مع سارين عبر واتساب",
+    "phone": "الهاتف",
+    "email": "البريد الإلكتروني",
+    "whatsapp": "واتساب",
+    "projectMessage": "مرحبا سارين كرافت، أود التحدث عن مشروعي."
+  },
+  "common": {
+    "loading": "جاري التحميل...",
+    "error": "حدث خطأ",
+    "items_one": "{{count}} عنصر",
+    "items_other": "{{count}} عناصر"
+  }
+}

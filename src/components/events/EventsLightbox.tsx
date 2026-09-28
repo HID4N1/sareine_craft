@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, type TouchEvent } from "react";
 
+import { useI18n } from "@/i18n/I18nProvider";
 import type { ActiveLightbox, Gallery } from "./eventsShared";
 
 export function EventsLightbox({
@@ -18,6 +19,7 @@ export function EventsLightbox({
   onNext: () => void;
   onPrevious: () => void;
 }) {
+  const { t } = useI18n();
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const touchStartXRef = useRef<number | null>(null);
   const gallery = active
@@ -84,7 +86,7 @@ export function EventsLightbox({
 
   return (
     <div
-      aria-label="Image agrandie"
+      aria-label={t("events.enlargedImage")}
       aria-modal="true"
       className="fixed inset-0 z-[120] flex items-center justify-center bg-plum-900/94 p-4 text-ivory backdrop-blur-md"
       onClick={onClose}
@@ -107,18 +109,18 @@ export function EventsLightbox({
           src={image.src}
         />
         <button
-          aria-label="Fermer l'image"
+          aria-label={t("events.closeImage")}
           className="absolute right-3 top-3 z-10 min-h-11 rounded-[4px] border border-gold-300/35 bg-ivory/92 px-4 font-sans text-sm font-bold text-secondary shadow-[0_12px_30px_rgba(0,0,0,0.18)] backdrop-blur-md transition hover:bg-gold-100"
           onClick={onClose}
           ref={closeButtonRef}
           type="button"
         >
-          Fermer
+          {t("events.close")}
         </button>
         {imageCount > 1 ? (
           <>
             <button
-              aria-label="Image précédente"
+              aria-label={t("events.previousImage")}
               className="absolute left-3 top-1/2 z-10 grid size-12 -translate-y-1/2 place-items-center rounded-full border border-gold-300/35 bg-ivory/92 font-sans text-xl font-bold text-secondary shadow-[0_12px_30px_rgba(0,0,0,0.18)] backdrop-blur-md transition hover:bg-gold-100"
               onClick={onPrevious}
               type="button"
@@ -126,7 +128,7 @@ export function EventsLightbox({
               ←
             </button>
             <button
-              aria-label="Image suivante"
+              aria-label={t("events.nextImage")}
               className="absolute right-3 top-1/2 z-10 grid size-12 -translate-y-1/2 place-items-center rounded-full border border-gold-300/35 bg-ivory/92 font-sans text-xl font-bold text-secondary shadow-[0_12px_30px_rgba(0,0,0,0.18)] backdrop-blur-md transition hover:bg-gold-100"
               onClick={onNext}
               type="button"

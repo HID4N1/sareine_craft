@@ -909,11 +909,6 @@ Largest assets found:
 | `public/images/home/events/graduation.png` | ~2.1 MB | 1122x1402 | Large PNG | Convert/optimize. |
 | `public/brand/sareine-logo-horizontal.png` | Large source dimensions | 1942x809 | Logo displayed around 200px in footer | Provide smaller optimized display asset. |
 
-Unused or questionable assets:
-
-- Several craft creation JPGs are present but not referenced by static string scans, including `IMG_6447.jpg`, `IMG_6448.jpg`, `IMG_6449.jpg`, `IMG_6450.jpg`, `IMG_6451.jpg`, `IMG_6452.jpg`, `IMG_6453.jpg`, `IMG_6454.jpg`, `IMG_6455.jpg`, `IMG_6456.jpg`, `IMG_6457.jpg`, `IMG_6467.jpg`, `IMG_6470.jpg`, `IMG_6476.jpg`, `IMG_6481.jpg`, `IMG_6482.jpg`, `IMG_6485.jpg`.
-- Some of those are referenced dynamically by `craft-page.ts`, but that array is not currently rendered by the craft page. Treat as "currently unused by visible UI" rather than safe to delete.
-
 ## Data Architecture Audit
 
 ```mermaid

@@ -96,6 +96,27 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+html[dir="rtl"] body {
+  font-family: var(--font-arabic), var(--font-sans), system-ui, sans-serif;
+}
+
+html[dir="rtl"] {
+  text-align: right;
+}
+
+html[dir="rtl"] .scroll-line-grow {
+  transform-origin: right center;
+}
+
+html[dir="rtl"] [class*="right-5"] {
+  right: auto;
+  left: 1.25rem;
+}
+
+html[dir="rtl"] a > span[aria-hidden="true"]:last-child {
+  display: none;
+}
+
 h1,
 h2,
 h3 {

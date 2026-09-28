@@ -3,11 +3,13 @@
 import { useEffect, useState, type MouseEvent } from "react";
 
 import { Container } from "@/components/ui/Container";
+import { useI18n } from "@/i18n/I18nProvider";
 import type { EventCategory } from "@/data/events";
 
 import { joinClasses } from "./eventsShared";
 
 export function EventNavigation({ categories }: { categories: EventCategory[] }) {
+  const { t } = useI18n();
   const [activeId, setActiveId] = useState(categories[0]?.id ?? "");
 
   useEffect(() => {
@@ -60,7 +62,7 @@ export function EventNavigation({ categories }: { categories: EventCategory[] })
 
   return (
     <nav
-      aria-label="Index des événements"
+      aria-label={t("events.indexAria")}
       className="sticky top-20 z-40 border-y border-gold-300/45 bg-ivory/92 shadow-[0_16px_40px_rgba(36,16,25,0.07)] backdrop-blur-xl"
     >
       <Container>

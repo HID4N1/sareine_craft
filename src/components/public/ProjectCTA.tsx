@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useId, useRef, useState } from "react";
 
 import { Button, type ButtonProps } from "@/components/ui/Button";
+import { useI18n } from "@/i18n/I18nProvider";
 
 type ProjectCTAProps = {
   className?: string;
@@ -22,10 +23,11 @@ export function ProjectCTA({
   className,
   triggerClassName,
   panelClassName,
-  label = "Contacter nous",
+  label,
   align = "right",
   size = "sm",
 }: ProjectCTAProps) {
+  const { localizedPath, t } = useI18n();
   const [isOpen, setIsOpen] = useState(false);
   const ctaRef = useRef<HTMLDivElement>(null);
   const panelId = useId();
@@ -62,7 +64,7 @@ export function ProjectCTA({
         size={size}
         type="button"
       >
-        {label}
+        {label ?? t("projectCta.defaultLabel")}
       </Button>
 
       <div
@@ -77,15 +79,15 @@ export function ProjectCTA({
         id={panelId}
       >
         <p className="font-display text-2xl leading-tight text-secondary">
-          Quel projet imaginez-vous ?
+          {t("projectCta.question")}
         </p>
         <div className="mt-4 grid gap-2">
           <Link
             className="group flex items-center justify-between border-t border-sand/80 py-3 font-sans text-sm font-semibold transition-colors duration-200 hover:text-primary focus-visible:text-primary"
-            href="/craft"
+            href={localizedPath("/craft")}
             onClick={() => setIsOpen(false)}
           >
-            Une création Craft
+            {t("projectCta.craft")}
             <span
               aria-hidden="true"
               className="transition-transform duration-200 group-hover:translate-x-1"
@@ -95,10 +97,10 @@ export function ProjectCTA({
           </Link>
           <Link
             className="group flex items-center justify-between border-t border-sand/80 py-3 font-sans text-sm font-semibold transition-colors duration-200 hover:text-primary focus-visible:text-primary"
-            href="/events"
+            href={localizedPath("/events")}
             onClick={() => setIsOpen(false)}
           >
-            Un événement
+            {t("projectCta.event")}
             <span
               aria-hidden="true"
               className="transition-transform duration-200 group-hover:translate-x-1"

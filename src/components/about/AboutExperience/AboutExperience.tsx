@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 
@@ -7,6 +9,7 @@ import {
   type AboutProcessStep,
   type AboutTrustItem,
 } from "@/data/about";
+import { useI18n } from "@/i18n/I18nProvider";
 
 import styles from "./AboutExperience.module.css";
 
@@ -129,8 +132,13 @@ function Icon({ name }: IconProps) {
   }
 }
 
-export function AboutExperience() {
-  const { hero, trustItems, pillars, process, finalCta } = aboutPageData;
+type AboutExperienceProps = {
+  data?: typeof aboutPageData;
+};
+
+export function AboutExperience({ data = aboutPageData }: AboutExperienceProps) {
+  const { localizedPath, t } = useI18n();
+  const { hero, trustItems, pillars, process, finalCta } = data;
   const primaryCtaIsExternal = finalCta.primary.href.startsWith("http");
 
   return (
@@ -157,7 +165,7 @@ export function AboutExperience() {
 
       <section
         className={styles.trustSection}
-        aria-label="Les engagements de Sareine"
+        aria-label={t("about.commitmentsAria")}
       >
         <Container>
           <div className={styles.trustGrid}>
@@ -177,7 +185,7 @@ export function AboutExperience() {
       <section className={styles.pillarsSection}>
         <Container width="wide">
           <header className={styles.sectionHeading}>
-            <p className={styles.eyebrow}>L’UNIVERS SAREINE</p>
+            <p className={styles.eyebrow}>{t("about.universe")}</p>
 
             <h2>{pillars.title}</h2>
 
@@ -227,7 +235,10 @@ export function AboutExperience() {
                     ))}
                   </ul>
 
-                  <Link className={styles.pillarCta} href={pillar.cta.href}>
+                  <Link
+                    className={styles.pillarCta}
+                    href={localizedPath(pillar.cta.href)}
+                  >
                     <span>{pillar.cta.label}</span>
                     <span aria-hidden="true">→</span>
                   </Link>
@@ -241,7 +252,7 @@ export function AboutExperience() {
       <section className={styles.processSection}>
         <Container>
           <header className={styles.sectionHeading}>
-            <p className={styles.eyebrow}>NOTRE APPROCHE</p>
+            <p className={styles.eyebrow}>{t("about.approach")}</p>
 
             <h2>{process.title}</h2>
 
@@ -273,14 +284,14 @@ export function AboutExperience() {
       <section className={styles.finalSection}>
         <Container>
           <div className={styles.finalCta}>
-            <p className={styles.finalEyebrow}>VOTRE PROJET, NOTRE PASSION</p>
+            <p className={styles.finalEyebrow}>{t("about.finalEyebrow")}</p>
 
             <h2 className={styles.finalTitle}>{finalCta.title}</h2>
 
             <div className={styles.actions}>
               <Link
                 className={styles.primaryCta}
-                href={finalCta.primary.href}
+                href={localizedPath(finalCta.primary.href)}
                 rel={primaryCtaIsExternal ? "noreferrer" : undefined}
                 target={primaryCtaIsExternal ? "_blank" : undefined}
               >
@@ -290,7 +301,7 @@ export function AboutExperience() {
 
               <Link
                 className={styles.secondaryCta}
-                href={finalCta.secondary.href}
+                href={localizedPath(finalCta.secondary.href)}
               >
                 <span>{finalCta.secondary.label}</span>
                 <span aria-hidden="true">→</span>

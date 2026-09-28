@@ -1,7 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 
 import { Container } from "@/components/ui/Container";
+import { useI18n } from "@/i18n/I18nProvider";
 import type {
   CraftCollectionData,
   CraftPageData,
@@ -21,6 +24,8 @@ export function CraftCreationsSection({
   data,
   collections,
 }: CraftCreationsSectionProps) {
+  const { localizedPath, t } = useI18n();
+
   return (
     <section id="creations" className={styles.section}>
       <Container>
@@ -36,9 +41,11 @@ export function CraftCreationsSection({
           {collections.map((collection) => (
             <Link
               className={styles.card}
-              href={`/craft/${collection.slug}`}
+              href={localizedPath(`/craft/${collection.slug}`)}
               key={collection.slug}
-              aria-label={`Découvrir la collection ${collection.name}`}
+              aria-label={t("craft.discoverCollection", {
+                collection: collection.name,
+              })}
             >
               <div className={styles.imageWrapper}>
                 <Image
@@ -58,7 +65,7 @@ export function CraftCreationsSection({
                   }}
                 />
 
-                <span className={styles.badge}>Collection</span>
+                <span className={styles.badge}>{t("craft.collection")}</span>
               </div>
 
               <div className={styles.cardContent}>

@@ -1,6 +1,9 @@
+"use client";
+
 import Image from "next/image";
 
 import { Button } from "@/components/ui/Button";
+import { useI18n } from "@/i18n/I18nProvider";
 import type { EventsPageHero } from "@/data/events";
 
 export function EventsHero({
@@ -10,10 +13,12 @@ export function EventsHero({
   hero: EventsPageHero;
   onOpen: (index: number) => void;
 }) {
+  const { t } = useI18n();
+
   return (
     <section className="relative isolate min-h-[40rem] overflow-hidden bg-plum-900 text-ivory lg:min-h-[clamp(36rem,64svh,40rem)]">
       <button
-        aria-label={`Agrandir l'image : ${hero.image.alt}`}
+        aria-label={t("events.zoomImage", { image: hero.image.alt })}
         className="absolute inset-0 z-0 cursor-zoom-in text-left"
         onClick={() => onOpen(0)}
         type="button"

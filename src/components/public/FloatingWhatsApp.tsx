@@ -1,4 +1,7 @@
+"use client";
+
 import { siteData } from "@/data";
+import { useI18n } from "@/i18n/I18nProvider";
 import { getWhatsAppHref } from "@/lib/whatsapp";
 
 function WhatsAppIcon() {
@@ -15,6 +18,7 @@ function WhatsAppIcon() {
 }
 
 export function FloatingWhatsApp() {
+  const { t } = useI18n();
   const whatsappHref = getWhatsAppHref(siteData.contact.whatsapp);
 
   if (!whatsappHref) {
@@ -23,7 +27,7 @@ export function FloatingWhatsApp() {
 
   return (
     <a
-      aria-label="Contacter Sareine sur WhatsApp"
+      aria-label={t("contact.whatsappAria")}
       className="fixed right-5 bottom-5 z-[60] inline-flex min-h-14 items-center gap-3 rounded-full border border-white/30 bg-[#25D366] px-5 font-sans text-sm font-bold text-white shadow-[0_12px_35px_rgba(37,211,102,0.35)] transition duration-300 hover:-translate-y-1 hover:bg-[#1ebe5d] hover:shadow-[0_16px_40px_rgba(37,211,102,0.45)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#25D366]"
       href={whatsappHref}
       rel="noreferrer"

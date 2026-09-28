@@ -1,0 +1,105 @@
+{
+  "lang": "en",
+  "language": {
+    "label": "Language",
+    "aria": "Choose language",
+    "switchTo": "Switch the site to {{language}}",
+    "names": {
+      "fr": "French",
+      "en": "English",
+      "ar": "Arabic"
+    }
+  },
+  "meta": {
+    "title": "Sareine — Craft & Events",
+    "description": "Sareine creates handmade pieces and thoughtful event experiences for your most precious moments.",
+    "keywords": "Sareine, craft, events, Casablanca, handmade creations, event styling"
+  },
+  "nav": {
+    "aria": "Main navigation",
+    "mobileAria": "Mobile navigation",
+    "footerAria": "Footer navigation",
+    "legalAria": "Legal navigation",
+    "home": "Home",
+    "craft": "Craft",
+    "events": "Events",
+    "about": "About",
+    "privacy": "Privacy",
+    "cookies": "Cookies",
+    "terms": "Terms"
+  },
+  "header": {
+    "homeAria": "Sareine Craft & Events - Home",
+    "openMenu": "Open menu",
+    "closeMenu": "Close",
+    "menu": "Menu",
+    "contact": "Contact us",
+    "projectQuestion": "What project are you imagining?",
+    "craftProject": "Your Craft project",
+    "eventProject": "Your event"
+  },
+  "projectCta": {
+    "defaultLabel": "Contact us",
+    "question": "What project are you imagining?",
+    "craft": "A Craft creation",
+    "event": "An event"
+  },
+  "about": {
+    "commitmentsAria": "Sareine commitments",
+    "universe": "THE SAREINE WORLD",
+    "approach": "OUR APPROACH",
+    "finalEyebrow": "YOUR PROJECT, OUR PASSION"
+  },
+  "craft": {
+    "collection": "Collection",
+    "discoverCollection": "Discover the {{collection}} collection",
+    "handmade": "Handmade",
+    "handmadeCreation": "HANDMADE CREATION",
+    "color": "Color: ",
+    "chooseColor": "Choose the color {{color}}",
+    "backToCollections": "Back to collections",
+    "viewModels": "View models",
+    "theCollection": "THE COLLECTION",
+    "chooseModel": "Choose your model.",
+    "chooseModelDescription": "Select a model and, when available, choose its colors."
+  },
+  "events": {
+    "zoomImage": "Enlarge image: {{image}}",
+    "enlargedImage": "Enlarged image",
+    "closeImage": "Close image",
+    "close": "Close",
+    "previousImage": "Previous image",
+    "nextImage": "Next image",
+    "indexAria": "Event index",
+    "view": "View",
+    "chapterSummary": "Staging, personalized details, and coordination"
+  },
+  "footer": {
+    "description": "Creations and experiences thoughtfully designed for your precious moments.",
+    "editorialLine": "Craft · Events · Emotion",
+    "signature": "Exceptional moments, beyond the everyday.",
+    "explore": "Explore",
+    "findUs": "Find us",
+    "location": "Location",
+    "socialAria": "Social networks",
+    "followUs": "Follow us",
+    "followOn": "Follow Sareine on {{platform}}",
+    "soon": "{{platform}} coming soon",
+    "projectTitle": "A project?",
+    "projectText": "A custom creation or an unforgettable event? Let's talk.",
+    "rights": "All rights reserved"
+  },
+  "contact": {
+    "whatsappAria": "Contact Sareine on WhatsApp",
+    "phone": "Phone",
+    "email": "Email",
+    "whatsapp": "WhatsApp",
+    "projectMessage": "Hello Sareine Craft, I would like to talk about my project."
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "items_one": "{{count}} item",
+    "items_other": "{{count}} items"
+  }
+}

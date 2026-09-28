@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Container } from "@/components/ui/Container";
+import { useI18n } from "@/i18n/I18nProvider";
 import type {
   CraftCollectionData,
   CraftCollectionItem,
@@ -21,6 +22,7 @@ function CollectionItemCard({
 }: {
   item: CraftCollectionItem;
 }) {
+  const { t } = useI18n();
   const [selectedColorId, setSelectedColorId] = useState(
     item.colors?.[0]?.id,
   );
@@ -51,18 +53,18 @@ function CollectionItemCard({
           }}
         />
 
-        <span className={styles.handmade}>Fait main</span>
+        <span className={styles.handmade}>{t("craft.handmade")}</span>
       </div>
 
       <div className={styles.cardContent}>
-        <p className={styles.cardEyebrow}>CRÉATION ARTISANALE</p>
+        <p className={styles.cardEyebrow}>{t("craft.handmadeCreation")}</p>
         <h2 className={styles.cardTitle}>{item.name}</h2>
         <p className={styles.cardDescription}>{item.description}</p>
 
         {item.colors && item.colors.length > 0 ? (
           <div className={styles.colorSection}>
             <p className={styles.colorLabel}>
-              Couleur :
+              {t("craft.color")}
               <strong>{selectedColor?.label}</strong>
             </p>
 
@@ -78,7 +80,9 @@ function CollectionItemCard({
                       isSelected ? styles.selectedColor : ""
                     }`}
                     style={{ backgroundColor: color.hex }}
-                    aria-label={`Choisir la couleur ${color.label}`}
+                    aria-label={t("craft.chooseColor", {
+                      color: color.label,
+                    })}
                     aria-pressed={isSelected}
                     title={color.label}
                     onClick={() => setSelectedColorId(color.id)}
@@ -96,6 +100,8 @@ function CollectionItemCard({
 export function CraftCollectionPage({
   collection,
 }: CraftCollectionPageProps) {
+  const { localizedPath, t } = useI18n();
+
   return (
     <main className={styles.page}>
       <section className={styles.hero}>
@@ -121,9 +127,9 @@ export function CraftCollectionPage({
           </div>
 
           <div className={styles.heroContent}>
-            <Link href="/craft" className={styles.backLink}>
+            <Link href={localizedPath("/craft")} className={styles.backLink}>
               <span aria-hidden="true">←</span>
-              Retour aux collections
+              {t("craft.backToCollections")}
             </Link>
 
             <p className={styles.eyebrow}>{collection.eyebrow}</p>
@@ -139,7 +145,7 @@ export function CraftCollectionPage({
             </p>
 
             <Link href="#modeles" className={styles.heroCta}>
-              Voir les modèles
+              {t("craft.viewModels")}
               <span aria-hidden="true">↓</span>
             </Link>
           </div>
@@ -149,11 +155,10 @@ export function CraftCollectionPage({
       <section id="modeles" className={styles.models}>
         <Container>
           <header className={styles.modelsHeader}>
-            <p className={styles.eyebrow}>LA COLLECTION</p>
-            <h2>Choisissez votre modèle.</h2>
+            <p className={styles.eyebrow}>{t("craft.theCollection")}</p>
+            <h2>{t("craft.chooseModel")}</h2>
             <p>
-              Sélectionnez un modèle et, lorsqu’elles sont disponibles,
-              choisissez ses couleurs.
+              {t("craft.chooseModelDescription")}
             </p>
           </header>
 

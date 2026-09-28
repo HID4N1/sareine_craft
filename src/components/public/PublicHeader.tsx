@@ -5,10 +5,17 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
-import { publicNavigation, siteData, socialLinks } from "@/data";
+import { siteData, socialLinks } from "@/data";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { getWhatsAppHref } from "@/lib/whatsapp";
+import {
+  localeLabels,
+  stripLocaleFromPathname,
+  supportedLocales,
+} from "@/i18n/config";
+import { publicNavigationKeys } from "@/i18n/navigation";
+import { useI18n } from "@/i18n/I18nProvider";
 
 function joinClasses(...classes: Array<string | undefined | false>) {
   return classes.filter(Boolean).join(" ");
@@ -83,25 +90,10 @@ function hasDarkBackground(element: Element | null) {
   return false;
 }
 
-type LanguageCode = "fr" | "en" | "ar";
-
-const languages: Array<{ code: LanguageCode; label: string }> = [
-  {
-    code: "fr",
-    label: "FR",
-  },
-  {
-    code: "en",
-    label: "EN",
-  },
-  {
-    code: "ar",
-    label: "AR",
-  },
-];
-
 export function PublicHeader() {
   const pathname = usePathname();
+  const cleanPathname = stripLocaleFromPathname(pathname);
+  const { locale, localizedPath, setLanguage, t } = useI18n();
   const [isScrolled, setIsScrolled] = useState(false);
   const [headerTone, setHeaderTone] = useState({
     desktop: false,
@@ -109,7 +101,6 @@ export function PublicHeader() {
     mobile: false,
   });
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const [activeLanguage, setActiveLanguage] = useState<LanguageCode>("fr");
   const headerRef = useRef<HTMLElement>(null);
   const actionsRef = useRef<HTMLDivElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
@@ -119,7 +110,7 @@ export function PublicHeader() {
   const projectWhatsAppHref =
     getWhatsAppHref(
       siteData.contact.whatsapp,
-      "Bonjour Sareine Craft, j'aimerais parler de mon projet.",
+      t("contact.projectMessage"),
     ) ?? "/";
 
   useEffect(() => {
@@ -274,18 +265,18 @@ export function PublicHeader() {
           )}
         >
           <Link
-            aria-label="Sareine Craft & Events - Accueil"
+            aria-label={t("header.homeAria")}
             className="shrink-0"
-            href="/"
+            href={localizedPath("/")}
           >
             <Image
-              priority
               alt={siteData.name}
               className={joinClasses(
                 "h-auto w-[126px] transition-[width] duration-200 md:w-[138px]",
                 isScrolled ? "md:w-[124px]" : undefined,
               )}
               height={214}
+              loading="eager"
               sizes="(max-width: 767px) 126px, 138px"
               src={siteData.brand.logoHorizontal}
               width={512}
@@ -293,14 +284,14 @@ export function PublicHeader() {
           </Link>
 
           <nav
-            aria-label="Navigation principale"
+            aria-label={t("nav.aria")}
             className={joinClasses(
               "hidden items-center gap-11 transition-colors duration-200 lg:flex",
               headerTone.desktop ? "text-ivory" : "text-secondary",
             )}
           >
-            {publicNavigation.map((item) => {
-              const isActive = isActiveLink(item.href, pathname);
+            {publicNavigationKeys.map((item) => {
+              const isActive = isActiveLink(item.href, cleanPathname);
 
               return (
                 <Link
@@ -315,10 +306,10 @@ export function PublicHeader() {
                         ? "text-inherit hover:text-gold-300"
                         : "text-inherit hover:text-plum-700",
                   )}
-                  href={item.href}
+                  href={localizedPath(item.href)}
                   key={item.href}
                 >
-                  {item.label}
+                  {t(item.translationKey)}
                   <span
                     aria-hidden="true"
                     className={joinClasses(
@@ -339,18 +330,22 @@ export function PublicHeader() {
             ref={actionsRef}
           >
             <div
-              aria-label="Choisir la langue"
+              aria-label={t("language.aria")}
               className={joinClasses(
                 "flex items-center gap-1 border-l pl-4 transition-colors duration-200",
                 headerTone.desktop ? "border-gold-300/35" : "border-sand",
               )}
               role="group"
             >
-              {languages.map((language) => {
-                const isActiveLanguage = activeLanguage === language.code;
+              {supportedLocales.map((language) => {
+                const isActiveLanguage = locale === language;
+                const label = localeLabels[language];
 
                 return (
                   <button
+                    aria-label={t("language.switchTo", {
+                      language: t(`language.names.${language}`),
+                    })}
                     aria-pressed={isActiveLanguage}
                     className={joinClasses(
                       "min-h-9 px-2 font-sans text-xs font-bold transition-colors duration-200",
@@ -362,11 +357,13 @@ export function PublicHeader() {
                           ? "text-ivory/82 hover:text-gold-300"
                           : "text-secondary hover:text-primary",
                     )}
-                    key={language.code}
-                    onClick={() => setActiveLanguage(language.code)}
+                    key={language}
+                    lang={language}
+                    onClick={() => setLanguage(language)}
                     type="button"
                   >
-                    {language.label}
+                    <span aria-hidden="true">{label.flag}</span>{" "}
+                    {label.short}
                   </button>
                 );
               })}
@@ -380,14 +377,14 @@ export function PublicHeader() {
               size="sm"
               target="_blank"
             >
-              Nous contacter
+              {t("header.contact")}
             </Button>
           </div>
 
           <button
             aria-controls="mobile-navigation"
             aria-expanded={isMobileOpen}
-            aria-label="Ouvrir le menu"
+            aria-label={t("header.openMenu")}
             className={joinClasses(
               "relative z-10 inline-flex min-h-11 items-center gap-3 font-sans text-xs font-bold uppercase tracking-[0.18em] transition-colors duration-200 lg:hidden",
               headerTone.mobile ? "text-ivory" : "text-secondary",
@@ -396,7 +393,7 @@ export function PublicHeader() {
             ref={menuButtonRef}
             type="button"
           >
-            Menu
+            {t("header.menu")}
             <span aria-hidden="true" className="grid gap-1">
               <span
                 className={joinClasses(
@@ -429,8 +426,8 @@ export function PublicHeader() {
           >
             <div className="flex items-center justify-between">
               <Link
-                aria-label="Sareine Craft & Events - Accueil"
-                href="/"
+                aria-label={t("header.homeAria")}
+                href={localizedPath("/")}
                 onClick={closeMobileMenu}
               >
                 <Image
@@ -444,19 +441,19 @@ export function PublicHeader() {
               </Link>
 
               <button
-                aria-label="Fermer le menu"
+                aria-label={t("header.closeMenu")}
                 className="min-h-11 font-sans text-sm font-semibold uppercase tracking-[0.18em] text-gold-300 transition-colors duration-200 hover:text-ivory"
                 onClick={closeMobileMenu}
                 ref={closeButtonRef}
                 type="button"
               >
-                Fermer
+                {t("header.closeMenu")}
               </button>
             </div>
 
-            <nav aria-label="Navigation mobile" className="mt-10 grid gap-4">
-              {publicNavigation.map((item) => {
-                const isActive = isActiveLink(item.href, pathname);
+            <nav aria-label={t("nav.mobileAria")} className="mt-10 grid gap-4">
+              {publicNavigationKeys.map((item) => {
+                const isActive = isActiveLink(item.href, cleanPathname);
 
                 return (
                   <Link
@@ -465,11 +462,11 @@ export function PublicHeader() {
                       "font-display text-[clamp(1.75rem,9vw,2.25rem)] leading-none text-ivory transition-colors duration-200 hover:text-gold-300",
                       isActive ? "text-gold-300" : undefined,
                     )}
-                    href={item.href}
+                    href={localizedPath(item.href)}
                     key={item.href}
                     onClick={closeMobileMenu}
                   >
-                    {item.label}
+                    {t(item.translationKey)}
                   </Link>
                 );
               })}
@@ -477,15 +474,19 @@ export function PublicHeader() {
 
             <div className="pt-10">
               <div
-                aria-label="Choisir la langue"
+                aria-label={t("language.aria")}
                 className="mb-6 flex items-center gap-2"
                 role="group"
               >
-                {languages.map((language) => {
-                  const isActiveLanguage = activeLanguage === language.code;
+                {supportedLocales.map((language) => {
+                  const isActiveLanguage = locale === language;
+                  const label = localeLabels[language];
 
                   return (
                     <button
+                      aria-label={t("language.switchTo", {
+                        language: t(`language.names.${language}`),
+                      })}
                       aria-pressed={isActiveLanguage}
                       className={joinClasses(
                         "min-h-9 min-w-11 border border-gold-300/35 px-3 font-sans text-xs font-bold text-ivory transition-colors duration-200 hover:border-gold-300 hover:text-gold-300",
@@ -493,11 +494,13 @@ export function PublicHeader() {
                           ? "border-gold-300 bg-gold-300 text-plum-900"
                           : undefined,
                       )}
-                      key={language.code}
-                      onClick={() => setActiveLanguage(language.code)}
+                      key={language}
+                      lang={language}
+                      onClick={() => setLanguage(language)}
                       type="button"
                     >
-                      {language.label}
+                      <span aria-hidden="true">{label.flag}</span>{" "}
+                      {label.short}
                     </button>
                   );
                 })}
@@ -505,23 +508,23 @@ export function PublicHeader() {
 
               <div className="border-t border-gold-300/35 pt-6">
                 <p className="type-label text-gold-300">
-                  Quel projet imaginez-vous ?
+                  {t("header.projectQuestion")}
                 </p>
                 <div className="mt-4 grid gap-3">
                   <Link
                     className="group flex items-center justify-between font-sans text-base font-semibold text-ivory transition-colors duration-200 hover:text-gold-300"
-                    href="/craft"
+                    href={localizedPath("/craft")}
                     onClick={closeMobileMenu}
                   >
-                    Votre projet Craft
+                    {t("header.craftProject")}
                     <span aria-hidden="true">-&gt;</span>
                   </Link>
                   <Link
                     className="group flex items-center justify-between font-sans text-base font-semibold text-ivory transition-colors duration-200 hover:text-gold-300"
-                    href="/events"
+                    href={localizedPath("/events")}
                     onClick={closeMobileMenu}
                   >
-                    Votre événement
+                    {t("header.eventProject")}
                     <span aria-hidden="true">-&gt;</span>
                   </Link>
                 </div>

@@ -6,6 +6,27 @@
   background: var(--background);
 }
 
+:global(html[dir="rtl"]) .hero {
+  direction: ltr;
+  text-align: left;
+}
+
+:global(html[dir="rtl"]) .content {
+  direction: rtl;
+  text-align: right;
+}
+
+:global(html[dir="rtl"]) .eyebrowRow,
+:global(html[dir="rtl"]) .ctaGroup,
+:global(html[dir="rtl"]) .microCopy {
+  direction: rtl;
+}
+
+:global(html[dir="rtl"]) .divider {
+  margin-left: auto;
+  transform-origin: right center;
+}
+
 .hero::before {
   content: "";
   position: absolute;
