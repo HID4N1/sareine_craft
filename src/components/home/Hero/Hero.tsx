@@ -16,48 +16,6 @@ function joinClasses(...classes: Array<string | undefined | false>) {
 export function Hero({ hero }: HeroProps) {
   return (
     <section className={styles.hero} aria-labelledby="home-hero-title">
-      {/*
-      <svg aria-hidden="true" className={styles.clipSvg} focusable="false">
-        <defs>
-          <clipPath clipPathUnits="objectBoundingBox" id="hero-main-image-clip">
-            <path d="M 0 0 H 1 V 0.9 C 0.82 0.96 0.58 1.01 0.32 0.98 C 0.18 0.96 0.09 0.88 0.055 0.76 C 0.012 0.62 0.018 0.46 0.036 0.34 C 0.058 0.19 0.04 0.06 0 0 Z" />
-          </clipPath>
-        </defs>
-      </svg>
-      */}
-
-      {/*
-      <div className={styles.mainImage} aria-hidden="true">
-        <Image
-          src={`${hero.images.primary.src}?v=portrait-20260917-2`}
-          alt=""
-          fill
-          priority
-          sizes="(min-width: 1200px) 49vw, 100vw"
-          className={styles.mainImagePhoto}
-        />
-        <svg
-          aria-hidden="true"
-          className={styles.mainImageBorder}
-          focusable="false"
-          preserveAspectRatio="none"
-          viewBox="0 0 100 100"
-        >
-          <path d="M 0 0 H 100 V 90 C 82 96 58 101 32 98 C 18 96 9 88 5.5 76 C 1.2 62 1.8 46 3.6 34 C 5.8 19 4 6 0 0 Z" />
-        </svg>
-      </div>
-
-      <div className={styles.secondaryImage} aria-hidden="true">
-        <Image
-          src={hero.images.secondary.src}
-          alt=""
-          fill
-          sizes="(min-width: 1200px) 25vw, 0px"
-          className={styles.secondaryImagePhoto}
-        />
-      </div>
-      */}
-
       <div className={styles.rightImage} aria-hidden="true">
         <Image
           src="/images/home/hero/right side.png"
