@@ -1,6 +1,9 @@
+import type { Metadata } from "next";
+
 import { InfoPage } from "@/components/public/InfoPage";
 import { getInfoPage, type InfoPageKey } from "@/data/info-pages";
 import { defaultLocale, isLocale, type Locale } from "@/i18n/config";
+import { buildPageMetadata } from "@/lib/metadata";
 
 type LocalizedInfoProps = {
   params: Promise<{
@@ -8,10 +11,26 @@ type LocalizedInfoProps = {
   }>;
 };
 
+const page: InfoPageKey = "cookies";
+
+export async function generateMetadata({
+  params,
+}: LocalizedInfoProps): Promise<Metadata> {
+  const { locale: routeLocale } = await params;
+  const locale: Locale = isLocale(routeLocale) ? routeLocale : defaultLocale;
+  const data = getInfoPage(locale, page);
+
+  return buildPageMetadata({
+    title: `${data.title} | Sareine Craft & Events`,
+    description: data.description,
+    path: "/cookies",
+    locale,
+  });
+}
+
 export default async function LocalizedCookies({ params }: LocalizedInfoProps) {
   const { locale: routeLocale } = await params;
   const locale: Locale = isLocale(routeLocale) ? routeLocale : defaultLocale;
-  const page: InfoPageKey = "cookies";
 
   return <InfoPage {...getInfoPage(locale, page)} />;
 }

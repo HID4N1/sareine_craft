@@ -14,37 +14,25 @@ import {
 } from "@/data";
 import { CraftHighlightSection } from "@/components/home/CraftHighlightSection/CraftHighlightSection";
 import { ProjectContactSection } from "@/components/home/ProjectContactSection/ProjectContactSection";
+import { buildPageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Sareine Craft & Events | Créations artisanales et événements",
   description:
     "Bougies artisanales, créations personnalisées et événements imaginés avec soin à Casablanca pour célébrer chaque moment à votre façon.",
-  alternates: {
-    canonical: "/",
+  path: "/",
+  image: {
+    url: homeHero.images.primary.src,
+    alt: homeHero.images.primary.alt,
   },
-  openGraph: {
-    title: "Sareine Craft & Events | Créations artisanales et événements",
-    description:
-      "Découvrez l’univers Sareine : créations artisanales, décorations et événements sur mesure à Casablanca.",
-    url: "/",
-    type: "website",
-    locale: "fr_MA",
-    siteName: "Sareine Craft & Events",
-    images: [
-      {
-        url: homeHero.images.primary.src,
-        alt: homeHero.images.primary.alt,
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Sareine Craft & Events | Créations artisanales et événements",
-    description:
-      "Créations artisanales, décorations et événements sur mesure à Casablanca.",
-    images: [homeHero.images.primary.src],
-  },
-};
+  keywords: [
+    "Sareine Craft",
+    "créations artisanales Casablanca",
+    "événements Casablanca",
+    "bougies artisanales Maroc",
+    "décoration événementielle Casablanca",
+  ],
+});
 
 export default function Home() {
   return (

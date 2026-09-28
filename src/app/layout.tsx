@@ -9,8 +9,11 @@ import { cookies, headers } from "next/headers";
 import "./globals.css";
 
 import { defaultLocale, isLocale, isRTL, localeCookieName } from "@/i18n/config";
+import { siteName } from "@/lib/metadata";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://sareinecraft.com";
+const defaultDescription =
+  "Sareine imagine des créations artisanales et des expériences événementielles pensées avec soin pour vos moments précieux.";
 
 const cormorantGaramond = Cormorant_Garamond({
   variable: "--font-display",
@@ -39,9 +42,32 @@ const notoNaskhArabic = Noto_Naskh_Arabic({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "Sareine — Craft & Events",
-  description:
-    "Sareine imagine des créations artisanales et des expériences événementielles pensées avec soin pour vos moments précieux.",
+  title: {
+    default: "Sareine — Craft & Events",
+    template: "%s",
+  },
+  description: defaultDescription,
+  applicationName: siteName,
+  openGraph: {
+    title: "Sareine — Craft & Events",
+    description: defaultDescription,
+    url: "/",
+    type: "website",
+    locale: "fr_MA",
+    siteName,
+    images: [
+      {
+        url: "/brand/sareine-logo-horizontal.png",
+        alt: "Sareine Craft & Events",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Sareine — Craft & Events",
+    description: defaultDescription,
+    images: ["/brand/sareine-logo-horizontal.png"],
+  },
   icons: {
     icon: [
       {

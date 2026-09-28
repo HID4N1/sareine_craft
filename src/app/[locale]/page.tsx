@@ -10,9 +10,9 @@ import { getLocalizedHomeData } from "@/data/localized";
 import {
   defaultLocale,
   isLocale,
-  ogLocales,
   type Locale,
 } from "@/i18n/config";
+import { buildPageMetadata } from "@/lib/metadata";
 
 type LocalizedHomeProps = {
   params: Promise<{
@@ -58,34 +58,19 @@ export async function generateMetadata({
   const locale: Locale = isLocale(routeLocale) ? routeLocale : defaultLocale;
   const home = getLocalizedHomeData(locale);
   const copy = localizedMetadata[locale];
-  const canonical = `/${locale}`;
 
   return {
-    title: copy.title,
+    ...buildPageMetadata({
+      title: copy.title,
+      description: copy.openGraphDescription,
+      path: "/",
+      locale,
+      image: {
+        url: home.hero.images.primary.src,
+        alt: home.hero.images.primary.alt,
+      },
+    }),
     description: copy.description,
-    alternates: {
-      canonical,
-    },
-    openGraph: {
-      title: copy.title,
-      description: copy.openGraphDescription,
-      url: canonical,
-      type: "website",
-      locale: ogLocales[locale],
-      siteName: "Sareine Craft & Events",
-      images: [
-        {
-          url: home.hero.images.primary.src,
-          alt: home.hero.images.primary.alt,
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: copy.title,
-      description: copy.openGraphDescription,
-      images: [home.hero.images.primary.src],
-    },
   };
 }
 

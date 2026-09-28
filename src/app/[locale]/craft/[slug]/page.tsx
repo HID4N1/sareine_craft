@@ -5,6 +5,7 @@ import { CraftCollectionPage } from "@/components/craft/CraftCollectionPage/Craf
 import { craftCollections } from "@/data";
 import { getLocalizedCraftCollection } from "@/data/localized";
 import { defaultLocale, isLocale, supportedLocales, type Locale } from "@/i18n/config";
+import { buildPageMetadata } from "@/lib/metadata";
 
 export const dynamicParams = false;
 
@@ -37,10 +38,16 @@ export async function generateMetadata({
     };
   }
 
-  return {
+  return buildPageMetadata({
     title: `${collection.name} | Sareine Craft`,
     description: collection.shortDescription,
-  };
+    path: `/craft/${collection.slug}`,
+    locale,
+    image: {
+      url: collection.cover.src,
+      alt: collection.cover.alt,
+    },
+  });
 }
 
 export default async function LocalizedCraftCollectionRoute({

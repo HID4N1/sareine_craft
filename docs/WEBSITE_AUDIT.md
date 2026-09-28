@@ -29,7 +29,7 @@ Severity summary:
 | Data architecture | GOOD | Site, navigation, home, events, about, craft, and collections are mostly centralized. |
 | API readiness | MEDIUM | Static data is typed, but content is still imported directly into pages/components and several record arrays are empty. |
 | Accessibility | MEDIUM | Good alt text and focus outlines exist; remaining risks include lightbox focus trapping, hidden scrollbars, and manual mobile/keyboard QA. |
-| SEO | MEDIUM | Metadata routes exist and public/legal pages have content; remaining risk is thin page metadata and auth/admin routes without route-level noindex. |
+| SEO | GOOD | Metadata routes, canonical alternates, OpenGraph/Twitter previews, contact/legal metadata, and auth/admin `noindex` are now in place. |
 | Performance | MEDIUM | Next Image is used heavily, but assets include large PNG/JPEG files and many above-the-fold/client sections. |
 
 ## Table of Contents
@@ -625,13 +625,13 @@ Mobile screenshot is readable and compact.
 Uses headings, semantic sections, list items, and descriptive image alt text.
 
 ### SEO
-Strongest page metadata in the app: canonical, keywords, OpenGraph, and Twitter metadata.
+About metadata now follows the shared metadata pattern with canonical alternates, OpenGraph, and Twitter preview data.
 
 ### Issues
-- `SEO-002`: About page has rich metadata while other important pages have thinner metadata, creating inconsistency.
+- None specific to the About page metadata after the shared metadata pass.
 
 ### Recommendations
-- Use the about page metadata structure as a model for home/events/craft/legal pages.
+- Keep copy and preview image aligned with final brand positioning.
 
 ## Page — Contact
 
@@ -1009,15 +1009,15 @@ Concrete risks:
 
 | SEO Item | Status | Source | Recommendation |
 |---|---|---|---|
-| Root title/description | GOOD | `src/app/layout.tsx` includes `metadataBase` | Add OpenGraph, Twitter, and canonical defaults. |
+| Root title/description | GOOD | `src/app/layout.tsx` includes `metadataBase`, OpenGraph, and Twitter defaults | Keep production `NEXT_PUBLIC_SITE_URL` accurate. |
 | Locale | GOOD | Root layout derives `html lang` and `dir` from locale headers/cookie | Keep locale routing/header behavior aligned. |
-| Home metadata | CHECK | Inherits root metadata | Add page-specific home OpenGraph/canonical. |
-| Events metadata | GOOD | `src/app/(public)/events/page.tsx` | Add OpenGraph image/canonical. |
-| Craft metadata | GOOD | `src/app/(public)/craft/page.tsx` | Add OpenGraph image/canonical. |
-| Craft collection metadata | GOOD | `generateMetadata` from collection | Add canonical and OG image from cover. |
-| About metadata | GOOD | Rich metadata in `about/page.tsx` | Use as pattern for others. |
-| Contact/legal metadata | CHECK | Info pages have content but no page-specific metadata | Add metadata and decide index/noindex policy. |
-| Admin/auth metadata | ISSUE | Blank routes are blocked in `robots.ts`, but no route-level noindex/guards exist | Protect or add noindex metadata. |
+| Home metadata | GOOD | `src/app/(public)/page.tsx`, `src/app/[locale]/page.tsx` | Keep copy/images aligned with final brand positioning. |
+| Events metadata | GOOD | `src/app/(public)/events/page.tsx`, `src/app/[locale]/events/page.tsx` | Keep OG image current. |
+| Craft metadata | GOOD | `src/app/(public)/craft/page.tsx`, `src/app/[locale]/craft/page.tsx` | Keep OG image current. |
+| Craft collection metadata | GOOD | `generateMetadata` from collection | Keep collection cover images accurate. |
+| About metadata | GOOD | `about/page.tsx` and localized about routes | Keep copy aligned with final brand positioning. |
+| Contact/legal metadata | GOOD | Info pages now define metadata and canonical alternates | Confirm index/noindex policy before launch. |
+| Admin/auth metadata | GOOD | Auth/admin layouts set `noindex` metadata and robots blocks discovery | Add guards or remove routes if they remain unfinished. |
 | Sitemap | GOOD | `src/app/sitemap.ts` | Keep route list aligned with public pages and craft collections. |
 | Robots | GOOD | `src/app/robots.ts` | Continue blocking admin/auth/API surfaces until they are production-ready. |
 | Manifest | GOOD | `src/app/manifest.ts` | Add smaller dedicated icons later if needed. |
@@ -1191,7 +1191,7 @@ flowchart TD
 | ID | Severity | Area | Page/Component | Issue | Evidence | Recommended Action |
 |---|---|---|---|---|---|---|
 | ARCH-003 | MEDIUM | Routing/Security | Admin/auth pages | Admin/auth routes are routable but blank and unguarded | `src/app/(admin)` and `src/app/(auth)` pages return `null` | Add middleware/guards or remove from production. |
-| CONTENT-001 | LOW | Legal/contact | Info pages | Legal/contact pages now exist but need final copy approval and metadata | `InfoPage` uses `src/data/info-pages.ts`; no page-specific metadata | Review copy, add metadata, decide index/noindex. |
+| CONTENT-001 | LOW | Legal/contact | Info pages | Legal/contact pages now exist with metadata but need final copy approval | `InfoPage` uses `src/data/info-pages.ts` | Review copy and decide index/noindex policy. |
 | NAV-002 | LOW | Events | `EventNavigation` | Sticky event nav exists but is unused | No imports found for `EventNavigation` | Use it or remove/document it. |
 | UX-001 | MEDIUM | Homepage | `ServicesSection` | Cards look like navigational tiles but are not links | `homeServices.cards` include `href`; rendered as `article` | Make cards clickable or remove href data. |
 | UX-002 | LOW | Homepage | `ProjectContactSection` | Two adjacent CTAs lead to same WhatsApp URL | `primaryCta` and `whatsappCta` both use project WhatsApp | Differentiate actions or remove duplicate. |
@@ -1199,8 +1199,7 @@ flowchart TD
 | RESP-001 | MEDIUM | Mobile | Home/events long sections | Mobile event sections are very tall and scroll-heavy | Screenshots show long vertical image sections | Review mobile section heights and density. |
 | A11Y-001 | MEDIUM | Modal | Events lightbox | Dialog lacks full focus trap | `EventsLightbox` handles close/focus restore but not Tab trap | Add focus trap and keyboard QA. |
 | A11Y-002 | MEDIUM | Blank pages | Auth/admin routes | Blank auth/admin routes have no headings/landmarks/content | Auth/admin page files return `null` | Protect, noindex, remove, or implement content. |
-| SEO-001 | MEDIUM | SEO | Blank auth/admin routes | Auth/admin pages are buildable; robots blocks discovery but route-level noindex/guards are still absent | `robots.ts` exists; no route-level noindex metadata | Add guards, noindex, notFound, or remove routes. |
-| SEO-002 | MEDIUM | SEO | Public pages | Metadata depth is inconsistent | About rich metadata; home/craft/events thinner | Add canonical/OG/Twitter consistently. |
+| SEO-001 | LOW | SEO | Blank auth/admin routes | Auth/admin pages are buildable; robots and route-level noindex exist, but guards/content are still absent | `robots.ts` and auth/admin layout metadata exist | Add guards, notFound, or remove routes. |
 | PERF-001 | MEDIUM | Assets | Large PNG/JPG images | Several assets exceed ~2 MB | `find public ... du` output | Optimize/convert source assets. |
 | PERF-002 | MEDIUM | JS | Events page | Full events experience is client component | `EventsExperience` uses `"use client"` | Split static rendering from lightbox island later. |
 | DATA-001 | MEDIUM | Data | Events/crafts records | `events`, `crafts`, `testimonials` arrays are empty placeholders | `src/data/events.ts`, `craft.ts`, `testimonials.ts` | Clarify future API model or remove unused exports. |
@@ -1255,7 +1254,7 @@ flowchart TD
 | Task | Priority | Affected files/components | Reason | Expected impact | Dependencies |
 |---|---|---|---|---|---|
 | Maintain sitemap, robots, and manifest | LOW | `src/app/sitemap.ts`, `src/app/robots.ts`, `src/app/manifest.ts` | Metadata routes now exist and should stay aligned with launch route decisions | SEO/PWA hygiene | Route decisions |
-| Standardize metadata | MEDIUM | home/events/craft/collections/legal | About page is richer than others | Better social/SEO previews | Copy/OG images |
+| Maintain standardized metadata | LOW | home/events/craft/collections/legal/contact/auth/admin | Metadata is now standardized; keep it aligned with route/content changes | Stable social/SEO previews | Copy/OG images |
 | Improve lightbox accessibility | MEDIUM | `EventsLightbox` | Focus trap/keyboard completeness | Better keyboard UX | Testing |
 
 ## Phase 7 — Architecture / API Readiness
@@ -1277,13 +1276,13 @@ flowchart TD
 
 ### What needs immediate attention
 
-- Admin/auth routes should not remain publicly routable without guards or noindex behavior.
+- Admin/auth routes should not remain publicly routable without guards or intentional placeholder behavior.
 - Legal/contact copy should receive final approval before launch.
 - Remaining `.DS_Store` files should be removed from source folders.
 
 ### What should be improved before launch
 
-- Standardize metadata across public pages and add route-level noindex/guards for auth/admin if those routes remain.
+- Maintain standardized metadata as page copy and preview images evolve.
 - Optimize the largest PNG assets.
 - Deep-link homepage event categories.
 - Make service cards behavior match their visual affordance.

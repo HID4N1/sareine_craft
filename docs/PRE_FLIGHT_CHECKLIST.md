@@ -101,13 +101,14 @@ Already done:
 - `/sitemap.xml`
 - `/robots.txt`
 - `/manifest.webmanifest`
-
-Still needed:
-
 - Add stronger metadata to home, events, craft, legal, and contact pages.
 - Add canonical URLs where appropriate.
 - Add OpenGraph and Twitter metadata consistently.
 - Add route-level `noindex` for any intentionally unfinished routes.
+
+Still needed:
+
+- Confirm `NEXT_PUBLIC_SITE_URL` is set to the production domain before deployment.
 
 Must pass:
 

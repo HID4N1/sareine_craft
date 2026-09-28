@@ -1,6 +1,17 @@
+import type { Metadata } from "next";
+
 import { InfoPage } from "@/components/public/InfoPage";
 import { getInfoPage } from "@/data/info-pages";
+import { buildPageMetadata } from "@/lib/metadata";
+
+const page = getInfoPage("fr", "privacy");
+
+export const metadata: Metadata = buildPageMetadata({
+  title: `${page.title} | Sareine Craft & Events`,
+  description: page.description,
+  path: "/privacy",
+});
 
 export default function PrivacyPage() {
-  return <InfoPage {...getInfoPage("fr", "privacy")} />;
+  return <InfoPage {...page} />;
 }

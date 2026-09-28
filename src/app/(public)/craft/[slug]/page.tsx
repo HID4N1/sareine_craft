@@ -6,6 +6,7 @@ import {
   craftCollections,
   getCraftCollection,
 } from "@/data";
+import { buildPageMetadata } from "@/lib/metadata";
 
 type CraftCollectionRouteProps = {
   params: Promise<{
@@ -33,10 +34,15 @@ export async function generateMetadata({
     };
   }
 
-  return {
+  return buildPageMetadata({
     title: `${collection.name} | Sareine Craft`,
     description: collection.shortDescription,
-  };
+    path: `/craft/${collection.slug}`,
+    image: {
+      url: collection.cover.src,
+      alt: collection.cover.alt,
+    },
+  });
 }
 
 export default async function CraftCollectionRoute({
