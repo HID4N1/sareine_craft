@@ -143,8 +143,9 @@ export function PublicFooter() {
       t("contact.projectMessage"),
     ) ?? "/";
   const addressDisplay = getAddressDisplay();
-  const footerSocialLinks = socialLinks.filter((social) =>
-    ["instagram", "tiktok"].includes(social.platform),
+  const footerSocialLinks = socialLinks.filter(
+    (social) =>
+      Boolean(social.url) && ["instagram", "tiktok"].includes(social.platform),
   );
 
   const contactLinks = [
@@ -296,29 +297,17 @@ export function PublicFooter() {
 
                       return (
                         <li key={social.platform}>
-                          {social.url ? (
-                            <a
-                              aria-label={t("footer.followOn", {
-                                platform: social.label,
-                              })}
-                              className={socialClasses}
-                              href={social.url}
-                              rel="noreferrer"
-                              target="_blank"
-                            >
-                              {socialIcon}
-                            </a>
-                          ) : (
-                            <span
-                              aria-label={t("footer.soon", {
-                                platform: social.label,
-                              })}
-                              className={socialClasses}
-                              role="img"
-                            >
-                              {socialIcon}
-                            </span>
-                          )}
+                          <a
+                            aria-label={t("footer.followOn", {
+                              platform: social.label,
+                            })}
+                            className={socialClasses}
+                            href={social.url ?? undefined}
+                            rel="noreferrer"
+                            target="_blank"
+                          >
+                            {socialIcon}
+                          </a>
                         </li>
                       );
                     })}

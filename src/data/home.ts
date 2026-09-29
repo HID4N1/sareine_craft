@@ -146,11 +146,11 @@ export const homeHero: HomeHeroData = {
   },
   images: {
     primary: {
-      src: "/images/home/hero/baby-shower-pink.png",
+      src: "/images/home/hero/baby-shower-pink.webp",
       alt: "Décoration baby shower rose avec ballons, chariot fleuri et ours en peluche.",
     },
     secondary: {
-      src: "/images/home/hero/bridal-shower-green.png",
+      src: "/images/home/hero/bridal-shower-green.webp",
       alt: "Décoration bridal shower vert et or avec ballons, table basse et fleurs.",
     },
   },
@@ -249,7 +249,7 @@ export const homeEventCategories: HomeEventCategoriesData = {
   categories: [
     {
       title: "Anniversaire",
-      href: "/events",
+      href: "/events#anniversaire",
       image: {
         src: "/images/events/birthday/birthday-02.webp",
         alt: "Décor d'anniversaire Sareine Craft avec scénographie festive et élégante.",
@@ -258,7 +258,7 @@ export const homeEventCategories: HomeEventCategoriesData = {
     },
     {
       title: "Baby Shower",
-      href: "/events",
+      href: "/events#baby-shower",
       image: {
         src: "/images/events/baby-shower/baby-shower-01.webp",
         alt: "Décor baby shower Sareine Craft avec ambiance délicate et féminine.",
@@ -266,17 +266,17 @@ export const homeEventCategories: HomeEventCategoriesData = {
       },
     },
     {
-      title: "Graduation",
-      href: "/events",
+      title: "Remise de diplômes",
+      href: "/events#remise-de-diplomes",
       image: {
-        src: "/images/home/events/graduation.png",
+        src: "/images/home/events/graduation.webp",
         alt: "Mise en scène de graduation avec toque, diplôme, bougies et détails dorés.",
         position: "50% 50%",
       },
     },
     {
       title: "Naissance",
-      href: "/events",
+      href: "/events#baby-shower",
       image: {
         src: "/images/events/birth/birth-01.webp",
         alt: "Décor de naissance complet avec table personnalisée et composition douce.",
@@ -284,8 +284,8 @@ export const homeEventCategories: HomeEventCategoriesData = {
       },
     },
     {
-      title: "Célébration privée",
-      href: "/events",
+      title: "Événements privés",
+      href: "/events#evenements-prives",
       image: {
         src: "/images/events/private-event/private-event-01.webp",
         alt: "Célébration privée Sareine Craft avec décor chaleureux et ambiance intimiste.",

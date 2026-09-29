@@ -9,6 +9,7 @@ import type {
 } from "@/data/events";
 
 import { EventChapter } from "./EventChapter";
+import { EventNavigation } from "./EventNavigation";
 import { EventsHero } from "./EventsHero";
 import { EventsLightbox } from "./EventsLightbox";
 import { ServiceProcess } from "./ServiceProcess";
@@ -97,6 +98,7 @@ export function EventsExperience({
   return (
     <>
       <EventsHero hero={hero} onOpen={(index) => openLightbox("hero", index)} />
+      <EventNavigation categories={categories} />
       {categories.map((category) => (
         <EventChapter
           category={category}
@@ -105,7 +107,7 @@ export function EventsExperience({
           onOpen={openLightbox}
         />
       ))}
-      <ServiceProcess service={service} />
+      <ServiceProcess inquiryHref={inquiryHref} service={service} />
       <EventsLightbox
         active={activeLightbox}
         galleries={galleries}

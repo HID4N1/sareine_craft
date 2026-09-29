@@ -54,12 +54,14 @@ function ServiceCard({ card }: { card: HomeServiceCard }) {
   const isFeature = card.variant === "feature";
 
   return (
-    <article
+    <Link
+      aria-label={`${card.eyebrow} - ${card.description}`}
       className={joinClasses(
         styles.card,
         card.variant === "wide" && styles.cardWide,
         isFeature && styles.cardFeature,
       )}
+      href={card.href}
     >
       <Image
         src={card.image.src}
@@ -87,7 +89,7 @@ function ServiceCard({ card }: { card: HomeServiceCard }) {
         <h3 className={styles.cardTitle}>{card.title}</h3>
         <p className={styles.cardDescription}>{card.description}</p>
       </div>
-    </article>
+    </Link>
   );
 }
 

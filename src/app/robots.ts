@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://sareinecraft.com";
+import { getAbsoluteUrl, getSiteUrl } from "@/lib/site-url";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -13,10 +13,11 @@ export default function robots(): MetadataRoute.Robots {
         "/login",
         "/forgot-password",
         "/reset-password",
+        "/contact",
         "/api/",
       ],
     },
-    sitemap: new URL("/sitemap.xml", siteUrl).toString(),
-    host: siteUrl,
+    sitemap: getAbsoluteUrl("/sitemap.xml"),
+    host: getSiteUrl(),
   };
 }

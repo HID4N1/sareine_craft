@@ -1,238 +1,147 @@
 # Sareine Craft — Pre-Flight Checklist
 
-Use this as the practical launch checklist after the website audit. Work from top to bottom. Do not deploy until every `Must Pass` item is complete.
+Verified on 2026-09-28 after the production-readiness pass. Do not link the final custom domain until the remaining deployment-only items are complete.
 
-## 1. Confirm The Current Baseline
-
-Run these first:
-
-```bash
-npm run lint
-npm run build
-git status --short
-```
+## 1. Current Production Surface
 
 Must pass:
 
-- `npm run lint` completes without errors.
-- `npm run build` completes without errors.
-- `git status --short` only shows changes you expect.
+- [x] Intended public routes are limited to `/`, `/about`, `/events`, `/craft`, `/craft/[slug]`, `/privacy`, `/terms`, and `/cookies`.
+- [x] `/contact` page files were removed. WhatsApp remains the direct contact/conversion surface.
+- [x] `/events/[slug]` is not present. Events remain section-based with anchors.
+- [x] Auth/admin page files were removed from the production app; private paths are still disallowed in `robots.ts`.
+- [x] Legal pages render meaningful French content through `InfoPage`.
+- [x] A branded `not-found.tsx` exists for invalid URLs.
+- [x] A lightweight branded `error.tsx` exists for runtime failures.
 
-## 2. Fix Blank Public Routes
-
-These routes are public and should not stay blank:
-
-- `/contact`
-- `/privacy`
-- `/cookies`
-- `/terms`
-
-Choose one action for each route:
-
-| Route | Best pre-flight action | Alternative |
-|---|---|---|
-| `/contact` | Add a simple contact page with WhatsApp CTA | Redirect to WhatsApp or remove links |
-| `/privacy` | Add privacy policy content | Add temporary noindex page |
-| `/cookies` | Add cookie policy content | Add temporary noindex page |
-| `/terms` | Add terms content | Add temporary noindex page |
+## 2. Navigation And Links
 
 Must pass:
 
-- No linked public route renders an empty page.
-- Footer legal links open meaningful content.
-- Contact path gives users a clear way to reach Sareine.
+- [x] Header logo links to home.
+- [x] Header and footer public navigation point only to valid production routes.
+- [x] Footer legal links point to `/privacy`, `/cookies`, and `/terms`.
+- [x] Homepage event cards now deep-link to real event sections: `#baby-shower`, `#anniversaire`, `#remise-de-diplomes`, and `#evenements-prives`.
+- [x] Homepage service cards are real links instead of static articles with unused `href` data.
+- [x] Events page includes the in-page event navigation.
+- [x] Unconfigured Facebook/TikTok footer icons are hidden.
+- [x] No linked production route intentionally renders a blank page.
 
-## 3. Decide Admin And Auth Route Strategy
-
-Current auth/admin routes exist but are unfinished:
-
-- `/admin`
-- `/admin/*`
-- `/login`
-- `/forgot-password`
-- `/reset-password`
-
-Recommended pre-flight action:
-
-- If admin/auth is not ready, keep them blocked from discovery and add route-level `noindex`.
-- If admin/auth is ready, add actual guards before launch.
+## 3. Conversion
 
 Must pass:
 
-- Admin pages are not publicly useful without authentication.
-- Auth/admin routes are either protected, removed, or explicitly `noindex`.
+- [x] WhatsApp helper uses a valid `wa.me` URL with encoded messages.
+- [x] Global floating WhatsApp button remains enabled.
+- [x] Header/footer project CTAs include project context.
+- [x] Event inquiry CTAs use event-specific copy.
+- [x] Craft collection detail pages include a subtle collection-aware WhatsApp inquiry CTA.
+- [x] No cart, checkout, prices, account, or e-commerce flow was introduced.
 
-## 4. Decide Event Detail Strategy
-
-The events experience is section-based. Do not leave a blank detail route if one exists.
-
-Choose one:
-
-- Remove the empty `/events/[slug]` route if event details are not launching now.
-- Implement event detail pages if each event needs its own URL.
-- Redirect unknown event detail URLs back to `/events`.
+## 4. SEO And Metadata
 
 Must pass:
 
-- No event URL opens a blank page.
-- Homepage event cards take users to the right section or page.
+- [x] Root metadata includes title, description, application name, creator/publisher, keywords, robots, OpenGraph, Twitter, icons, and manifest references.
+- [x] Page metadata exists for home, about, events, craft, craft detail, privacy, terms, and cookies.
+- [x] Craft collection metadata is generated from collection data.
+- [x] `NEXT_PUBLIC_SITE_URL` is centralized through `src/lib/site-url.ts`.
+- [x] `sitemap.ts` excludes `/contact`, auth/admin routes, and unfinished surfaces.
+- [x] `robots.ts` disallows `/admin`, auth routes, `/contact`, and `/api`.
+- [x] Organization/WebSite JSON-LD uses only known project data.
 
-## 5. Fix Navigation Expectations
+Deployment-only:
 
-Audit items to resolve:
+- [ ] Set `NEXT_PUBLIC_SITE_URL` to the final production domain before the production build/deploy.
+- [ ] Replace the temporary `https://example.com` fallback by environment configuration, not a guessed domain.
+- [ ] Submit only the final production domain to search engines after DNS/HTTPS verification.
+- [ ] Prepare or approve a dedicated 1200 x 630 OG image if the current logo-based preview is not sufficient.
 
-- Homepage event category cards all go to `/events`.
-- Service cards look clickable but are rendered as static articles.
-
-Recommended pre-flight action:
-
-- Deep-link event category cards to event sections, for example `/events#baby-shower`.
-- Either make service cards real links or remove the visual affordance that makes them look clickable.
-
-Must pass:
-
-- Clickable-looking UI is actually clickable.
-- Users can jump from homepage categories to the right event content.
-
-## 6. Standardize SEO Metadata
-
-Already done:
-
-- `/sitemap.xml`
-- `/robots.txt`
-- `/manifest.webmanifest`
-- Add stronger metadata to home, events, craft, legal, and contact pages.
-- Add canonical URLs where appropriate.
-- Add OpenGraph and Twitter metadata consistently.
-- Add route-level `noindex` for any intentionally unfinished routes.
-
-Still needed:
-
-- Confirm `NEXT_PUBLIC_SITE_URL` is set to the production domain before deployment.
+## 5. Assets And Performance
 
 Must pass:
 
-- Important public pages have title and description.
-- Blank or temporary pages are not indexable.
-- `NEXT_PUBLIC_SITE_URL` is set correctly in production.
+- [x] Homepage hero/event PNGs were converted to WebP and references updated: `baby-shower-pink.webp`, `bridal-shower-green.webp`, `right-side.webp`, `graduation.webp`.
+- [x] The old unreferenced homepage PNG originals were removed.
+- [x] The filename with a space, `right side.png`, is no longer referenced.
+- [x] Hero images retain `priority` and responsive `sizes`.
+- [x] Next image output formats remain AVIF/WebP.
 
-## 7. Optimize Heavy Assets
+Remaining production content dependency:
 
-Priority assets from the audit:
+- [ ] Large craft collection PNG/JPG assets still exist. They were not bulk-converted during this pass because many product images may depend on transparency, exact color, and visual approval. Optimize them after visual QA on collection pages.
+- [ ] Graduation event images in `src/data/events.ts` remain marked `temporary: true`; replace or approve them before final launch.
+- [ ] Brand logo PNGs are still large source files; create smaller approved display/OG variants if desired.
 
-- `public/images/home/hero/bridal-shower-green.png`
-- `public/images/craft/collections/Cakes/Cakes_02.png`
-- `public/images/home/hero/right side.png`
-- `public/images/home/events/graduation.png`
-- `public/brand/sareine-logo-horizontal.png`
-
-Recommended pre-flight action:
-
-- Convert large PNGs to WebP or AVIF where transparency is not required.
-- Add smaller logo display variants.
-- Rename `right side.png` during a coordinated asset cleanup, then update references.
+## 6. Accessibility And UX
 
 Must pass:
 
-- Above-the-fold images remain visually clean.
-- Large images are reduced without breaking existing references.
-- Build still passes after asset changes.
+- [x] Mobile menu has Escape close behavior and scroll lock.
+- [x] Events lightbox supports Escape, previous/next arrows, focus return, and a basic focus trap.
+- [x] Event index improves navigation through the long events page.
+- [x] Important interactive elements are anchors or buttons according to behavior.
+- [x] Focus-visible styles remain present on new fallback pages and CTAs.
 
-## 8. Accessibility QA
+Manual QA still required:
 
-Manual checks:
+- [ ] Keyboard through header, mobile menu, event index, lightbox, footer, and all CTAs.
+- [ ] Check viewports: 375px, 390px, 768px, 1024px, 1440px, 1920px.
+- [ ] Inspect `/`, `/events`, `/craft`, one `/craft/[slug]`, `/about`, `/privacy`, `/terms`, `/cookies`, and an invalid URL.
 
-- Keyboard through header, mobile menu, CTAs, lightbox, and footer.
-- Confirm Escape closes the mobile menu and lightbox.
-- Confirm focus is visible.
-- Confirm event lightbox does not trap users in a broken state.
-- Check text contrast over hero/event images.
-
-Must pass:
-
-- Every interactive element can be reached by keyboard.
-- Focus state is visible.
-- Modal/lightbox behavior is predictable.
-
-## 9. Mobile Visual QA
-
-Test these viewport widths:
-
-- 360px
-- 390px
-- 768px
-- 1024px
-- 1440px
-
-Pages to inspect:
-
-- `/`
-- `/events`
-- `/craft`
-- `/craft/bougies-gourmandes`
-- `/about`
-- `/contact`
-- `/privacy`
-- `/cookies`
-- `/terms`
+## 7. Security And Configuration
 
 Must pass:
 
-- No text overlaps.
-- Floating WhatsApp does not hide important CTAs.
-- Event sections are not awkwardly tall on mobile.
-- Craft detail pages remain readable on mobile.
+- [x] `next.config.ts` includes conservative production headers: `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`, and `X-Frame-Options`.
+- [x] No strict CSP was added blindly.
+- [x] `.env.example` documents `NEXT_PUBLIC_SITE_URL`.
+- [x] No real secrets were added.
+- [x] Analytics is not configured and no analytics dependency was introduced.
+- [x] No cookie banner was added because no non-essential analytics/tracking stack is configured.
 
-## 10. Final Build Gate
+Deployment-only:
 
-Run:
+- [ ] Revisit CSP once the final domain, analytics, and any third-party services are known.
+- [ ] Revisit cookie consent if analytics or non-essential cookies are added.
+
+## 8. Cleanup
+
+Must pass:
+
+- [x] Source `.DS_Store` files were removed.
+- [x] Empty auth/admin route files were removed.
+- [x] Contact route files were removed.
+- [x] Event detail route is absent.
+- [x] Build metadata routes remain present: `/sitemap.xml`, `/robots.txt`, `/manifest.webmanifest`.
+
+Known retained placeholders:
+
+- [ ] `events: []`, `crafts: []`, and `testimonials: []` remain as future typed data structures. Remove them only when the future content model is decided.
+- [ ] Old contact InfoPage data may be removed in a later data cleanup; it is not routed or linked.
+
+## 9. Final Verification Gate
+
+Run before deployment:
 
 ```bash
 npm run lint
 npm run build
 ```
 
-Then verify generated metadata routes in the build output:
+Then production-smoke the built site:
 
-- `/sitemap.xml`
-- `/robots.txt`
-- `/manifest.webmanifest`
+```bash
+npm run start
+```
 
-Must pass:
+Expected direct URL behavior:
 
-- Lint passes.
-- Build passes.
-- Metadata routes are generated.
-
-## 11. Production Environment Check
-
-Before deployment, confirm:
-
-- `NEXT_PUBLIC_SITE_URL` is the real production URL.
-- WhatsApp number is correct.
-- Brand logo assets load.
-- Social links are correct.
-- Legal/contact copy is approved.
-
-Must pass:
-
-- Production URLs in sitemap and robots use the final domain.
-- No staging or localhost URLs appear in public metadata.
-
-## 12. Deployment Smoke Test
-
-After deployment, open the production site and verify:
-
-- Home loads.
-- Navigation links work.
-- Footer legal links work.
-- Contact route works.
-- WhatsApp CTA opens the expected chat.
-- Craft collection pages load.
-- `/sitemap.xml` opens.
-- `/robots.txt` opens.
-- `/manifest.webmanifest` opens.
+- Valid page -> 200 or intended locale redirect.
+- Invalid page -> branded 404.
+- Removed `/contact`, auth, and admin pages -> no blank 200 page.
+- `/sitemap.xml`, `/robots.txt`, and `/manifest.webmanifest` open.
 
 Final go/no-go rule:
 
-- Launch only when no public route is blank, lint/build pass, and production metadata points at the correct domain.
+- Launch only when lint/build pass, production metadata uses the real domain through `NEXT_PUBLIC_SITE_URL`, no public route is blank, legal copy is approved, and final responsive/accessibility smoke tests pass.

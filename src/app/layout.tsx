@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import {
   Allura,
   Cormorant_Garamond,
@@ -10,8 +11,9 @@ import "./globals.css";
 
 import { defaultLocale, isLocale, isRTL, localeCookieName } from "@/i18n/config";
 import { siteName } from "@/lib/metadata";
+import { getSiteUrl } from "@/lib/site-url";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://sareinecraft.com";
+const siteUrl = getSiteUrl();
 const defaultDescription =
   "Sareine imagine des créations artisanales et des expériences événementielles pensées avec soin pour vos moments précieux.";
 
@@ -48,6 +50,27 @@ export const metadata: Metadata = {
   },
   description: defaultDescription,
   applicationName: siteName,
+  creator: siteName,
+  publisher: siteName,
+  keywords: [
+    "Sareine Craft",
+    "créations artisanales",
+    "événements Casablanca",
+    "baby shower Casablanca",
+    "anniversaire Casablanca",
+    "bougies artisanales",
+  ],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   openGraph: {
     title: "Sareine — Craft & Events",
     description: defaultDescription,
@@ -99,7 +122,10 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
       data-locale={locale}
       className={`${cormorantGaramond.variable} ${manrope.variable} ${allura.variable} ${notoNaskhArabic.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }

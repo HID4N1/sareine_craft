@@ -21,6 +21,7 @@ export function EventsLightbox({
 }) {
   const { t } = useI18n();
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
   const touchStartXRef = useRef<number | null>(null);
   const gallery = active
     ? galleries.find((item) => item.id === active.galleryId)
@@ -40,6 +41,27 @@ export function EventsLightbox({
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
         onClose();
+      }
+
+      if (event.key === "Tab") {
+        const focusableElements = dialogRef.current?.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])',
+        );
+        const focusable = Array.from(focusableElements ?? []);
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (!first || !last) {
+          return;
+        }
+
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
       }
 
       if (event.key === "ArrowLeft") {
@@ -94,6 +116,7 @@ export function EventsLightbox({
       onTouchStart={(event) => {
         touchStartXRef.current = event.changedTouches[0].clientX;
       }}
+      ref={dialogRef}
       role="dialog"
     >
       <div

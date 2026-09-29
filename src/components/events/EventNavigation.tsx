@@ -66,7 +66,7 @@ export function EventNavigation({ categories }: { categories: EventCategory[] })
       className="sticky top-20 z-40 border-y border-gold-300/45 bg-ivory/92 shadow-[0_16px_40px_rgba(36,16,25,0.07)] backdrop-blur-xl"
     >
       <Container>
-        <div className="grid auto-cols-[max-content] grid-flow-col gap-3 overflow-x-auto py-3 [scrollbar-width:none] lg:grid-flow-row lg:grid-cols-5 [&::-webkit-scrollbar]:hidden">
+        <div className="grid auto-cols-[max-content] grid-flow-col gap-3 overflow-x-auto py-3 [scrollbar-width:none] lg:grid-flow-row lg:grid-cols-4 [&::-webkit-scrollbar]:hidden">
           {categories.map((category) => {
             const isActive = activeId === category.id;
 

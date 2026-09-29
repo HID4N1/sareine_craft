@@ -10,6 +10,7 @@
     "images:events": "node scripts/optimize-event-images.mjs"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "heic-convert": "^2.1.0",
     "next": "16.3.5",
     "react": "19.2.8",

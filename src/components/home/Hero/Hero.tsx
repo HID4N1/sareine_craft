@@ -18,7 +18,7 @@ export function Hero({ hero }: HeroProps) {
     <section className={styles.hero} aria-labelledby="home-hero-title">
       <div className={styles.rightImage} aria-hidden="true">
         <Image
-          src="/images/home/hero/right side.png"
+          src="/images/home/hero/right-side.webp"
           alt=""
           fill
           priority

@@ -2,13 +2,11 @@ import type { MetadataRoute } from "next";
 
 import { craftCollections } from "@/data";
 import { supportedLocales } from "@/i18n/config";
-
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://sareinecraft.com";
+import { getAbsoluteUrl } from "@/lib/site-url";
 
 const publicRoutes = [
   "",
   "/about",
-  "/contact",
   "/craft",
   "/events",
   "/privacy",
@@ -17,7 +15,7 @@ const publicRoutes = [
 ];
 
 function absoluteUrl(pathname: string) {
-  return new URL(pathname, siteUrl).toString();
+  return getAbsoluteUrl(pathname);
 }
 
 function localizedAlternates(pathname: string) {

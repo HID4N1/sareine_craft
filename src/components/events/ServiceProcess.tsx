@@ -1,9 +1,12 @@
 import { Container } from "@/components/ui/Container";
+import { Button } from "@/components/ui/Button";
 import type { EventsServiceSection } from "@/data/events";
 
 export function ServiceProcess({
+  inquiryHref,
   service,
 }: {
+  inquiryHref: string;
   service: EventsServiceSection;
 }) {
   return (
@@ -29,6 +32,14 @@ export function ServiceProcess({
           <p className="mt-8 max-w-[34rem] text-[1.08rem] leading-8 text-ivory/76">
             {service.description}
           </p>
+          <Button
+            className="mt-9"
+            href={inquiryHref}
+            rel="noreferrer"
+            target="_blank"
+          >
+            {service.primaryCta}
+          </Button>
         </div>
 
         <ul className="scroll-rise-soft grid content-center gap-x-12 gap-y-7 sm:grid-cols-2">

@@ -5,6 +5,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Container } from "@/components/ui/Container";
+import { siteData } from "@/data/site";
+import { getWhatsAppHref } from "@/lib/whatsapp";
 import { useI18n } from "@/i18n/I18nProvider";
 import type {
   CraftCollectionData,
@@ -101,6 +103,11 @@ export function CraftCollectionPage({
   collection,
 }: CraftCollectionPageProps) {
   const { localizedPath, t } = useI18n();
+  const inquiryHref =
+    getWhatsAppHref(
+      siteData.contact.whatsapp,
+      `Bonjour Sareine Craft, j'aimerais parler de la collection ${collection.name}.`,
+    ) ?? "/";
 
   return (
     <main className={styles.page}>
@@ -148,6 +155,15 @@ export function CraftCollectionPage({
               {t("craft.viewModels")}
               <span aria-hidden="true">↓</span>
             </Link>
+            <a
+              className={styles.contactLink}
+              href={inquiryHref}
+              rel="noreferrer"
+              target="_blank"
+            >
+              Discuter de cette création
+              <span aria-hidden="true">-&gt;</span>
+            </a>
           </div>
         </Container>
       </section>
