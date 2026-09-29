@@ -15,10 +15,6 @@ const PUBLIC_FILE = /\.(.*)$/;
 const ignoredPrefixes = [
   "/api",
   "/_next",
-  "/admin",
-  "/login",
-  "/forgot-password",
-  "/reset-password",
 ];
 
 function shouldIgnore(pathname: string) {
