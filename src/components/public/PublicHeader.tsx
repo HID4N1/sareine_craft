@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import { siteData, socialLinks } from "@/data";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
-import { getWhatsAppHref } from "@/lib/whatsapp";
+import { getProjectWhatsAppHref } from "@/lib/whatsapp";
 import {
   localeLabels,
   stripLocaleFromPathname,
@@ -107,11 +107,7 @@ export function PublicHeader() {
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   const configuredSocialLinks = socialLinks.filter((social) => social.url);
-  const projectWhatsAppHref =
-    getWhatsAppHref(
-      siteData.contact.whatsapp,
-      t("contact.projectMessage"),
-    ) ?? "/";
+  const projectWhatsAppHref = getProjectWhatsAppHref(locale) ?? "/";
 
   useEffect(() => {
     let animationFrame = 0;

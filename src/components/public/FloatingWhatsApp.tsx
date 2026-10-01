@@ -1,8 +1,7 @@
 "use client";
 
-import { siteData } from "@/data";
 import { useI18n } from "@/i18n/I18nProvider";
-import { getWhatsAppHref } from "@/lib/whatsapp";
+import { getSareineWhatsAppHref } from "@/lib/whatsapp";
 
 function WhatsAppIcon() {
   return (
@@ -19,7 +18,7 @@ function WhatsAppIcon() {
 
 export function FloatingWhatsApp() {
   const { t } = useI18n();
-  const whatsappHref = getWhatsAppHref(siteData.contact.whatsapp);
+  const whatsappHref = getSareineWhatsAppHref();
 
   if (!whatsappHref) {
     return null;

@@ -4,9 +4,7 @@ import type {
   EventService,
 } from "@/types";
 import { eventCategories } from "@/types";
-import { getWhatsAppHref } from "@/lib/whatsapp";
-
-import { siteData } from "./site";
+import { getEventWhatsAppHref } from "@/lib/whatsapp";
 
 export { eventCategories };
 export type { EventRecordCategory, EventService };
@@ -66,13 +64,7 @@ export type EventsFinalCta = {
   image: EventCategoryImage;
 };
 
-function createWhatsAppHref(message: string) {
-  return getWhatsAppHref(siteData.contact.whatsapp, message) ?? "/";
-}
-
-export const eventInquiryHref = createWhatsAppHref(
-  "Bonjour Sareine Craft, j'aimerais parler d'un projet événementiel.",
-);
+export const eventInquiryHref = getEventWhatsAppHref("fr") ?? "/";
 
 export const eventServices: EventService[] = [
   "venue-rental",

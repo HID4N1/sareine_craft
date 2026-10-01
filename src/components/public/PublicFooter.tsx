@@ -6,7 +6,10 @@ import Link from "next/link";
 import { siteData, socialLinks } from "@/data";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
-import { getWhatsAppHref } from "@/lib/whatsapp";
+import {
+  getProjectWhatsAppHref,
+  getSareineWhatsAppHref,
+} from "@/lib/whatsapp";
 import { useI18n } from "@/i18n/I18nProvider";
 import { legalNavigationKeys, publicNavigationKeys } from "@/i18n/navigation";
 
@@ -135,13 +138,9 @@ function FooterWave() {
 const currentYear = new Date().getFullYear();
 
 export function PublicFooter() {
-  const { localizedPath, t } = useI18n();
-  const whatsappHref = getWhatsAppHref(siteData.contact.whatsapp);
-  const projectWhatsAppHref =
-    getWhatsAppHref(
-      siteData.contact.whatsapp,
-      t("contact.projectMessage"),
-    ) ?? "/";
+  const { locale, localizedPath, t } = useI18n();
+  const whatsappHref = getSareineWhatsAppHref();
+  const projectWhatsAppHref = getProjectWhatsAppHref(locale) ?? "/";
   const addressDisplay = getAddressDisplay();
   const footerSocialLinks = socialLinks.filter(
     (social) =>

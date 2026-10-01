@@ -1,4 +1,7 @@
-import { getWhatsAppHref } from "@/lib/whatsapp";
+import {
+  getEventWhatsAppHref,
+  getProjectWhatsAppHref,
+} from "@/lib/whatsapp";
 import type { Locale } from "@/i18n/config";
 import { defaultLocale, withLocalePath } from "@/i18n/config";
 
@@ -20,19 +23,6 @@ import {
   homeProjectContact,
   homeServices,
 } from "./home";
-import { siteData } from "./site";
-
-const projectMessages: Record<Locale, string> = {
-  fr: "Bonjour Sareine Craft, j'aimerais parler de mon projet.",
-  en: "Hello Sareine Craft, I would like to talk about my project.",
-  ar: "مرحبا سارين كرافت، أود التحدث عن مشروعي.",
-};
-
-const eventMessages: Record<Locale, string> = {
-  fr: "Bonjour Sareine Craft, j'aimerais parler d'un projet événementiel.",
-  en: "Hello Sareine Craft, I would like to talk about an event project.",
-  ar: "مرحبا سارين كرافت، أود التحدث عن مشروع فعالية.",
-};
 
 type TranslationMap = Record<string, string>;
 
@@ -798,7 +788,7 @@ function localizeHref(href: string, locale: Locale): string {
 
   if (href.startsWith("http")) {
     if (href.includes("wa.me")) {
-      return getWhatsAppHref(siteData.contact.whatsapp, projectMessages[locale]) ?? href;
+      return getProjectWhatsAppHref(locale) ?? href;
     }
 
     return href;
@@ -867,7 +857,6 @@ export function getLocalizedEventsData(locale: Locale) {
     service: localizeValue(eventsServiceSection, locale),
     finalCta: localizeValue(eventsFinalCta, locale),
     inquiryHref:
-      getWhatsAppHref(siteData.contact.whatsapp, eventMessages[locale]) ??
-      eventInquiryHref,
+      getEventWhatsAppHref(locale) ?? eventInquiryHref,
   };
 }

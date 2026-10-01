@@ -1,14 +1,8 @@
-import { getWhatsAppHref } from "@/lib/whatsapp";
+import { getProjectWhatsAppHref } from "@/lib/whatsapp";
 import type { Locale } from "@/i18n/config";
 import { withLocalePath } from "@/i18n/config";
 
 import { siteData } from "./site";
-
-const contactHref =
-  getWhatsAppHref(
-    siteData.contact.whatsapp,
-    "Bonjour Sareine Craft, j'aimerais parler de mon projet.",
-  ) ?? "/";
 
 export const infoPages = {
   fr: {
@@ -27,7 +21,10 @@ export const infoPages = {
           body: siteData.address.country ?? "Maroc",
         },
       ],
-      cta: { label: "Nous contacter", href: contactHref },
+      cta: {
+        label: "Nous contacter",
+        href: getProjectWhatsAppHref("fr") ?? "/",
+      },
     },
     privacy: {
       eyebrow: "CONFIDENTIALITÉ",
@@ -89,10 +86,16 @@ export const infoPages = {
       description:
         "A handmade creation, decor concept, or event to imagine? Contact Sareine Craft directly on WhatsApp.",
       sections: [
-        { title: "WhatsApp", body: siteData.contact.whatsapp ?? "Available on request." },
+        {
+          title: "WhatsApp",
+          body: siteData.contact.whatsapp ?? "Available on request.",
+        },
         { title: "Location", body: siteData.address.country ?? "Morocco" },
       ],
-      cta: { label: "Contact us", href: contactHref },
+      cta: {
+        label: "Contact us",
+        href: getProjectWhatsAppHref("en") ?? "/",
+      },
     },
     privacy: {
       eyebrow: "PRIVACY",
@@ -154,10 +157,16 @@ export const infoPages = {
       description:
         "إبداع يدوي، ديكور أو فعالية تريدون تخيلها؟ تواصلوا مع سارين كرافت مباشرة عبر واتساب.",
       sections: [
-        { title: "واتساب", body: siteData.contact.whatsapp ?? "متوفر عند الطلب." },
+        {
+          title: "واتساب",
+          body: siteData.contact.whatsapp ?? "متوفر عند الطلب.",
+        },
         { title: "الموقع", body: "المغرب" },
       ],
-      cta: { label: "تواصلوا معنا", href: contactHref },
+      cta: {
+        label: "تواصلوا معنا",
+        href: getProjectWhatsAppHref("ar") ?? "/",
+      },
     },
     privacy: {
       eyebrow: "الخصوصية",

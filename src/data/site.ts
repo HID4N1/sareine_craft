@@ -16,7 +16,7 @@ export const siteData: SiteData = {
   footerSignature: "Des instants d'exception, au-delà du quotidien.",
   contact: {
     phone: null,
-    whatsapp: "+212 607306666",
+    whatsapp: "212607306666",
     email: null,
   },
   address: {

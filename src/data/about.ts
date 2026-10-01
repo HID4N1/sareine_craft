@@ -1,12 +1,6 @@
-import { getWhatsAppHref } from "@/lib/whatsapp";
+import { getProjectWhatsAppHref } from "@/lib/whatsapp";
 
-import { siteData } from "./site";
-
-const projectWhatsAppHref =
-  getWhatsAppHref(
-    siteData.contact.whatsapp,
-    "Bonjour Sareine Craft, j'aimerais parler de mon projet.",
-  ) ?? "/";
+const projectWhatsAppHref = getProjectWhatsAppHref("fr") ?? "/";
 
 export type AboutImage = {
   src: string;
