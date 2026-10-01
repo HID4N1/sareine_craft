@@ -1,6 +1,6 @@
 # Sareine Craft — Pre-Flight Checklist
 
-Verified on 2026-09-28 after the production-readiness pass. Do not link the final custom domain until the remaining deployment-only items are complete.
+Verified on 2026-09-29 after the production-readiness pass. Do not link the final custom domain until the remaining deployment-only items are complete.
 
 ## 1. Current Production Surface
 
@@ -9,7 +9,7 @@ Must pass:
 - [x] Intended public routes are limited to `/`, `/about`, `/events`, `/craft`, `/craft/[slug]`, `/privacy`, `/terms`, and `/cookies`.
 - [x] `/contact` page files were removed. WhatsApp remains the direct contact/conversion surface.
 - [x] `/events/[slug]` is not present. Events remain section-based with anchors.
-- [x] Auth/admin page files were removed from the production app; private paths are still disallowed in `robots.ts`.
+- [x] Auth/admin page files and route groups were removed from the production app.
 - [x] Legal pages render meaningful French content through `InfoPage`.
 - [x] A branded `not-found.tsx` exists for invalid URLs.
 - [x] A lightweight branded `error.tsx` exists for runtime failures.
@@ -46,8 +46,8 @@ Must pass:
 - [x] Page metadata exists for home, about, events, craft, craft detail, privacy, terms, and cookies.
 - [x] Craft collection metadata is generated from collection data.
 - [x] `NEXT_PUBLIC_SITE_URL` is centralized through `src/lib/site-url.ts`.
-- [x] `sitemap.ts` excludes `/contact`, auth/admin routes, and unfinished surfaces.
-- [x] `robots.ts` disallows `/admin`, auth routes, `/contact`, and `/api`.
+- [x] `sitemap.ts` includes only active public pages and craft collections.
+- [x] `robots.ts` disallows only removed `/contact` surfaces and `/api`.
 - [x] Organization/WebSite JSON-LD uses only known project data.
 
 Deployment-only:
@@ -139,7 +139,7 @@ Expected direct URL behavior:
 
 - Valid page -> 200 or intended locale redirect.
 - Invalid page -> branded 404.
-- Removed `/contact`, auth, and admin pages -> no blank 200 page.
+- Removed `/contact`, auth, and admin pages -> branded 404 or locale-aware invalid-route handling, never a blank 200 page.
 - `/sitemap.xml`, `/robots.txt`, and `/manifest.webmanifest` open.
 
 Final go/no-go rule:

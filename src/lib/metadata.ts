@@ -7,6 +7,7 @@ import {
   withLocalePath,
   type Locale,
 } from "@/i18n/config";
+import { getAbsoluteUrl } from "@/lib/site-url";
 
 export const siteName = "Sareine Craft & Events";
 
@@ -24,7 +25,11 @@ type PageMetadataInput = {
 };
 
 function getLocalizedPath(path: string, locale: Locale) {
-  return locale === defaultLocale ? path : withLocalePath(path, locale);
+  return withLocalePath(path, locale);
+}
+
+function getLocalizedUrl(path: string, locale: Locale) {
+  return getAbsoluteUrl(getLocalizedPath(path, locale));
 }
 
 function getAlternates(path: string, canonical: string) {
@@ -33,11 +38,17 @@ function getAlternates(path: string, canonical: string) {
     languages: Object.fromEntries([
       ...supportedLocales.map((locale) => [
         locale,
-        getLocalizedPath(path, locale),
+        getLocalizedUrl(path, locale),
       ]),
-      ["x-default", getLocalizedPath(path, defaultLocale)],
+      ["x-default", getLocalizedUrl(path, defaultLocale)],
     ]),
   };
+}
+
+function getAlternateOgLocales(locale: Locale) {
+  return supportedLocales
+    .filter((alternateLocale) => alternateLocale !== locale)
+    .map((alternateLocale) => ogLocales[alternateLocale]);
 }
 
 export function buildPageMetadata({
@@ -49,7 +60,7 @@ export function buildPageMetadata({
   path,
   title,
 }: PageMetadataInput): Metadata {
-  const canonical = getLocalizedPath(path, locale);
+  const canonical = getLocalizedUrl(path, locale);
   const images = image
     ? [
         {
@@ -70,6 +81,7 @@ export function buildPageMetadata({
       url: canonical,
       type: "website",
       locale: ogLocales[locale],
+      alternateLocale: getAlternateOgLocales(locale),
       siteName,
       images,
     },
